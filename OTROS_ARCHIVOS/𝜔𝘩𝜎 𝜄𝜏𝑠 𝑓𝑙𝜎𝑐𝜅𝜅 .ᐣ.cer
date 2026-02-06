@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>10.0.77.77</string>
+          <string>10.0.77.78</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.speedy</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>EEE55555-FFFF-6666-AAAA-5555EEEE6666</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝑨𝒊𝒎𝒍𝒐𝒙𝒌 𝑶𝒗𝒆𝒓 𝑳𝒆𝒈𝒊𝒕✴s</string>
+    </dict>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>10.0.77.79</string>
+          <string>10.0.77.80</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.speedyx4</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>FFF66666-AAAA-7777-BBBB-6666FFFF7777</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝑨𝒊𝒎𝒃𝒐𝒕 𝑶𝒗𝒆𝒓 𝒍𝒆𝒈𝒊𝒕 📁</string>
+    </dict>
+
+  </array>
+
+  <key>PayloadDisplayName</key>
+  <string>𝜔𝘩𝜎 𝜄𝜏𝑠 𝑓𝑙𝜎𝑐𝜅𝜅 .ᐣ</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.dns.speedmm</string>
+  <key>PayloadOrganization</key>
+  <string>PAYBACC</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>FEDCBA98-7654-3210-FEDC-BA9876543212</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Revenge</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Changa:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Changa', 'Cherokee', cursive, sans-serif;
+    }
+    body {
+      background: url('https://i.pinimg.com/736x/49/34/8a/49348aff060f7302d31d2f6110ed6f8e.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+      font-size: 13px;
+    }
+    /* El login-box se elimina, por lo que su estilo ya no es relevante aquí */
+    .menu-box, .options-box {
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 0.7rem;
+      box-shadow: 0 0 16px #00ffff, 0 0 32px #00ffff;
+      text-align: center;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      color: #00ffff;
+      max-width: 95vw;
+      width: 320px;
+      margin: auto;
+      display: flex; /* Por defecto se muestra */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-box {
+      padding: 2rem 1.2rem;
+      gap: 1.1rem;
+    }
+    .menu-box h2 {
+      margin-bottom: 1.2rem;
+      font-size: 1.35rem;
+      width: 100%;
+      text-align: center;
+    }
+    .menu-box .item {
+      font-size: 1.05rem;
+      padding: 0.5rem 1.2rem;
+      min-height: 28px;
+      border-radius: 7px;
+      background-color: rgba(0,0,0,0.5);
+      box-shadow: 0 0 10px #00ffff;
+      text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
+      color: #00ffff;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 260px;
+      transition: background 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer; /* Añadido para indicar que son clicables */
+    }
+    .menu-box .item:hover {
+      background-color: rgba(0,255,255,0.15);
+      box-shadow: 0 0 20px #00ffff;
+    }
+    .options-box {
+      display: none; /* Por defecto est�n ocultas */
+      flex-direction: column;
+      gap: 0.9rem;
+      padding: 1.7rem 1.2rem;
+      align-items: center;
+      font-size: 1.08rem;
+      max-width: 380px;
+    }
+    .options-box h2 {
+      margin-bottom: 1.1rem;
+      font-size: 1.18rem;
+    }
+    .option-row {
+      font-size: 1rem;
+      padding: 0.35rem 0.5rem;
+      min-height: 22px;
+      max-width: 340px;
+    }
+    .option-label {
+      font-size: 1rem;
+      gap: 10px;
+      display: flex;
+      align-items: center;
+    }
+    .back-btn {
+      margin-bottom: 0.7rem;
+      background: none;
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      border-radius: 5px;
+      padding: 0.3rem 1rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+      text-shadow: 0 0 8px #00ffff;
+      box-shadow: 0 0 8px #00ffff;
+      align-self: flex-start;
+    }
+    .back-btn:hover {
+      background: rgba(0,255,255,0.1);
+    }
+    /* Interruptor tipo switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 30px;
+      height: 16px;
+      margin-left: 8px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 16px;
+      box-shadow: 0 0 6px #00ffff;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 10px;
+      width: 10px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #00ffff;
+    }
+    input:checked + .slider {
+      background-color: #00ffff;
+      box-shadow: 0 0 10px #00ffff;
+    }
+    input:checked + .slider:before {
+      transform: translateX(12px);
+      background: #e0ffff;
+    }
+    .safe-label {
+      color: #33ffff;
+      font-weight: bold;
+      margin-left: 8px;
+      font-size: 0.85em;
+      background: rgba(0,255,255,0.15);
+      padding: 2px 6px;
+      border-radius: 5px;
+      text-shadow: 0 0 8px #00ffff;
+    }
+    .safe-status {
+      color: #00ff99;
+      font-weight: bold;
+      margin-left: 8px;
+      font-size: 0.85em;
+      background: rgba(0,255,153,0.10);
+      padding: 2px 6px;
+      border-radius: 5px;
+      text-shadow: 0 0 8px #00ff99;
+    }
+    /* Sliders personalizados */
+    input[type="range"] {
+      accent-color: #00ffff;
+      filter: drop-shadow(0 0 4px #00ffff);
+      background: transparent;
+      height: 2px;
+      flex-grow: 1; /* Para que el slider ocupe el espacio disponible */
+    }
+    #predictivo-value, #aimfov-value {
+      font-size: 0.7rem;
+      min-width: 32px; /* Asegura un ancho mínimo para el valor */
+      text-align: right;
+    }
+    .aimbot-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0,255,255,0.07);
+      border-radius: 8px;
+      padding: 0.7rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 0 8px #00ffff22;
+      font-size: 1.08rem;
+      width: 100%;
+      gap: 1.2rem;
+    }
+    .aimbot-label {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: #00ffff;
+      text-shadow: 0 0 8px #00ffff99;
+    }
+    .aimbot-slider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: rgba(0,255,255,0.04);
+      border-radius: 8px;
+      padding: 0.6rem 1.1rem;
+      width: 100%;
+      box-shadow: 0 0 8px #00ffff11;
+      font-size: 1.05rem;
+    }
+  
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+  <div class="menu-box" id="menu">
+    <h2 class="glow-text"><i class="fas fa-cog"></i> Panel Principal</h2>
+    <div class="item" onclick="showOptions('aimbot')"><i class="fas fa-crosshairs"></i> Aimbot</div>
+    <div class="item" onclick="showOptions('misc')"><i class="fas fa-random"></i> Misc</div>
+    <div class="item" onclick="showOptions('rendimiento')"><i class="fas fa-tachometer-alt"></i> Rendimiento</div>
+    <div class="item" onclick="showOptions('extra')"><i class="fas fa-plus-circle"></i> Extra</div>
+    <div class="item" onclick="showOptions('holograma')"><i class="fas fa-vr-cardboard"></i> Holograma</div>
+    <div class="item" onclick="showOptions('calibrar')"><i class="fas fa-sliders-h"></i> Calibrar</div>
+    <!-- Bot�n solo en el menú -->
+    <div class="section" style="margin-top: 20px;">
+      <button id="btn-open-ff" class="btn-clear" style="
+        width: 100%;
+        padding: 12px 0;
+        background: linear-gradient(90deg,#00ffff 60%,#00baba 100%);
+        color: #003c3c;
+        font-weight: 700;
+        font-size: 1.12rem;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 0 16px #00ffff99, 0 0 32px #00ffff33;
+        cursor: pointer;
+        text-shadow: 0 0 8px #00ffff,0 0 16px #00ffff;
+        letter-spacing: 1px;
+        transition: background 0.2s, box-shadow 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      ">
+        <i class="fas fa-gamepad"></i> Abrir Free Fire
+      </button>
+    </div>
+  </div>
+
+  <!-- Opciones de cada secci�n -->
+  <div class="options-box" id="aimbot-options" style="background: rgba(10,20,40,0.92); box-shadow: 0 0 32px #00ffff99, 0 0 64px #00ffff33; border-radius: 1.2rem; padding: 2.2rem 1.5rem; max-width: 410px;">
+    <button class="back-btn" onclick="backToMenu()" style="margin-bottom:1.2rem;"><i class="fas fa-arrow-left"></i> Volver</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem;">
+      <div style="background:linear-gradient(135deg,#00ffff44 0%,#181848 100%);border-radius:50%;padding:1.1rem 1.3rem;box-shadow:0 0 32px #00ffff99;">
+        <i class="fas fa-crosshairs" style="font-size:2.5rem;color:#00ffff;text-shadow:0 0 24px #00ffff,0 0 48px #00ffff;"></i>
+      </div>
+      <span style="font-size:1.35rem;font-weight:700;letter-spacing:2px;color:#00ffff;text-shadow:0 0 16px #00ffff,0 0 32px #00ffff;">Aimbot</span>
+      <form style="width:100%;display:flex;flex-direction:column;gap:1.2rem;">
+        <div class="aimbot-row">
+          <label class="aimbot-label">
+            <span style="color:#ff5252;font-weight:bold;">Aimbot cuello 100%</span>
+            <span class="safe-status">safe</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Aimbot Zenith</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Aimlock</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Aimbot Headshot</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Aimbot Predictivo</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Soft Aim</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Movement++</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row"><label class="aimbot-label">No Spread</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-slider-row">
+          <span style="color:cyan;">Precisi�n:</span>
+          <input id="predictivo-slider" type="range" min="0.1" max="5" step="0.1" value="1" style="width:120px;">
+          <span id="predictivo-value" style="min-width:32px;">1.0</span>
+        </div>
+        <div class="aimbot-slider-row">
+          <span style="color:cyan;">Aimfov:</span>
+          <input id="aimfov-slider" type="range" min="1" max="180" value="90" style="width:120px;">
+          <span id="aimfov-value" style="min-width:32px;">90</span>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Aimbot Invisible</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Bone Aimbot</label>
+          <select style="background:rgba(0,0,0,0.55);color:#00ffff;border:1.5px solid #00ffff55;border-radius:7px;padding:0.3rem 0.7rem;font-size:1rem;">
+            <option value="head">Cabeza</option>
+            <option value="neck">Cuello</option>
+            <option value="chest">Pecho</option>
+            <option value="stomach">Est�mago</option>
+            <option value="pelvis">Pelvis</option>
+            <option value="left_arm">Brazo Izquierdo</option>
+            <option value="right_arm">Brazo Derecho</option>
+            <option value="left_leg">Pierna Izquierda</option>
+            <option value="right_leg">Pierna Derecha</option>
+            <option value="feet">Pies</option>
+          </select>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">RageAIM</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="aimbot-row">
+          <label class="aimbot-label">Legit Aim</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Nueva secci�n Calibrar -->
+  <div class="options-box" id="calibrar-options" style="background: rgba(10,20,40,0.92); box-shadow: 0 0 32px #00ffff99, 0 0 64px #00ffff33; border-radius: 1.2rem; padding: 2.2rem 1.5rem; max-width: 410px;">
+    <button class="back-btn" onclick="backToMenu()" style="margin-bottom:1.2rem;"><i class="fas fa-arrow-left"></i> Volver</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem;">
+      <div style="background:linear-gradient(135deg,#00ffff44 0%,#181848 100%);border-radius:50%;padding:1.1rem 1.3rem;box-shadow:0 0 32px #00ffff99;">
+        <i class="fas fa-sliders-h" style="font-size:2.5rem;color:#00ffff;text-shadow:0 0 24px #00ffff,0 0 48px #00ffff;"></i>
+      </div>
+      <span style="font-size:1.35rem;font-weight:700;letter-spacing:2px;color:#00ffff;text-shadow:0 0 16px #00ffff,0 0 32px #00ffff;">Calibrar x Arma</span>
+      <form style="width:100%;display:flex;flex-direction:column;gap:1.2rem;">
+        <!-- Lista de armas de Free Fire -->
+        <div class="aimbot-row"><span>Calibrar M4A1</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar SCAR</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar AK</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar FAMAS</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar GROZA</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar XM8</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar AN94</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar M14</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar M60</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar MP40</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar UMP</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar P90</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar Thompson</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar Vector</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar M1014</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar SPAS12</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar M82B</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar KAR98K</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <div class="aimbot-row"><span>Calibrar AWM</span><input type="range" min="0" max="10" step="1" value="5"></div>
+        <!-- Puedes agregar m�s armas si lo deseas -->
+      </form>
+    </div>
+  </div>
+
+  <!-- Opciones EXTRA -->
+  <div class="options-box" id="extra-options" style="background: rgba(10,20,40,0.92); box-shadow: 0 0 32px #00ffff99, 0 0 64px #00ffff33; border-radius: 1.2rem; padding: 2.2rem 1.5rem; max-width: 410px;">
+    <button class="back-btn" onclick="backToMenu()" style="margin-bottom:1.2rem;"><i class="fas fa-arrow-left"></i> Volver</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem;">
+      <div style="background:linear-gradient(135deg,#00ffff44 0%,#181848 100%);border-radius:50%;padding:1.1rem 1.3rem;box-shadow:0 0 32px #00ffff99;">
+        <i class="fas fa-plus-circle" style="font-size:2.5rem;color:#00ffff;text-shadow:0 0 24px #00ffff,0 0 48px #00ffff;"></i>
+      </div>
+      <span style="font-size:1.35rem;font-weight:700;letter-spacing:2px;color:#00ffff;text-shadow:0 0 16px #00ffff,0 0 32px #00ffff;">Extra</span>
+      <form style="width:100%;display:flex;flex-direction:column;gap:1.2rem;">
+        <div class="aimbot-row"><label class="aimbot-label">0 Recoil</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Auxilio Head v4</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Auto Headshot</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Movement++</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Opciones HOLOGRAMA -->
+  <div class="options-box" id="holograma-options" style="background: rgba(10,20,40,0.92); box-shadow: 0 0 32px #00ffff99, 0 0 64px #00ffff33; border-radius: 1.2rem; padding: 2.2rem 1.5rem; max-width: 410px;">
+    <button class="back-btn" onclick="backToMenu()" style="margin-bottom:1.2rem;"><i class="fas fa-arrow-left"></i> Volver</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem;">
+      <div style="background:linear-gradient(135deg,#00ffff44 0%,#181848 100%);border-radius:50%;padding:1.1rem 1.3rem;box-shadow:0 0 32px #00ffff99;">
+        <i class="fas fa-vr-cardboard" style="font-size:2.5rem;color:#00ffff;text-shadow:0 0 24px #00ffff,0 0 48px #00ffff;"></i>
+      </div>
+      <span style="font-size:1.35rem;font-weight:700;letter-spacing:2px;color:#00ffff;text-shadow:0 0 16px #00ffff,0 0 32px #00ffff;">Holograma</span>
+      <!-- Opciones de holograma (actualizado) -->
+      <form style="width:100%;display:flex;flex-direction:column;gap:1.2rem;">
+        <div class="aimbot-row">
+          <label class="aimbot-label">Holograma Activar</label>
+          <label class="switch">
+            <input type="checkbox" id="holo-switch">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="holo-fail" style="display:none;color:#ff5252;text-shadow:0 0 8px #ff5252;font-size:1rem;text-align:center;">
+          Activaci�n fallida
+        </div>
+        <div class="aimbot-row"><label class="aimbot-label">ESP Lines</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Ver Loot</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Bypass Antiban</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma 360�</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma Team</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma Enemigos</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma Loot</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma Personalizado</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma Distancia</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma Transparente</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Holograma MiniMapa</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Secci�n Rendimiento para tu panel, ejemplo de switches populares -->
+  <div class="options-box" id="rendimiento-options" style="background: rgba(10,20,40,0.92); box-shadow: 0 0 32px #00ffff99, 0 0 64px #00ffff33; border-radius: 1.2rem; padding: 2.2rem 1.5rem; max-width: 410px;">
+    <button class="back-btn" onclick="backToMenu()" style="margin-bottom:1.2rem;"><i class="fas fa-arrow-left"></i> Volver</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem;">
+      <div style="background:linear-gradient(135deg,#00ffff44 0%,#181848 100%);border-radius:50%;padding:1.1rem 1.3rem;box-shadow:0 0 32px #00ffff99;">
+        <i class="fas fa-tachometer-alt" style="font-size:2.5rem;color:#00ffff;text-shadow:0 0 24px #00ffff,0 0 48px #00ffff;"></i>
+      </div>
+      <span style="font-size:1.35rem;font-weight:700;letter-spacing:2px;color:#00ffff;text-shadow:0 0 16px #00ffff,0 0 32px #00ffff;">Rendimiento</span>
+      <form style="width:100%;display:flex;flex-direction:column;gap:1.2rem;">
+        <div class="aimbot-row"><label class="aimbot-label">Optimizar FPS</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Limpiar Caché</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Reducir Gr�ficos</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Desactivar Sombras</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Modo Batería</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Cerrar Apps en Segundo Plano</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Liberar RAM</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Ping Estable</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Desactivar Animaciones</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Auto Boost</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Opciones MISC -->
+  <div class="options-box" id="misc-options" style="background: rgba(10,20,40,0.92); box-shadow: 0 0 32px #00ffff99, 0 0 64px #00ffff33; border-radius: 1.2rem; padding: 2.2rem 1.5rem; max-width: 410px;">
+    <button class="back-btn" onclick="backToMenu()" style="margin-bottom:1.2rem;"><i class="fas fa-arrow-left"></i> Volver</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem;">
+      <div style="background:linear-gradient(135deg,#00ffff44 0%,#181848 100%);border-radius:50%;padding:1.1rem 1.3rem;box-shadow:0 0 32px #00ffff99;">
+        <i class="fas fa-random" style="font-size:2.5rem;color:#00ffff;text-shadow:0 0 24px #00ffff,0 0 48px #00ffff;"></i>
+      </div>
+      <span style="font-size:1.35rem;font-weight:700;letter-spacing:2px;color:#00ffff;text-shadow:0 0 16px #00ffff,0 0 32px #00ffff;">Misc</span>
+      <form style="width:100%;display:flex;flex-direction:column;gap:1.2rem;">
+        <div class="aimbot-row"><label class="aimbot-label">Mostrar FPS</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Modo Streamer</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Fake Device ID</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Speed Hack x5</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Fake Ping</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="aimbot-row"><label class="aimbot-label">Fake Location</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('btn-open-ff').addEventListener('click', function() {
+      // Intenta abrir la aplicaci�n Free Fire a través de su esquema de URL
+      // Esto solo funcionar� si la aplicaci�n est� instalada y registrada para ese esquema.
+      // En iOS/Safari, Safari.open puede ser una opci�n, pero window.location.href es m�s universal.
+      window.location.href = "freefireth://";
+    });
+
+    function showOptions(section) {
+      document.getElementById('menu').style.display = 'none';
+      // Oculta todas las secciones de opciones
+      document.querySelectorAll('.options-box').forEach(box => box.style.display = 'none');
+      // Muestra la secci�n seleccionada
+      if(section === 'aimbot') {
+        document.getElementById('aimbot-options').style.display = 'flex';
+      } else if(section === 'calibrar') {
+        document.getElementById('calibrar-options').style.display = 'flex';
+      } else if(section === 'extra') {
+        document.getElementById('extra-options').style.display = 'flex';
+      } else if(section === 'holograma') {
+        document.getElementById('holograma-options').style.display = 'flex';
+      } else if(section === 'rendimiento') {
+        document.getElementById('rendimiento-options').style.display = 'flex';
+      } else if(section === 'misc') {
+        document.getElementById('misc-options').style.display = 'flex';
+      }
+    }
+
+    function backToMenu() {
+      // Oculta todas las secciones de opciones
+      document.querySelectorAll('.options-box').forEach(box => box.style.display = 'none');
+      // Muestra el menú principal
+      document.getElementById('menu').style.display = 'flex';
+    }
+
+    // Al cargar el documento, configurar los sliders y el switch de holograma
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sliders para mostrar el valor en tiempo real
+      const predictivoSlider = document.getElementById('predictivo-slider');
+      const predictivoValue = document.getElementById('predictivo-value');
+      if (predictivoSlider && predictivoValue) { // Asegúrate de que existan antes de usarlos
+        predictivoSlider.addEventListener('input', function() {
+          predictivoValue.textContent = parseFloat(this.value).toFixed(1);
+        });
+        // Establecer el valor inicial al cargar
+        predictivoValue.textContent = parseFloat(predictivoSlider.value).toFixed(1);
+      }
+
+      const aimfovSlider = document.getElementById('aimfov-slider');
+      const aimfovValue = document.getElementById('aimfov-value');
+      if (aimfovSlider && aimfovValue) { // Asegúrate de que existan antes de usarlos
+        aimfovSlider.addEventListener('input', function() {
+          aimfovValue.textContent = this.value;
+        });
+        // Establecer el valor inicial al cargar
+        aimfovValue.textContent = aimfovSlider.value;
+      }
+
+      // Holograma: mostrar "activaci�n fallida" al activar
+      const holoSwitch = document.getElementById('holo-switch');
+      const holoFail = document.getElementById('holo-fail');
+      if(holoSwitch && holoFail) { // Asegúrate de que existan
+        holoSwitch.addEventListener('change', function() {
+          if(this.checked) {
+            holoFail.style.display = 'block';
+          } else {
+            holoFail.style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

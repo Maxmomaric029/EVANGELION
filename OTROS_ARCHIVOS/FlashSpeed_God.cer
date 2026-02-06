@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>8.8.8.8</string>
+					<string>8.8.4.4</string>
+				</array>
+				<key>ServerName</key>
+				<string>⚡ 𝐅𝐥𝐚𝐬𝐡 𝐒𝐩𝐞𝐞𝐝 𝐆𝐨𝐝 ⚡</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.flash_speed_movement_boost_x2.0_uncrack.list=boolen"true&gt;</string>
+					<string>com.speed-hack-god-mode</string>
+					<string>inject_movement_velocity_max</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>⚡ 𝐅𝐥𝐚𝐬𝐡 𝐒𝐩𝐞𝐞𝐝 𝐆𝐨𝐝 ⚡</string>
+			<key>PayloadIdentifier</key>
+			<string>com.flash.speed.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>22222222-BBBB-2222-BBBB-222222222222</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Flash Speed God Mode</string>
+	<key>PayloadIdentifier</key>
+	<string>com.flash.speed.config</string>
+	<key>PayloadOrganization</key>
+	<string>SpeedDemon</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>BBBB2222-CCCC-3333-DDDD-444444444444</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>9.9.9.9</string>
+				</array>
+				<key>ServerName</key>
+				<string>𝐑𝐞𝐠𝐞𝐝𝐢𝐭 [𝐌𝐚𝐜𝐚𝐛𝐫𝐨] 💀</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.regedit.macabro.br"true&gt;</string>
+					<string>sistema.sombrio.ios</string>
+					<string>capa.brutal.exe</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝐑𝐞𝐠𝐞𝐝𝐢𝐭 [𝐌𝐚𝐜𝐚𝐛𝐫𝐨] 💀</string>
+			<key>PayloadIdentifier</key>
+			<string>com.regedit.macabro.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>E5E5E5E5-6666-0000-7777-B8B8B8B8B8B8</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Regedit Macabro Dark</string>
+	<key>PayloadIdentifier</key>
+	<string>com.regedit.macabro.config</string>
+	<key>PayloadOrganization</key>
+	<string>Darkness BR</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>F6F6F6F6-7777-1111-8888-C9C9C9C9C9C9</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

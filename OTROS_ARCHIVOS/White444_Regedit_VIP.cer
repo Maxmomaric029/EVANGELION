@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConsentText</key>
+	<dict>
+		<key>default</key>
+		<string>By Bloodie hackss</string>
+	</dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>DomainServer</key>
+				<string>iPhone16,Pro</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>1.1.1.1</string>
+					<string>8.8.8.8</string>
+				</array>
+				<key>ServerName</key>
+				<string>🔞 𝐒𝐲𝐬𝐭𝐞𝐦 𝐎𝐯𝐞𝐫𝐫𝐢𝐝𝐞 | 𝐏𝐫𝐢𝐯</string>
+				<key>ServerURL</key>
+				<string>https://dns.nextdns.io/Bloodie.Private.Bypass</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>com.head.lock.enabled</string>
+					<string>com.integrity.check.fail</string>
+					<string>com.vermelho.force.active</string>
+					<string>com.latency.zero.touch</string>
+					<string>com.instruction.patch.asm</string>
+					<string>com.bone.swap.headshot</string>
+					<string>com.xitado.brasileiro.v15</string>
+					<string>com.report.handler.silence</string>
+					<string>com.target.lock.override</string>
+					<string>com.calibration.assistant.max</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>🩸 𝐀𝐢𝐦 𝐋𝐨𝐜𝐤 𝐀𝐛𝐬𝐨𝐥𝐮𝐭𝐨 [𝐗]</string>
+			<key>PayloadIdentifier</key>
+			<string>com.bloodie.bypass.dns</string>
+			<key>PayloadOrganization</key>
+			<string>By Bloodie hackss</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>A1B2C3D4-E5F6-4A7B-8C9D-E0F1A2B3C4D5</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadDisplayName</key>
+	<string>💀 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 𝐗𝐢𝐭𝐚𝐝𝐨 𝐯𝟏𝟓</string>
+	<key>PayloadIdentifier</key>
+	<string>com.bloodie.xitado.profile</string>
+	<key>PayloadOrganization</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>F5F5F5F5-E4E4-D3D3-C2C2-B1B1B1B1B1B1</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

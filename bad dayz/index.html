@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAD DAYZ  | PREMIUM EDITION</title>
+    <style>
+        :root {
+            --accent-color: #007aff; /* Azul iPhone */
+            --bg-glass: rgba(15, 15, 15, 0.85);
+            --border-glass: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top right, #0a1a2f, #000);
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Panel estilo Cápsula iOS */
+        .panel {
+            width: 340px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-glass);
+            border-radius: 45px; /* Bordes super redondeados */
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 0.65rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .separator {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 25px 0;
+        }
+
+        /* Opciones estilo "Pill" (Píldora) */
+        .option-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 25px;
+            padding: 12px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid transparent;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .option-pill:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 122, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .option-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e1e1e1;
+        }
+
+        /* Switch Estilo Apple Smooth */
+        .switch {
+            position: relative;
+            width: 42px;
+            height: 24px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #313134;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        input:checked + .slider { background-color: #34c759; }
+        input:checked + .slider:before { transform: translateX(18px); }
+
+        /* Botón Curvo Premium */
+        .btn-action {
+            width: 100%;
+            padding: 18px;
+            margin-top: 15px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-action:hover {
+            box-shadow: 0 15px 30px rgba(0, 122, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 0.6rem;
+            color: #555;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <div class="header">
+        <h1>𝐁𝐚𝐝 𝐃𝐚𝐲𝐳</h1>
+        <p>𝐏𝐑𝐈𝐕𝐀𝐓𝐄 𝐒𝐎𝐅𝐓𝐖𝐀𝐑𝐄 </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="content">
+        <div class="option-pill">
+            <span class="option-name">👺 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐅𝐮𝐥𝐥 𝐕𝐞𝐫𝐦𝐞𝐥𝐡𝐨</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="option-pill">
+            <span class="option-name">💀 𝐀𝐮𝐱𝐢𝐥𝐢𝐨 𝐆𝐫𝐮𝐝𝐚 [𝐕𝐈𝐏]</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="option-pill">
+            <span class="option-name">🇧🇷 𝐓𝐫𝐢𝐜𝐤 𝐂𝐚𝐩𝐚 𝐈𝐧𝐬𝐚𝐧𝐨</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="option-pill">
+            <span class="option-name">💎 𝐒𝐞𝐜𝐫𝐞𝐭 𝐒𝐮𝐚𝐯𝐞 𝐢𝐎𝐒</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <button class="btn-action" onclick="this.innerHTML='𝐀𝐂𝐓𝐈𝐕𝐀𝐓𝐄𝐃...';">𝐈𝐍𝐉𝐄𝐂𝐓 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒</button>
+
+    <div class="footer">
+        𝐁𝐘 𝐁𝐀𝐃 𝐃𝐀𝐘𝐙
+    </div>
+</div>
+
+</body>
+</html>

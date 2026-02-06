@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>1.0.0.1</string>
+				</array>
+				<key>ServerName</key>
+				<string>𝐒𝐞𝐧𝐬𝐢 [𝐂𝐫𝐢𝐦𝐢𝐧𝐨𝐬𝐚] 🔞</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.sensi.criminosa.br"true&gt;</string>
+					<string>ajuste.ilegal.vip</string>
+					<string>sensibilidade.abusiva</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝐒𝐞𝐧𝐬𝐢 [𝐂𝐫𝐢𝐦𝐢𝐧𝐨𝐬𝐚] 🔞</string>
+			<key>PayloadIdentifier</key>
+			<string>com.sensi.criminosa.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>A1A1A1A1-2222-CCCC-3333-D4D4D4D4D4D4</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Sensi Criminosa VIP</string>
+	<key>PayloadIdentifier</key>
+	<string>com.sensi.criminosa.config</string>
+	<key>PayloadOrganization</key>
+	<string>Underground BR</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>B2B2B2B2-3333-DDDD-4444-E5E5E5E5E5E5</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

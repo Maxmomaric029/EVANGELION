@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>🔑 Panel Cheats</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #a020f0 0%, #3a225d 100%), url('https://i.pinimg.com/736x/ea/4a/fc/ea4afc6ae9ed8a00cc56fe9f6aac3215.jpg') no-repeat center center fixed;
+      background-blend-mode: multiply;
+      background-size: cover;
+      color: #f3f1fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      user-select: none;
+      text-shadow: 0 2px 8px #3a225d99;
+      padding: 20px 0;
+    }
+
+    #menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(58, 34, 93, 0.97);
+      padding: 10px 0 10px 0;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #a020f099, 0 1.5px 8px #fff2;
+      max-width: 98vw;
+      width: 340px;
+      max-height: 70vh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #a020f0 #e0d6f7;
+      border: 1.5px solid #a020f0;
+      animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    @media (max-width: 600px) {
+      #menu {
+        width: 98vw;
+        max-width: 98vw;
+        min-width: 0;
+        padding: 6px 0 6px 0;
+        border-radius: 10px;
+        max-height: 80vh;
+      }
+      .menu-section {
+        padding: 0 4px;
+      }
+    }
+    .menu-section {
+      margin-top: 18px;
+      width: 100%;
+      background: rgba(243,241,250,0.04);
+      border-radius: 10px;
+      box-shadow: 0 1px 6px #a020f022;
+      padding: 10px 0 8px 0;
+      margin-bottom: 2px;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0;
+      padding: 0 10px;
+    }
+    .toggle .label {
+      font-size: 1rem;
+      color: #e0d6f7;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 22px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #bba0e0;
+      transition: 0.4s;
+      border-radius: 22px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #fff;
+      transition: 0.4s;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px #a020f055;
+    }
+    .switch input:checked + .slider {
+      background-color: #a020f0;
+    }
+    .switch input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+    .slider-container {
+      margin-top: 8px;
+      padding: 0 10px;
+      color: #e0d6f7;
+      font-size: 0.98rem;
+      font-weight: 500;
+    }
+    .slider-container input[type="range"] {
+      width: 100%;
+      accent-color: #a020f0;
+      margin-top: 2px;
+      height: 4px;
+      border-radius: 2px;
+      background: #e0d6f7;
+      box-shadow: 0 1px 4px #a020f022;
+    }
+    .sub-options {
+      display: none;
+      margin-left: 18px;
+    }
+    .menu-section h3 {
+      font-size: 1.08rem;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      font-weight: 700;
+      text-shadow: 0 2px 8px #a020f0cc;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px #a020f0cc;
+      letter-spacing: 2px;
+    }
+  
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+
+  <div id="menu">
+    <div class="title">♿ Panel Cheats</div>
+    
+    <div class="menu-section">
+      <h3><i class="fas fa-crosshairs"></i> Aimbot</h3>
+      
+      <div class="toggle">
+        <span class="label">Aimbot Cuello</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+
+      <div class="slider-container">
+        <span>Porcentaje</span>
+        <input type="range" min="0" max="100" value="50">
+      </div>
+
+      <div class="toggle">
+        <span class="label">Aim Priority</span>
+        <label class="switch"><input type="checkbox" onchange="toggleSubOptions(this)"><span class="slider"></span></label>
+      </div>
+
+      <div class="sub-options" id="aimSubOptions">
+        <div class="toggle">
+          <span class="label">Fix Aim</span>
+          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+        <div class="toggle">
+          <span class="label">Easy HS</span>
+          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+        <div class="toggle">
+          <span class="label">Legit Mode</span>
+          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+      </div>
+
+      <div class="toggle">
+        <span class="label">Aimbot Head</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Aimbot Alok Fix</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Aimbot x2</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Aimbot Rage</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Aimbot AWP</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">No Recoil</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <h3><i class="fas fa-sliders-h"></i> Misc</h3>
+      <div class="toggle">
+        <span class="label">Easy HS</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Better Textures</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">More Sensi</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="slider-container">
+        <span>Velocity</span>
+        <input type="range" min="1.5" max="3" step="0.01" value="1.5">
+      </div>
+      <div class="slider-container">
+        <span>Fake Lag</span>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="toggle">
+        <span class="label">Headtrick</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Quick Scope</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Fic Lag</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">Prediccion</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+      <div class="toggle">
+        <span class="label">No Recoil</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+    </div>
+  </div>
+
+<script>
+  function toggleSubOptions(checkbox) {
+    document.getElementById("aimSubOptions").style.display = checkbox.checked ? "block" : "none";
+  }
+</script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

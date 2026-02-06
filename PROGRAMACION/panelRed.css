@@ -1,0 +1,245 @@
+body {
+  background: #2b101a;
+  font-family: 'Inter', Arial, sans-serif;
+  margin: 0;
+  color: #ffeaea;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  height: 100vh;
+  /* Previene el rebote en iOS */
+  overscroll-behavior: none;
+}
+
+.panel-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, #ff3c3c 0%, #790000 100%);
+  opacity: 0.7;
+}
+
+.panel-menu-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(50,20,30,0.96);
+  border: 2px solid #ff3c3c;
+  border-radius: 16px;
+  box-shadow: 0 0 40px #ff3c3c44;
+  width: 85%;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ff3c3c44 transparent;
+  -webkit-overflow-scrolling: touch;
+  max-width: 360px;
+  min-width: 320px;
+  max-height: 80vh;
+  padding: 24px 20px 16px;
+  z-index: 2;
+  margin: 0 auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ff3c3c44 transparent;
+  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+}
+.panel-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.panel-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff3c3c;
+  text-shadow: 0 0 16px #ff3c3c, 0 0 4px #fff1;
+  letter-spacing: 0.05em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+.panel-header h1 i {
+  font-size: 1.6rem;
+}
+
+.panel-subtitle {
+  color: #bcbcbc;
+  font-size: 0.9rem;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.panel-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 12px;
+}
+.panel-section {
+  width: 100%;
+  margin-bottom: 14px;
+}
+.panel-section-title {
+  color: #ff3c3c;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #3a181a;
+  border: 1.5px solid #ff3c3c44;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.panel-option:hover {
+  border-color: #ff3c3c88;
+  box-shadow: 0 0 15px #ff3c3c22;
+}
+
+.panel-option:last-child {
+  margin-bottom: 0;
+}
+
+.panel-option-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #ffeaea;
+  padding: 2px 0;
+}
+
+.panel-option-title i {
+  color: #ff3c3c;
+  font-size: 0.95rem;
+  width: 18px;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  .panel-menu {
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .panel-section {
+    margin-bottom: 8px;
+  }
+  .panel-option {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 4px;
+    margin-bottom: 2px;
+    max-width: 100vw;
+  }
+  .panel-option-title {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+}
+}
+.panel-option-title {
+  color: #ffeaea;
+  font-size: 1.15rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ff3c3c44;
+  border-radius: 24px;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ff3c3c;
+  border-radius: 50%;
+  transition: .4s;
+  transform: translateX(0);
+}
+.switch input:checked + .slider {
+  background-color: #ff3c3c;
+}
+.switch input:checked + .slider:before {
+  background-color: #3a181a;
+  transform: translateX(20px);
+}
+.panel-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background: #3a181a;
+  color: #ff3c3c;
+  text-align: left;
+  border-radius: 6px;
+  padding: 6px 12px;
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  font-size: 0.85em;
+  box-shadow: 0 2px 8px #000a;
+  transition: opacity 0.2s, visibility 0.2s;
+  margin-left: 10px;
+  min-width: 120px;
+}
+.panel-option:hover .panel-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+.panel-option.active {
+  border-color: #ff3c3c;
+  box-shadow: 0 0 16px #ff3c3c99;
+}
+.panel-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0 0 0;
+}
+.panel-whatsapp a {
+  color: #ff3c3c;
+  font-size: 2rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.panel-whatsapp a:hover {
+  color: #790000;
+}
+/* Removed duplicate mobile CSS block for clarity and to avoid patch errors */

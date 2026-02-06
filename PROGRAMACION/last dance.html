@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel V2 - Neon Edition</title>
+    <style>
+        /* Importamos Outfit (Geométrica) y Sacramento (Cursiva efecto neon) */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;800&family=Sacramento&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-image: url('https://i.pinimg.com/1200x/89/9d/ed/899ded478d95e8dd51a0c3fb75e8b02f.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e0e0e0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(20, 20, 20, 0.4), rgba(0, 0, 0, 0.8));
+            z-index: 0;
+        }
+
+        /* --- SECCIÓN INTRO --- */
+        #intro-container {
+            position: absolute;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        /* EFECTO DE TEXTO NEÓN (NUEVO) */
+        .intro-special-text {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.5rem;
+            color: #5542ff;
+            margin-bottom: 15px; /* Espacio antes del video */
+            text-shadow: 
+                0 0 10px #8a2be2,
+                0 0 20px #8a2be2,
+                0 0 40px #ff00de; /* Mezcla de Morado y Rosa Neon */
+            transform: rotate(-5deg);
+            animation: floatText 3s ease-in-out infinite;
+            z-index: 25;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 280px;
+            height: 500px;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transform: scale(0.8);
+            opacity: 0;
+            animation: popIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #continue-btn {
+            margin-top: 30px;
+            padding: 14px 35px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.0);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #continue-btn.visible {
+            opacity: 1;
+            pointer-events: all;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #continue-btn:hover {
+            background: #8a2be2;
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.6);
+            transform: translateY(-2px);
+            color: black;
+        }
+
+        /* --- SECCIÓN MENÚ --- */
+        #menu-container {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-panel {
+            width: 90%;
+            max-width: 420px;
+            background: rgba(30, 30, 35, 0.65);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border-radius: 40px;
+            padding: 40px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 40px 80px rgba(0,0,0,0.6),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: scale(0.9);
+            text-align: center;
+        }
+
+        /* Título interno del menú (mantiene estilo original) */
+        .menu-title-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 35px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+            line-height: 1.2;
+        }
+
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .option-row:last-of-type {
+            border-bottom: none;
+            margin-bottom: 25px;
+        }
+
+        .option-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ccc;
+            text-align: left;
+        }
+
+        /* SWITCHES */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        input:checked + .slider {
+            background-color: #8a2be2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+            border-color: #8a2be2;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+            background-color: #fff;
+        }
+
+        .ff-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: #8a2be2;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.3);
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ff-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        .ff-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Animaciones */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Animaci�n del Texto Ne�n */
+        @keyframes floatText {
+            0%, 100% { transform: rotate(-5deg) translateY(0); }
+            50% { transform: rotate(-5deg) translateY(-10px); }
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes menuEntry {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+
+    <audio id="music" loop>
+        <source src="lilnaay.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- CONTENEDOR INTRO -->
+    <div id="intro-container">
+        
+        <!-- Texto con el efecto especial aplicado -->
+        <div class="intro-special-text">By. maddy flock💫</div>
+        
+        <div class="video-wrapper">
+            <video id="myVideo" autoplay muted playsinline>
+                <source src="Download.mp4" type="video/mp4">
+            </video>
+        </div>
+        <button id="continue-btn" onclick="startPanel()">Continuar</button>
+    </div>
+
+    <!-- CONTENEDOR MENÚ PRINCIPAL -->
+    <div id="menu-container">
+        <div class="glass-panel" id="panel">
+            <!-- Título del menú (estilo normal) -->
+            <div class="menu-title-text">lo' del terrorimo somo nosotro' 🥵</div>
+
+            <!-- Opci�n 1 -->
+            <div class="option-row">
+                <span class="option-text">Azmlock like flockk ✴</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Opci�n 2 -->
+            <div class="option-row">
+                <span class="option-text">ump headlockk 💫</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Opci�n 3 -->
+            <div class="option-row">
+                <span class="option-text">m1014 hittin up ✝</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Opci�n 4 -->
+            <div class="option-row">
+                <span class="option-text">try up if u want a 100% headlock. ❗</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Bot�n Free Fire -->
+            <a href="freefireth://" class="ff-button">
+                ABRIR FREE FIRE
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('myVideo');
+        const btn = document.getElementById('continue-btn');
+        const intro = document.getElementById('intro-container');
+        const menu = document.getElementById('menu-container');
+        const panel = document.getElementById('panel');
+        const music = document.getElementById('music');
+
+        // L�gica de 10 segundos
+        window.onload = () => {
+            setTimeout(() => {
+                btn.classList.add('visible');
+            }, 10000); 
+        };
+
+        function startPanel() {
+            music.play().catch(e => console.log("Error audio:", e));
+            video.pause();
+            intro.style.opacity = '0';
+            intro.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                intro.style.display = 'none';
+                menu.style.display = 'flex';
+                panel.style.animation = 'menuEntry 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards';
+            }, 500);
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

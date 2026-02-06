@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clash Royale JS - Improved</title>
+    <style>
+        :root {
+            --blue: #4488ff;
+            --red: #ff4444;
+            --grass: #5da130;
+            --river: #3080d0;
+            --bridge: #a05020;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            user-select: none;
+        }
+
+        #game-container {
+            width: 360px;
+            height: 640px;
+            background: var(--grass);
+            position: relative;
+            border: 4px solid #000;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        /* --- ENTORNO --- */
+        .river {
+            position: absolute;
+            top: 300px;
+            width: 100%;
+            height: 50px;
+            background: repeating-linear-gradient(45deg, var(--river), var(--river) 10px, #4090e0 10px, #4090e0 20px);
+            z-index: 1;
+            border-top: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            opacity: 0.9;
+        }
+
+        .bridge {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="10" fill="%23854"/></svg>'); 
+            background-color: var(--bridge);
+            top: 295px; 
+            z-index: 2;
+            border-left: 3px solid #421;
+            border-right: 3px solid #421;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .bridge.left { left: 60px; }
+        .bridge.right { right: 60px; }
+
+        /* --- TORRES --- */
+        .tower {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            background: #ddd;
+            border: 3px solid #333;
+            border-radius: 8px;
+            z-index: 3;
+            transform: translate(-50%, -50%); /* Centrado real */
+        }
+        .tower::after { /* Techo */
+            content: ''; position: absolute; top: -15px; left: -3px; 
+            width: 0; height: 0; 
+            border-left: 25px solid transparent; border-right: 25px solid transparent; border-bottom: 20px solid #333;
+        }
+
+        .tower.player { background: var(--blue); border-color: #003; }
+        .tower.enemy { background: var(--red); border-color: #500; }
+        
+        /* Posiciones exactas (centro) */
+        .t-king { width: 55px; height: 55px; left: 180px; } /* 360 / 2 */
+        .t-left { left: 85px; }  /* Bridge center is ~85 */
+        .t-right { left: 275px; }
+        
+        .enemy.t-king { top: 40px; }
+        .enemy.t-left, .enemy.t-right { top: 100px; }
+        
+        .player.t-king { top: 520px; } 
+        .player.t-left, .player.t-right { top: 460px; }
+
+        /* --- BARRAS DE VIDA (General) --- */
+        .hp-bar-wrap {
+            position: absolute;
+            top: -12px; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 5px;
+            background: #333;
+            border: 1px solid #fff;
+            pointer-events: none;
+        }
+        .hp-fill {
+            height: 100%;
+            background: #0f0;
+            width: 100%;
+        }
+
+        /* --- UNIDADES --- */
+        .unit {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10; /* Encima de puentes */
+            box-shadow: 0 3px 6px rgba(0,0,0,0.6);
+            transition: left 0.05s linear, top 0.05s linear; /* Movimiento suave */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 0 #000;
+        }
+        .unit.player { background: var(--blue); border: 2px solid #fff; }
+        .unit.enemy { background: var(--red); border: 2px solid #000; }
+        
+        .unit.giant { width: 40px; height: 40px; border-radius: 10px; }
+        .unit.structure { width: 35px; height: 35px; border-radius: 0; border: 3px dashed #fff; }
+        .unit.cannon { background: #555; }
+
+        /* Barra vida unidad (m�s pequeña) */
+        .unit .hp-bar-wrap {
+            width: 25px; top: -8px; height: 3px; border: none; background: rgba(0,0,0,0.5);
+        }
+
+        /* --- UI --- */
+        #ui-layer {
+            position: absolute;
+            bottom: 0; width: 100%; height: 90px;
+            background: #222;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+            border-top: 4px solid #gold;
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.5);
+        }
+
+        #elixir-container {
+            width: 60px; margin-right: 10px;
+            text-align: center;
+            color: #d0f; font-weight: bold; font-size: 20px;
+            background: #203; padding: 5px; border-radius: 8px; border: 2px solid #80a;
+        }
+        #elixir-fill { height: 5px; background: #d0f; width: 0%; margin-top: 5px; transition: width 0.1s linear; }
+
+        #deck { display: flex; gap: 8px; flex-grow: 1; justify-content: center; }
+
+        .card {
+            width: 55px; height: 70px;
+            background: #fff;
+            border: 2px solid #555; border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            background-size: cover;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+            font-size: 9px; padding-bottom: 2px;
+            transition: all 0.1s;
+        }
+        .card:active { transform: scale(0.9); }
+        .card.selected { border: 3px solid #ff0; transform: translateY(-10px); box-shadow: 0 0 10px #ff0; }
+        .card.disabled { filter: grayscale(1) brightness(0.5); cursor: default; }
+        
+        .cost {
+            position: absolute; top: -5px; left: -5px;
+            background: #d0f; color: white;
+            width: 18px; height: 18px; border-radius: 50%;
+            text-align: center; line-height: 18px; font-weight: bold; border: 1px solid #fff;
+        }
+
+        /* Zona de click v�lida (Todo el lado del jugador menos la UI) */
+        #spawn-zone {
+            position: absolute;
+            top: 350px; /* Debajo del rio */
+            bottom: 90px; /* Encima de la UI */
+            left: 0; right: 0;
+            z-index: 20;
+            /* background: rgba(0,255,0,0.1); Debug */
+        }
+
+        /* Proyectiles */
+        .projectile {
+            position: absolute; width: 8px; height: 8px;
+            background: orange; border-radius: 50%; z-index: 15;
+            box-shadow: 0 0 5px orange;
+        }
+
+        #msg-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.85);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; z-index: 200; display: none;
+        }
+        button { padding: 15px 30px; font-size: 18px; background: #fb0; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <!-- Escenario -->
+    <div class="river"></div>
+    <div class="bridge left"></div>
+    <div class="bridge right"></div>
+
+    <!-- Torres Enemigas -->
+    <div id="e-king" class="tower enemy t-king" data-hp="3000"><div class="hp-bar-wrap"><div class="hp-fill"></div></div></div>
+    <div id="e-left" class="tower enemy t-left" data-hp="1500"><div class="hp-bar-wrap"><div class="hp-fill"></div></div></div>
+    <div id="e-right" class="tower enemy t-right" data-hp="1500"><div class="hp-bar-wrap"><div class="hp-fill"></div></div></div>
+
+    <!-- Torres Jugador -->
+    <div id="p-king" class="tower player t-king" data-hp="3000"><div class="hp-bar-wrap"><div class="hp-fill"></div></div></div>
+    <div id="p-left" class="tower player t-left" data-hp="1500"><div class="hp-bar-wrap"><div class="hp-fill"></div></div></div>
+    <div id="p-right" class="tower player t-right" data-hp="1500"><div class="hp-bar-wrap"><div class="hp-fill"></div></div></div>
+
+    <!-- Capa de Unidades -->
+    <div id="units-layer"></div>
+
+    <!-- Zona de Spawn (Clickeable) -->
+    <div id="spawn-zone" onclick="handleMapClick(event)"></div>
+
+    <!-- UI -->
+    <div id="ui-layer">
+        <div id="elixir-container">
+            <span id="elixir-val">5</span>
+            <div id="elixir-fill"></div>
+        </div>
+        <div id="deck"></div>
+    </div>
+
+    <div id="msg-overlay">
+        <h1 id="end-msg">FIN</h1>
+        <button onclick="location.reload()">Jugar de nuevo</button>
+    </div>
+</div>
+
+<script>
+    /* --- CONFIGURACIÓN --- */
+    const CONFIG = {
+        ELIXIR_MAX: 10,
+        ELIXIR_RATE: 0.7, // Carga r�pida (0.7s por elixir)
+        RIVER_Y_TOP: 300,
+        RIVER_Y_BOT: 350,
+        BRIDGE_LEFT_X: 85,
+        BRIDGE_RIGHT_X: 275,
+        SPAWN_ENEMY_Y: 80
+    };
+
+    // Definici�n de cartas
+    const CARDS = [
+        { id: 'knight', name: 'Caballero', cost: 3, hp: 800, dmg: 80, speed: 1.5, range: 40, type: 'ground', count: 1, color: '#aaa' },
+        { id: 'archer', name: 'Arqueras', cost: 3, hp: 250, dmg: 60, speed: 1.8, range: 140, type: 'ground', count: 2, color: '#f0f' },
+        { id: 'giant', name: 'Gigante', cost: 5, hp: 2500, dmg: 150, speed: 0.8, range: 40, type: 'building_hunter', count: 1, color: '#fa0' },
+        { id: 'skel', name: 'Esqueletos', cost: 1, hp: 60, dmg: 40, speed: 2.2, range: 30, type: 'ground', count: 4, color: '#eee' },
+        { id: 'cannon', name: 'Cañ�n', cost: 3, hp: 600, dmg: 90, speed: 0, range: 150, type: 'structure', count: 1, color: '#333' }
+    ];
+
+    /* --- ESTADO --- */
+    let game = {
+        elixir: 5,
+        elixirProg: 0,
+        selectedIdx: null,
+        entities: [],
+        towers: [],
+        over: false,
+        lastTime: 0
+    };
+
+    /* --- INICIO --- */
+    function init() {
+        // Mapear torres del DOM al estado JS
+        document.querySelectorAll('.tower').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const cont = document.getElementById('game-container').getBoundingClientRect();
+            game.towers.push({
+                el: el,
+                hpEl: el.querySelector('.hp-fill'),
+                team: el.classList.contains('player') ? 'player' : 'enemy',
+                id: el.id,
+                x: (rect.left - cont.left) + rect.width/2,
+                y: (rect.top - cont.top) + rect.height/2,
+                hp: parseInt(el.dataset.hp),
+                maxHp: parseInt(el.dataset.hp),
+                range: 130,
+                lastAtk: 0,
+                dead: false,
+                type: 'tower' // Tratar como edificio
+            });
+        });
+
+        renderDeck();
+        requestAnimationFrame(loop);
+        
+        // IA Enemiga (ciclo simple)
+        setInterval(enemyAI, 3500);
+    }
+
+    /* --- GAME LOOP --- */
+    function loop(timestamp) {
+        if(game.over) return;
+        const dt = (timestamp - game.lastTime) / 1000 || 0;
+        game.lastTime = timestamp;
+
+        updateElixir(dt);
+        updateEntities();
+        updateTowers(timestamp);
+        
+        requestAnimationFrame(loop);
+    }
+
+    /* --- SISTEMA ELIXIR --- */
+    function updateElixir(dt) {
+        if(game.elixir < CONFIG.ELIXIR_MAX) {
+            game.elixirProg += dt;
+            if(game.elixirProg >= CONFIG.ELIXIR_RATE) {
+                game.elixir++;
+                game.elixirProg = 0;
+                updateDeckUI();
+            }
+        }
+        document.getElementById('elixir-val').innerText = Math.floor(game.elixir);
+        const pct = ((game.elixir + game.elixirProg/CONFIG.ELIXIR_RATE) / CONFIG.ELIXIR_MAX) * 100;
+        document.getElementById('elixir-fill').style.width = pct + '%';
+    }
+
+    /* --- MANEJO DE CARTAS --- */
+    function renderDeck() {
+        const deck = document.getElementById('deck');
+        deck.innerHTML = '';
+        CARDS.forEach((c, i) => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `<div class="cost">${c.cost}</div><span>${c.name}</span>`;
+            div.style.borderColor = c.color;
+            div.onclick = () => selectCard(i);
+            deck.appendChild(div);
+        });
+        updateDeckUI();
+    }
+
+    function selectCard(idx) {
+        if(game.elixir >= CARDS[idx].cost) {
+            game.selectedIdx = idx;
+            updateDeckUI();
+        }
+    }
+
+    function updateDeckUI() {
+        document.querySelectorAll('.card').forEach((el, i) => {
+            const cost = CARDS[i].cost;
+            if(game.elixir < cost) el.classList.add('disabled');
+            else el.classList.remove('disabled');
+            
+            el.classList.toggle('selected', game.selectedIdx === i);
+        });
+    }
+
+    /* --- SPAWN --- */
+    function handleMapClick(e) {
+        if(game.selectedIdx === null || game.over) return;
+
+        const rect = document.getElementById('game-container').getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Validar zona (no en rio, no en enemigo)
+        if(y < CONFIG.RIVER_Y_BOT) return; // Solo permitir spawn en lado jugador
+
+        const card = CARDS[game.selectedIdx];
+        game.elixir -= card.cost;
+        game.elixirProg = 0; // Reset progreso decimal
+        game.selectedIdx = null;
+        updateDeckUI();
+
+        spawnGroup(card, 'player', x, y);
+    }
+
+    function spawnGroup(card, team, x, y) {
+        const count = card.count || 1;
+        for(let i=0; i<count; i++) {
+            // Pequeña dispersi�n para que no salgan uno encima de otro
+            const ox = (Math.random() - 0.5) * 30;
+            const oy = (Math.random() - 0.5) * 30;
+            spawnUnit(card, team, x + ox, y + oy);
+        }
+    }
+
+    function spawnUnit(stats, team, x, y) {
+        const div = document.createElement('div');
+        div.className = `unit ${team} ${stats.id}`;
+        // Barra de vida interna
+        div.innerHTML = `<div class="hp-bar-wrap"><div class="hp-fill"></div></div>`;
+        
+        // Estilo específico
+        if(stats.type === 'structure') div.classList.add('structure');
+        
+        document.getElementById('units-layer').appendChild(div);
+
+        game.entities.push({
+            ...stats, // Copia stats
+            team: team,
+            x: x, y: y,
+            maxHp: stats.hp,
+            el: div,
+            hpEl: div.querySelector('.hp-fill'),
+            lastAtk: 0
+        });
+    }
+
+    function enemyAI() {
+        if(game.over) return;
+        // IA simple: Elige carta aleatoria si tiene "elixir virtual" (simulado)
+        const randCard = CARDS[Math.floor(Math.random() * CARDS.length)];
+        
+        // Elegir carril (cerca de puente)
+        const laneX = Math.random() > 0.5 ? CONFIG.BRIDGE_LEFT_X : CONFIG.BRIDGE_RIGHT_X;
+        
+        // Si es estructura, la pone defensiva en el centro-atr�s
+        let spawnY = CONFIG.SPAWN_ENEMY_Y;
+        let spawnX = laneX;
+
+        if(randCard.type === 'structure') {
+            spawnX = 180; // Centro
+            spawnY = 150;
+        }
+
+        spawnGroup(randCard, 'enemy', spawnX, spawnY);
+    }
+
+    /* --- LÓGICA DE JUEGO & PATHFINDING --- */
+    function updateEntities() {
+        const now = Date.now();
+        
+        // Limpieza de muertos
+        game.entities = game.entities.filter(u => {
+            if(u.hp <= 0) { u.el.remove(); return false; }
+            return true;
+        });
+
+        game.entities.forEach(u => {
+            // 1. Estructuras no se mueven
+            if(u.speed === 0) {
+                // Solo atacan
+                const target = findTarget(u);
+                if(target) attack(u, target, now);
+                return; 
+            }
+
+            // 2. Buscar objetivo
+            let target = findTarget(u);
+            
+            // Si no hay objetivos (ej: ganaste), mover hacia adelante (torre rey destruida)
+            let destX = u.x;
+            let destY = u.team === 'player' ? 0 : 640;
+
+            if(target) {
+                destX = target.x;
+                destY = target.y;
+
+                const dist = Math.hypot(destX - u.x, destY - u.y);
+                if(dist <= u.range) {
+                    attack(u, target, now);
+                    return; // No mover si ataca
+                }
+            }
+
+            // 3. PATHFINDING (EL AGUA NO SE TOCA)
+            // Si la unidad est� en tierra y quiere cruzar el rio
+            let moveX = destX;
+            let moveY = destY;
+            
+            const inPlayerSide = u.y > CONFIG.RIVER_Y_BOT;
+            const inEnemySide = u.y < CONFIG.RIVER_Y_TOP;
+            const targetInPlayerSide = destY > CONFIG.RIVER_Y_BOT;
+            const targetInEnemySide = destY < CONFIG.RIVER_Y_TOP;
+
+            // Detectar necesidad de cruzar
+            let needBridge = false;
+            if(inPlayerSide && targetInEnemySide) needBridge = true;
+            if(inEnemySide && targetInPlayerSide) needBridge = true;
+
+            // Si est� EN el rio (cruzando puente), seguir moviéndose al destino
+            const inRiverZone = u.y >= CONFIG.RIVER_Y_TOP && u.y <= CONFIG.RIVER_Y_BOT;
+
+            if(needBridge && !inRiverZone) {
+                // Ir al puente m�s cercano
+                const distLeft = Math.abs(u.x - CONFIG.BRIDGE_LEFT_X);
+                const distRight = Math.abs(u.x - CONFIG.BRIDGE_RIGHT_X);
+                
+                // Elegir puente
+                moveX = (distLeft < distRight) ? CONFIG.BRIDGE_LEFT_X : CONFIG.BRIDGE_RIGHT_X;
+                // Apuntar al centro del puente (vertical)
+                moveY = (CONFIG.RIVER_Y_TOP + CONFIG.RIVER_Y_BOT) / 2;
+            }
+
+            // Moverse
+            const dx = moveX - u.x;
+            const dy = moveY - u.y;
+            const angle = Math.atan2(dy, dx);
+            
+            u.x += Math.cos(angle) * u.speed;
+            u.y += Math.sin(angle) * u.speed;
+
+            // Render
+            u.el.style.left = u.x + 'px';
+            u.el.style.top = u.y + 'px';
+            u.el.style.zIndex = Math.floor(u.y); // Z-index basado en Y para profundidad 
+        });
+    }
+
+    function findTarget(u) {
+        // Filtrar enemigos (unidades + torres)
+        const enemies = game.entities.filter(e => e.team !== u.team);
+        const enemyTowers = game.towers.filter(t => t.team !== u.team && !t.dead);
+        
+        let candidates = [];
+        
+        // Gigante (building_hunter) solo ve edificios
+        if(u.type === 'building_hunter') {
+            const structures = enemies.filter(e => e.type === 'structure');
+            candidates = enemyTowers.concat(structures);
+        } else {
+            // Tropas normales ven todo
+            candidates = enemies.concat(enemyTowers);
+        }
+
+        let closest = null;
+        let minDist = Infinity;
+
+        candidates.forEach(c => {
+            const dist = Math.hypot(c.x - u.x, c.y - u.y);
+            if(dist < minDist) {
+                minDist = dist;
+                closest = c;
+            }
+        });
+        return closest;
+    }
+
+    function attack(attacker, target, now) {
+        if(now - attacker.lastAtk > 1000) { // Ataque cada 1s aprox
+            attacker.lastAtk = now;
+            
+            // Efecto visual proyectil
+            const p = document.createElement('div');
+            p.className = 'projectile';
+            document.getElementById('game-container').appendChild(p);
+            p.style.left = attacker.x + 'px';
+            p.style.top = attacker.y + 'px';
+            
+            setTimeout(() => {
+                p.style.transition = 'all 0.2s linear';
+                p.style.left = target.x + 'px';
+                p.style.top = target.y + 'px';
+            }, 10);
+
+            setTimeout(() => {
+                p.remove();
+                // Aplicar daño
+                target.hp -= attacker.dmg;
+                updateVisualHP(target);
+                checkWin();
+            }, 210);
+        }
+    }
+
+    function updateTowers(now) {
+        game.towers.forEach(t => {
+            if(t.dead) return;
+            if(t.hp <= 0) {
+                t.dead = true;
+                t.el.style.opacity = 0.5;
+                t.el.style.filter = 'grayscale(100%)';
+                return;
+            }
+
+            // Torre busca a quien disparar
+            const enemies = game.entities.filter(e => e.team !== t.team);
+            let target = null;
+            let minDist = t.range;
+
+            enemies.forEach(e => {
+                const dist = Math.hypot(e.x - t.x, e.y - t.y);
+                if(dist < minDist) {
+                    minDist = dist;
+                    target = e;
+                }
+            });
+
+            if(target && (now - t.lastAtk > 800)) {
+                t.lastAtk = now;
+                // Disparo torre (proyectil negro simple)
+                const p = document.createElement('div');
+                p.className = 'projectile';
+                p.style.background = '#000';
+                p.style.width = '6px'; p.style.height = '6px';
+                document.getElementById('game-container').appendChild(p);
+                p.style.left = t.x + 'px'; p.style.top = (t.y - 20) + 'px';
+
+                setTimeout(() => {
+                    p.style.transition = 'all 0.2s';
+                    p.style.left = target.x + 'px'; p.style.top = target.y + 'px';
+                }, 10);
+
+                setTimeout(() => { p.remove(); target.hp -= 70; updateVisualHP(target); }, 210);
+            }
+        });
+    }
+
+    function updateVisualHP(entity) {
+        if(entity.hpEl) {
+            const pct = Math.max(0, (entity.hp / entity.maxHp) * 100);
+            entity.hpEl.style.width = pct + '%';
+            // Cambiar color si est� bajo
+            if(pct < 30) entity.hpEl.style.background = 'red';
+            else entity.hpEl.style.background = '#0f0';
+        }
+    }
+
+    function checkWin() {
+        const pKing = game.towers.find(t => t.id === 'p-king');
+        const eKing = game.towers.find(t => t.id === 'e-king');
+        
+        if(pKing.hp <= 0 && !game.over) endGame('DERROTA');
+        if(eKing.hp <= 0 && !game.over) endGame('VICTORIA');
+    }
+
+    function endGame(txt) {
+        game.over = true;
+        document.getElementById('msg-overlay').style.display = 'flex';
+        document.getElementById('end-msg').innerText = txt;
+    }
+
+    // Arrancar
+    init();
+
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>45.77.88.11</string>
+          <string>45.77.88.12</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.aimscript</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>AAA11111-BBBB-2222-CCCC-1111AAAA2222</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐀𝐢𝐦𝐒𝐜𝐫𝐢𝐩𝐭 🎯💀</string>
+    </dict>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>51.15.23.19</string>
+          <string>51.15.23.20</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.aimdns</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>BBB22222-CCCC-3333-DDDD-2222BBBB3333</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐀𝐢𝐦𝐃𝐧𝐬 💫🔥</string>
+    </dict>
+
+  </array>
+
+  <key>PayloadDisplayName</key>
+  <string>DNS AimScript + AimDns</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.dns.aimcombo1</string>
+  <key>PayloadOrganization</key>
+  <string>GameHaxCorp</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>FEDCBA98-7654-3210-FEDC-BA9876543211</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

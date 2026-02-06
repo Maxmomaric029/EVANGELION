@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WE BACK? - Full Panel</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --vampire-black: #050505;
+            --red-midnight: #8B0000;
+            --bright-red: #ff1a1a;
+            --text-main: #e0e0e0;
+            --text-muted: #555;
+            --glow: 0 0 20px rgba(139, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; user-select: none; margin: 0; padding: 0; outline: none; }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            background: url('https://i.pinimg.com/736x/9b/8b/f4/9b8bf4dfeff706ee7e6f1df6681b5c83.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* --- NOTIFICACIÓN --- */
+        .notif {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: var(--vampire-black); border: 1px solid var(--red-midnight);
+            color: white; padding: 15px 35px; border-radius: 50px;
+            box-shadow: 0 0 25px var(--red-midnight); font-weight: bold;
+            transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000;
+        }
+        .notif.show { top: 30px; }
+
+        /* --- PANEL PRINCIPAL --- */
+        .injector-card {
+            width: 400px;
+            background-color: rgba(5, 5, 5, 0.97);
+            border: 1px solid #222;
+            border-radius: 35px; 
+            padding: 30px;
+            box-shadow: 0 15px 50px #000, var(--glow);
+            backdrop-filter: blur(10px);
+            max-height: 90vh;
+            overflow-y: auto; /* Por si el menú crece mucho */
+        }
+
+        /* Scrollbar personalizado para el panel */
+        .injector-card::-webkit-scrollbar { width: 4px; }
+        .injector-card::-webkit-scrollbar-thumb { background: var(--red-midnight); border-radius: 10px; }
+
+        h2 {
+            color: #fff; text-align: center; font-weight: 900; font-style: italic;
+            font-size: 2.2rem; text-shadow: 0 0 15px var(--red-midnight);
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 2px; margin: 15px 0 10px 10px; border-left: 2px solid var(--red-midnight);
+            padding-left: 8px;
+        }
+
+        /* --- FILAS DE OPCIONES --- */
+        .option-row {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; padding: 5px 10px; border-radius: 15px;
+            transition: 0.3s;
+        }
+        .option-row:hover { background: rgba(255,255,255,0.02); }
+
+        .label-group { display: flex; align-items: center; gap: 12px; color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
+
+        .icon-circle {
+            width: 36px; height: 36px; background: #000;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 50%; border: 1px solid #333; color: var(--red-midnight);
+        }
+
+        /* --- SWITCH REDONDO --- */
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #1a1a1a; transition: .4s; border-radius: 34px; border: 1px solid #333;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 14px; width: 14px;
+            left: 4px; bottom: 3px; background-color: #444; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #400000; border-color: var(--red-midnight); }
+        input:checked + .slider:before { 
+            transform: translateX(20px); background-color: var(--bright-red); 
+            box-shadow: 0 0 10px var(--bright-red);
+        }
+
+        /* --- BOTÓN CONNECT --- */
+        .connect-btn {
+            width: 100%; padding: 18px; margin-top: 20px;
+            background: transparent; border: 2px solid var(--red-midnight);
+            color: white; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 3px; border-radius: 50px; cursor: pointer;
+            transition: 0.4s;
+        }
+        .connect-btn:hover { background: var(--red-midnight); box-shadow: 0 0 25px var(--red-midnight); }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: none;
+            justify-content: center; align-items: center; z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            background: #050505; padding: 40px; border-radius: 30px;
+            border: 1px solid var(--red-midnight); text-align: center; width: 340px;
+            box-shadow: 0 0 30px var(--red-midnight);
+        }
+        .game-opt {
+            display: block; width: 100%; padding: 16px; margin: 12px 0;
+            background: #111; border: 1px solid #333; color: white;
+            border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+        .game-opt:hover { border-color: var(--bright-red); background: #200000; transform: scale(1.02); }
+    </style>
+</head>
+<body>
+
+    <div id="notification" class="notif">👿 SensiByflockk!</div>
+
+    <div class="injector-card">
+        <h2>WE BACK?</h2>
+
+        <div class="section-title">Ajustes Base (Legit)</div>
+        
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-file-code"></i></div>
+                <span>Regedit Vip</span>
+            </div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-arrows-alt-v"></i></div>
+                <span>Sensibilidad Y+</span>
+            </div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-bullseye"></i></div>
+                <span>Aim Suave</span>
+            </div>
+            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-cube"></i></div>
+                <span>Macro Gel</span>
+            </div>
+            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+
+        <div class="section-title">Ajustes Xit (PVP)</div>
+
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-robot"></i></div>
+                <span>Sensi By white444 </span>
+            </div>
+            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-arrow-up"></i></div>
+                <span>Puxada Suave</span>
+            </div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-redo"></i></div>
+                <span>Anti-Recuo</span>
+            </div>
+            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+
+        <div class="option-row">
+            <div class="label-group">
+                <div class="icon-circle"><i class="fas fa-shield-virus"></i></div>
+                <span>Ignorar fov</span>
+            </div>
+            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+
+        <button class="connect-btn" onclick="openModal()">CONNECT</button>
+    </div>
+
+    <div id="gameModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="color:white; margin-bottom:20px; font-style:italic;">SYSTEM READY</h3>
+            <button class="game-opt" onclick="launch('ff')">FREE FIRE</button>
+            <button class="game-opt" onclick="launch('bs')">BLOODSTRIKE</button>
+            <p style="color:#444; margin-top:15px; cursor:pointer; font-size:0.8rem;" onclick="closeModal()">CANCELAR</p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('gameModal');
+        const notif = document.getElementById('notification');
+
+        function openModal() { modal.style.display = 'flex'; }
+        function closeModal() { modal.style.display = 'none'; }
+
+        function launch(game) {
+            notif.classList.add('show');
+            closeModal();
+
+            setTimeout(() => {
+                if(game === 'ff') {
+                    window.location.href = "https://play.google.com/store/apps/details?id=com.dts.freefireth";
+                } else {
+                    window.location.href = "https://www.blood-strike.com/";
+                }
+            }, 2000);
+
+            // Ocultar notificaci�n después
+            setTimeout(() => { notif.classList.remove('show'); }, 5000);
+        }
+    </script>
+
+</body>
+</html>
+
+

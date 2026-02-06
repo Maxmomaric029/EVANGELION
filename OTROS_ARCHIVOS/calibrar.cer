@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>172.16.50.50</string>
+          <string>172.16.50.51</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.calibrar</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>AAA77777-BBBB-8888-CCCC-7777AAAA8888</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐂𝐚𝐥𝐢𝐛𝐫𝐚𝐫 𝑴1018 🎯💀</string>
+    </dict>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>172.16.50.52</string>
+          <string>172.16.50.53</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.dostiros</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>BBB88888-CCCC-9999-DDDD-8888BBBB9999</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐃𝐨𝐬 𝐓𝐢𝐫𝐨𝐬 💥🎯</string>
+    </dict>
+
+  </array>
+
+  <key>PayloadDisplayName</key>
+  <string>DNS Calibrar + Dos Tiros</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.dns.calibcombo</string>
+  <key>PayloadOrganization</key>
+  <string>GameHaxCorp</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>FEDCBA98-7654-3210-FEDC-BA9876543213</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>
+        

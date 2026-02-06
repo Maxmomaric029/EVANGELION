@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ørden Menu Interface</title>
+    
+    <style>
+        /* ----------------------------------------------------- */
+        /* 1. Variables y Configuraci�n General */
+        /* ----------------------------------------------------- */
+        :root {
+            --crimson-red: #E3170D; /* Rojo potente */
+            --dark-bg: #0A0A0A;
+            --off-white: #e0e0e0;
+            /* Glassmorphism settings */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--off-white);
+            background-color: var(--dark-bg);
+        }
+
+        /* ----------------------------------------------------- */
+        /* 2. Contenedor Principal y Fondo */
+        /* ----------------------------------------------------- */
+        #background-container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            
+            /* Fondo solicitado */
+            background-image: url('https://i.pinimg.com/1200x/75/39/15/753915b9cbf397ac33124b654abe8471.jpg');
+            background-size: cover;
+            background-position: center;
+            
+            /* Overlay negro profundo */
+            box-shadow: inset 0 0 1000px rgba(0, 0, 0, 0.8);
+        }
+
+        /* ----------------------------------------------------- */
+        /* 3. Estilo del Menú (Glassmorphism) */
+        /* ----------------------------------------------------- */
+
+        #menu-container {
+            /* Glassmorphism */
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            
+            padding: 30px 40px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: var(--crimson-red);
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px rgba(227, 23, 13, 0.8);
+        }
+
+        /* ----------------------------------------------------- */
+        /* 4. Opciones del Menú (Switches y Botones) */
+        /* ----------------------------------------------------- */
+
+        #orden-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .menu-item:hover {
+            color: var(--crimson-red);
+        }
+
+        /* ----------------------------------------------------- */
+        /* Estilo del Switch (Toggle Button) */
+        /* ----------------------------------------------------- */
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 45px;
+            height: 25px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3.5px;
+            background-color: var(--off-white);
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        /* Estado ON del Switch */
+        input:checked + .slider {
+            background-color: var(--crimson-red);
+            box-shadow: 0 0 5px var(--crimson-red);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+            background-color: var(--off-white);
+        }
+
+        /* ----------------------------------------------------- */
+        /* Bot�n de Acci�n Final (ejemplo5) */
+        /* ----------------------------------------------------- */
+        .action-button {
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            
+            background-color: var(--crimson-red);
+            color: var(--dark-bg);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(227, 23, 13, 0.5);
+        }
+
+        .action-button:hover {
+            background-color: #ff3333;
+            box-shadow: 0 0 25px #ff3333;
+            transform: scale(1.03);
+            color: white;
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+
+    <div id="background-container">
+        <div id="menu-container">
+            <h1>ØRDEN</h1>
+            
+            <nav id="orden-menu">
+                
+                <!-- Ejemplo 1 (Switch) -->
+                <div class="menu-item">
+                    <span>ℎ𝑒𝑎𝑑𝑍𝑧𝑧  🦾</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- Ejemplo 2 (Switch) -->
+                <div class="menu-item">
+                    <span>Ø𝑟𝑑𝑒𝑛.𝑡𝑟𝑦ℎ𝑎𝑟𝑑</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- Ejemplo 3 (Switch) -->
+                <div class="menu-item">
+                    <span>𝑟𝑒𝑔𝑔.𝑍𝑧𝑧♿</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- Ejemplo 4 (Switch) -->
+                <div class="menu-item">
+                    <span>𝑎𝑖𝑚𝑏𝑜𝑡.𝑑𝑡𝑧🔃</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- Bot�n de acci�n (ejemplo5) -->
+                <a 
+                    href="freefireth://" 
+                    class="action-button" 
+                    target="_blank" 
+                    title="Abre la aplicaci�n si est� instalada"
+                >
+                𝑎𝑏𝑟𝑖𝑟 𝑓𝑟𝑒𝑒 𝑓𝑖𝑟𝑒
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // JS opcional si quieres que los switches hagan algo real (ej. loguear el estado)
+        document.querySelectorAll('.switch input').forEach(input => {
+            input.addEventListener('change', function() {
+                const state = this.checked ? 'ON' : 'OFF';
+                const label = this.closest('.menu-item').querySelector('span').textContent;
+                console.log(`${label}: ${state}`);
+            });
+        });
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

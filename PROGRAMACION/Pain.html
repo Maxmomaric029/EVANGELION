@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PAIN 👁‍🗨</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sekuya&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #212842;
+            --accent-color: #F0E7D5;
+            --island-bg: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sekuya', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('https://i.pinimg.com/originals/98/9c/dd/989cdd572beea3f96451a16c92c60798.gif') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        /* --- Dynamic Island --- */
+        .dynamic-island {
+            position: fixed;
+            top: 20px;
+            width: 120px;
+            height: 35px;
+            background: var(--island-bg);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .dynamic-island.active {
+            width: 280px;
+            height: 50px;
+            font-size: 14px;
+            padding: 0 20px;
+        }
+
+        /* --- Glow Animado --- */
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(240, 231, 213, 0.2), 0 10px 40px rgba(0,0,0,0.5); }
+            50% { box-shadow: 0 0 20px rgba(240, 231, 213, 0.4), 0 10px 40px rgba(0,0,0,0.5); }
+            100% { box-shadow: 0 0 5px rgba(240, 231, 213, 0.2), 0 10px 40px rgba(0,0,0,0.5); }
+        }
+
+        .menu-container {
+            background-color: var(--bg-color);
+            width: 90%;
+            max-width: 360px;
+            padding: 20px;
+            border-radius: 24px;
+            border: 1px solid rgba(240, 231, 213, 0.15);
+            animation: glow 3s infinite ease-in-out;
+            position: relative;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+
+        /* --- Tabs --- */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(240, 231, 213, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            opacity: 0.5;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .tab-content.active { display: block; }
+
+        /* Scrollbar Estilo */
+        .tab-content::-webkit-scrollbar { width: 3px; }
+        .tab-content::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(240, 231, 213, 0.05);
+        }
+
+        .info { display: flex; align-items: center; color: var(--accent-color); }
+        .info i { font-size: 1.1rem; margin-right: 12px; width: 20px; text-align: center; }
+        .info span { font-size: 0.9rem; }
+
+        /* --- Switch --- */
+        .switch { position: relative; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #313a5e; transition: .3s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+            background-color: var(--accent-color); transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #4e5d94; }
+        input:checked + .slider:before { transform: translateX(22px); background-color: #fff; }
+
+        .ff-button {
+            display: block; width: 100%; margin-top: 20px; padding: 12px;
+            background-color: var(--accent-color); color: var(--bg-color);
+            text-align: center; text-decoration: none; border-radius: 12px;
+            font-weight: bold; font-size: 1rem; transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dynamic-island" id="island">
+        <span id="island-text"></span>
+    </div>
+
+    <div class="menu-container">
+        <h2>PAIN 👁‍🗨</h2>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('aim')">AIM</button>
+            <button class="tab-btn" onclick="openTab('system')">SYSTEM</button>
+        </div>
+
+        <div id="aim" class="tab-content active">
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-crosshairs"></i><span>AUTO-HEADSHOT 98%</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('AUTO-HEADSHOT', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-bullseye"></i><span>Aim Tracking</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('Aim Tracking', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-shuriken"></i><span>Aimlock</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('Aimlock', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-scroll"></i><span>FULLY AIMBOT</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('FULLY AIMBOT', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-arrows-alt"></i><span>No Recoil 2.0</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('No Recoil', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-expand-arrows-alt"></i><span>Sensi de XY</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('Sensi XY', this.checked)"><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <div id="system" class="tab-content">
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-user-ninja"></i><span>FULL REGEDiT</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('FULL REGEDiT', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-ghost"></i><span>Sensi Red focada</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('Sensi Red focada', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-dragon"></i><span>Sensi DO DEIMOS</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('Sensi DO DEIMOS', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-bolt"></i><span>FPS UNLOCK 120</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('FPS UNLOCK', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-fingerprint"></i><span>Ultra Touch</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('Ultra Touch', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-shield-halved"></i><span>Lag Reduce V3</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('Lag Reduce', this.checked)"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <div class="info"><i class="fas fa-microchip"></i><span>CPU Turbo Boost</span></div>
+                <label class="switch"><input type="checkbox" onchange="notify('CPU Turbo', this.checked)"><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <a href="freefireth://" class="ff-button">ABRIR FREE FIRE <i class="fas fa-play"></i></a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        let timeout;
+        function notify(name, status) {
+            const island = document.getElementById('island');
+            const text = document.getElementById('island-text');
+            const state = status ? "Activada 👁‍🗨" : "Desactivada";
+            clearTimeout(timeout);
+            text.innerHTML = `${name} ${state}`;
+            island.classList.add('active');
+            timeout = setTimeout(() => { island.classList.remove('active'); }, 3000);
+        }
+    </script>
+</body>
+</html>
+
+

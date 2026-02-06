@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>8.8.8.8</string>
+          <string>4.2.2.2</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.puxadainsana</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>AABBCCDD-1122-3344-5566-77889900AABB</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🚀 𝐏𝐮𝐱𝐚𝐝𝐚 𝐈𝐧𝐬𝐚𝐧𝐚 𝐕𝟏𝟎</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>77.88.8.8</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.grudartudo</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>CCDDEEFF-1122-3344-5566-AABBCCDDEEFF</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🩸 𝐆𝐫𝐮𝐝𝐚𝐫 𝐓𝐮𝐝𝐨 𝐇𝐒</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>👺 𝐗𝐢𝐭𝐚𝐝𝐨 𝐀𝐩𝐞𝐥ã𝐨 𝐕𝟏𝟎</string>
+  <key>PayloadIdentifier</key>
+  <string>com.bloodie.profile.apelao</string>
+  <key>PayloadOrganization</key>
+  <string>Bloodie</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>F1E2D3C4-B5A6-4738-9201-BCDEFA987654</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

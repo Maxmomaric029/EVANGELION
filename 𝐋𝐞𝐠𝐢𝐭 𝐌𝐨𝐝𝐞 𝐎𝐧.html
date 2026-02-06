@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XIT MENU FREE FIRE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+Math&family=UnifrakturMaguntia&display=swap');
+
+        :root {
+            --primary-color: rgb(253, 63, 146);
+            --secondary-color: rgb(0, 49, 83);
+            --text-color: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.75);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://i.pinimg.com/736x/19/73/1a/19731ac8160d962978824dfcc5bd04de.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Overlay for better readability */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,49,83,0.6) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: 1;
+        }
+
+        .menu-container {
+            position: relative;
+            z-index: 2;
+            width: 800px;
+            height: 500px;
+            background: rgba(10, 10, 20, 0.85);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--primary-color), 0 0 50px var(--secondary-color);
+            display: flex;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.5);
+            border-right: 1px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .profile h1 {
+            margin: 0;
+            font-family: 'UnifrakturMaguntia', cursive; /* Newspaper/Gothic feel */
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .profile p {
+            margin: 5px 0 0;
+            font-size: 0.8rem;
+            color: #ccc;
+            letter-spacing: 2px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 15px 20px;
+            text-align: left;
+            font-family: 'Cinzel', serif; /* Math Serif Bold ish */
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: #fff;
+            background: linear-gradient(90deg, rgba(253, 63, 146, 0.2) 0%, transparent 100%);
+            border-left: 4px solid var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .nav-btn i {
+            font-style: normal;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Checkbox Options Style */
+        .option-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--secondary-color);
+        }
+
+        .option-item input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            margin-right: 15px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-item input[type="checkbox"]:checked {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .option-item input[type="checkbox"]:checked::after {
+            content: '✔';
+            font-size: 14px;
+            color: white;
+        }
+
+        .option-label {
+            font-family: 'Segoe UI', sans-serif; /* Math Sans-serif feel */
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #eee;
+        }
+
+        .icon-prefix {
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color); 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Font Simulation for "Math" styles using CSS filters/weights */
+        .font-math-bold {
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+        .font-math-italic {
+            font-style: italic;
+            font-weight: 700;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="menu-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <h1>𝙀𝙑𝘼</h1>
+                <p>𝘽𝙇𝙊𝙊𝘿𝙄𝙀 𝙄𝙎 𝘽𝘼𝘾𝘾👿</p>
+            </div>
+            
+            <button class="nav-btn active" onclick="showSection('aims')">
+                <i>༒</i> 𝐀𝐈𝐌𝐒
+            </button>
+            <button class="nav-btn" onclick="showSection('optimizacion')">
+                <i>⚙</i> 𝐎𝐏𝐓𝐈𝐌𝐈𝐙𝐀𝐂𝐈𝐎𝐍
+            </button>
+            <button class="nav-btn" onclick="showSection('better')">
+                <i>✦</i> 𝐁𝐄𝐓𝐓𝐄𝐑
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            
+            <!-- AIMS Section -->
+            <div id="aims" class="section active">
+                <div class="section-header">☠ 𝙀𝙑𝘼</div>
+                <div class="option-grid">
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">⸻</span>
+                        <span class="option-label">𝐀𝐢𝐦𝐁𝐨𝐭 𝐋𝐞𝐠𝐢𝐭</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">✧</span>
+                        <span class="option-label">𝐀𝐢𝐦𝐋𝐨𝐜𝐤 𝐇𝐞𝐚𝐝</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">★</span>
+                        <span class="option-label">𝐍𝐨 𝐑𝐞𝐜𝐨𝐢𝐥 𝟏𝟎𝟎%</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">†</span>
+                        <span class="option-label">𝐀𝐮𝐱𝐢𝐥𝐢𝐨 𝐝𝐞 𝐌𝐢𝐫𝐚</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">༒</span>
+                        <span class="option-label">𝐌𝐚𝐠𝐢𝐜 𝐁𝐮𝐥𝐥𝐞𝐭</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">☾</span>
+                        <span class="option-label">𝐀𝐢𝐦 𝐅𝐎𝐕 𝟑𝟔𝟎</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">❤</span>
+                        <span class="option-label">𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐌𝐨𝐛𝐢𝐥𝐞</span>
+                    </label>
+                     <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">➣</span>
+                        <span class="option-label">𝐒𝐞𝐧𝐬𝐢 𝐇𝐚𝐜𝐤</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- OPTIMIZACION Section -->
+            <div id="optimizacion" class="section">
+                <div class="section-header">𝙉𝙂𝙀</div>
+                <div class="option-grid">
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">𓃠</span>
+                        <span class="option-label">𝐋𝐢𝐦𝐩𝐢𝐚𝐫 𝐂𝐚𝐜𝐡𝐞</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">✈</span>
+                        <span class="option-label">𝐙𝐞𝐫𝐨 𝐋𝐚𝐠</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">☼</span>
+                        <span class="option-label">𝐁𝐨𝐨𝐬𝐭 𝐅𝐏𝐒</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">❄</span>
+                        <span class="option-label">𝐂𝐨𝐨𝐥 𝐂𝐏𝐔</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">𝆹𝅥</span>
+                        <span class="option-label">𝐑𝐀𝐌 𝐁𝐨𝐨𝐬𝐭𝐞𝐫</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">♒︎</span>
+                        <span class="option-label">𝐏𝐢𝐧𝐠 𝐒𝐭𝐚𝐛𝐢𝐥𝐢𝐳𝐞𝐫</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- BETTER Section -->
+            <div id="better" class="section">
+                <div class="section-header">𝙇𝙄𝙊𝙉 ✡</div>
+                <div class="option-grid">
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">📁</span>
+                        <span class="option-label">📱 𝐃𝐏𝐈 𝐂𝐡𝐚𝐧𝐠𝐞𝐫</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">♛</span>
+                        <span class="option-label">𝐁𝐲𝐩𝐚𝐬𝐬 𝐕𝐈𝐏</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">⚔</span>
+                        <span class="option-label">𝐇𝐢𝐭𝐛𝐨𝐱 𝐏𝐞𝐬𝐜𝐨ç𝐨</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">👑</span>
+                        <span class="option-label">𝐎 𝐑𝐞𝐢 𝐝𝐨 𝐂𝐚𝐩𝐚</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">❦</span>
+                        <span class="option-label">𝐀𝐢𝐦𝐋𝐨𝐜𝐤 𝐀𝐩𝐞𝐥ã𝐨</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">☔</span>
+                        <span class="option-label">𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐄𝐱𝐭𝐫𝐞𝐦𝐞<</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">☯</span>
+                        <span class="option-label">𝐌𝐨𝐯𝐢𝐦𝐞𝐧𝐭𝐚çã𝐨 𝐅𝐚𝐬𝐭</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox">
+                        <span class="icon-prefix">☢</span>
+                        <span class="option-label">OVER ALL</span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Remove active class from buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Find the button that calls this function (rough approximation)
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

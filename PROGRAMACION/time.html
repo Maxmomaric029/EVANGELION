@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGEDIT ULTIMATE V3 - CRIMSON</title>
+    <style>
+        /* Fuente 'Prompt' para un look t�cnico y 'Sacramento' para el texto elegante */
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;600;800&family=Sacramento&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            /* Fondo solicitado */
+            background: linear-gradient(rgba(20, 0, 0, 0.6), rgba(0, 0, 0, 0.95)), 
+                        url('https://i.pinimg.com/736x/48/af/5c/48af5cb46eb0a1c26dfaff3cee8acddc.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        /* --- INTRODUCCI�N --- */
+        #intro-layer {
+            position: absolute;
+            z-index: 50;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.8s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .media-card {
+            position: relative;
+            width: 280px;
+            height: 400px; /* Altura ajustada para imagen */
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(255, 0, 60, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #000;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: introEnter 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Imagen del intro */
+        .intro-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+        /* Texto "The Best One" */
+        .intro-text-overlay {
+            position: absolute;
+            bottom: 20px;
+            font-family: 'Sacramento', cursive;
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 
+                0 0 10px #ff003c,
+                0 0 20px #ff003c,
+                0 0 40px #ff003c;
+            z-index: 10;
+            transform: rotate(-5deg);
+            animation: floatText 3s ease-in-out infinite;
+        }
+
+        #action-btn {
+            margin-top: 40px;
+            padding: 16px 50px;
+            background: rgba(255, 0, 60, 0.1);
+            border: 1px solid #ff003c;
+            color: #ff003c;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2);
+            text-transform: uppercase;
+        }
+
+        #action-btn.active {
+            opacity: 1;
+            pointer-events: all;
+            animation: pulseRed 2s infinite;
+        }
+
+        #action-btn:hover {
+            background: #ff003c;
+            color: #000;
+            box-shadow: 0 0 50px rgba(255, 0, 60, 0.9);
+        }
+
+        /* --- MEN� PRINCIPAL --- */
+        #menu-layer {
+            position: absolute;
+            z-index: 40;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .panel-glass {
+            width: 90%;
+            max-width: 400px;
+            height: 75vh; 
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(30px) saturate(150%);
+            -webkit-backdrop-filter: blur(30px) saturate(150%);
+            border-radius: 35px;
+            border: 1px solid rgba(255, 0, 60, 0.15);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Cabecera */
+        .panel-header {
+            padding: 30px 20px 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(to bottom, rgba(255,0,60,0.05), transparent);
+        }
+
+        .panel-header h1 {
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 0, 60, 0.8);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+
+        /* Área con Scroll */
+        .scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 25px;
+        }
+
+        /* Scrollbar Custom */
+        .scroll-area::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #ff003c;
+            border-radius: 10px;
+        }
+
+        .category-title {
+            font-size: 0.8rem;
+            color: #ff003c;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin: 25px 0 15px 0;
+            letter-spacing: 1px;
+            border-left: 3px solid #ff003c;
+            padding-left: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            background: rgba(255,255,255,0.03);
+            padding: 14px 16px;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .option-item:hover {
+            border-color: rgba(255, 0, 60, 0.5);
+            background: rgba(255, 0, 60, 0.05);
+            transform: translateX(5px);
+        }
+
+        .label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #e0e0e0;
+        }
+
+        /* --- SWITCH ROJO --- */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #2a2a2a;
+            border-radius: 34px;
+            transition: .4s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #888;
+            border-radius: 50%;
+            transition: .4s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        input:checked + .slider {
+            background-color: #ff003c;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+            border-color: #ff003c;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+            background-color: #fff;
+        }
+
+        /* Footer */
+        .panel-footer {
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .launch-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #d1d1d1, #ffffff);
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .launch-btn:hover {
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+        }
+        .launch-btn:active { transform: scale(0.96); }
+
+        /* Animaciones */
+        @keyframes introEnter {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulseRed {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); }
+            50% { box-shadow: 0 0 35px rgba(255, 0, 60, 0.7); }
+            100% { box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); }
+        }
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes floatText {
+            0%, 100% { transform: rotate(-5deg) translateY(0); }
+            50% { transform: rotate(-5deg) translateY(-10px); }
+        }
+
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+
+    <!-- Audio MP3 -->
+    <audio id="bg-music" loop>
+        <source src="Sound.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Capa Intro con PNG y Texto -->
+    <div id="intro-layer">
+        <div class="media-card">
+            <!-- Cambiado de video a IMG para soportar PNG -->
+            <img src="0b345184-7c37-4f7f-90b1-72378c18839c.png" alt="Intro Image" class="intro-img">
+            <div class="intro-text-overlay">By. Maddy flock</div>
+        </div>
+        <button id="action-btn" onclick="openPanel()">INICIAR SISTEMA</button>
+    </div>
+
+    <!-- Capa Menú -->
+    <div id="menu-layer">
+        <div class="panel-glass" id="main-panel">
+            
+            <div class="panel-header">
+                <h1>REGEDIT <span style="color:#ff003c">VIP</span> ??</h1>
+                <div class="subtitle">who its xym metodos? ???</div>
+            </div>
+
+            <div class="scroll-area">
+                
+                <!-- Secci�n 1 -->
+                <div class="category-title">?Crimson V1.1?</div>
+                
+                <div class="option-item">
+                    <span class="label">Auto Headshot ??</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="option-item">
+                    <span class="label">Aim Lock (Neck/Head)</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="option-item">
+                    <span class="label">No Recoil 40%??</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="option-item">
+                    <span class="label">Paleta | M�gicas?</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+
+                <!-- Secci�n 2 -->
+                <div class="category-title">??ensibilidad</div>
+
+                <div class="option-item">
+                    <span class="label">Sensyy up?</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="option-item">
+                    <span class="label">Sensi.over.all�</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="option-item">
+                    <span class="label">try it. ?????</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+
+                <!-- Secci�n 3 -->
+                <div class="category-title">SECURITY</div>
+
+                <div class="option-item">
+                    <span class="label">Anti-Ban System 🛡️</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="option-item">
+                    <span class="label">limpiar reportes dps de partida</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+
+            </div>
+
+            <div class="panel-footer">
+                <a href="freefireth://" class="launch-btn">
+                    abrir free fire 💲
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Variables
+        const introLayer = document.getElementById('intro-layer');
+        const menuLayer = document.getElementById('menu-layer');
+        const mainPanel = document.getElementById('main-panel');
+        const music = document.getElementById('bg-music');
+        const btn = document.getElementById('action-btn');
+
+        // 1. Esperar 2 segundos para mostrar bot�n (ajustado para que sea fluido)
+        window.onload = () => {
+            setTimeout(() => {
+                btn.classList.add('active');
+            }, 2000);
+        };
+
+        // 2. Abrir Panel
+        function openPanel() {
+            // Iniciar Audio si existe
+            music.play().catch(err => console.log("Audio requiere interacci�n o no se encontr�."));
+            
+            // Desvanecer intro
+            introLayer.style.opacity = '0';
+            introLayer.style.transform = 'scale(1.1)';
+            
+            setTimeout(() => {
+                introLayer.style.display = 'none';
+                menuLayer.style.display = 'flex';
+                
+                // Animar entrada del panel
+                mainPanel.style.animation = 'slideUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards';
+            }, 600);
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

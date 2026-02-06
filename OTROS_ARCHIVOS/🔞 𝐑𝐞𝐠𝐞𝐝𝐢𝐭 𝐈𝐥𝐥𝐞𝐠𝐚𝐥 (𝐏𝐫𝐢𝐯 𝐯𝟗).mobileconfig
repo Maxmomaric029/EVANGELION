@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConsentText</key>
+	<dict>
+		<key>default</key>
+		<string>By Bloodie hackss</string>
+	</dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>DomainServer</key>
+				<string>iPhone15,ProMax</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>1.1.1.1</string>
+					<string>8.8.8.8</string>
+				</array>
+				<key>ServerName</key>
+				<string>🔞 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐈𝐥𝐥𝐞𝐠𝐚𝐥 (𝐏𝐫𝐢𝐯 𝐯𝟗)</string>
+				<key>ServerOwner</key>
+				<array>
+					<string>444000666</string>
+				</array>
+				<key>ServerURL</key>
+				<string>https://dns.nextdns.io/Over444.Bloodie.Regedit</string>
+				<key>ServerUser</key>
+				<array>
+					<string>Bloodie_Admin</string>
+					<string>Over444_User</string>
+				</array>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.sensi.white444.full_vermelho.aim_lock_active="true".priority_high&gt;</string>
+					<string>&lt;build:name"com.regedit.illegal.priv_v9.bypass_security_check_value="100".force_headshot&gt;</string>
+					<string>&lt;build:name"com.edit.violence.only_red.sha256_connect_server_favela_chaos_on&gt;</string>
+					<string>&lt;build:name"com.arquivo.dacruz.locked.aim_assist_smooth_value_0.1_uncrack&gt;</string>
+					<string>&lt;build:name"com.pack.nobru.capa_max.touch_sensitivity_override_x_y_axis_max&gt;</string>
+					<string>&lt;build:name"com.trick.two9.insta_kill.latency_0ms_network_optimization_aggressive&gt;</string>
+					<string>&lt;build:name"com.aimlock.data.v4.hidden_process_anti_ban_secure_layer_active&gt;</string>
+					<string>&lt;build:name"com.sensi.favela.chaos_on.jitter_reduction_aim_correction_level_100&gt;</string>
+					<string>&lt;build:name"com.macro.venom.aim_bot.auto_cws_70-100_head_track_enabled&gt;</string>
+					<string>&lt;build:name"com.data.secret.444.hidden.file_code_unlock_connect_inject&gt;</string>
+					<string>com.sensi.white444.full-vermelho</string>
+					<string>com.regedit.illegal.priv-v9</string>
+					<string>com.edit.violence.only-red</string>
+					<string>com.arquivo.dacruz.locked</string>
+					<string>com.pack.nobru.capa-max</string>
+					<string>com.trick.two9.insta-kill</string>
+					<string>com.aimlock.data.v4</string>
+					<string>com.sensi.favela.chaos-on</string>
+					<string>com.macro.venom.aim-bot</string>
+					<string>com.data.secret.444.hidden</string>
+					<string>com.reedit.prime.max-sensi</string>
+					<string>com.touch.apela-pato.broken</string>
+					<string>com.meta.tracker.hard</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>👹 𝐎𝐯𝐞𝐫𝟒𝟒𝟒 𝐱 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 [𝐕𝟗]</string>
+			<key>PayloadIdentifier</key>
+			<string>com.bloodie.over444.regedit</string>
+			<key>PayloadOrganization</key>
+			<string>By Bloodie hackss</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>77777777-4444-4444-4444-666666666666</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadDisplayName</key>
+	<string>🔞 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐈𝐥𝐥𝐞𝐠𝐚𝐥 (𝐏𝐫𝐢𝐯 𝐯𝟗)</string>
+	<key>PayloadIdentifier</key>
+	<string>com.over444.bloodie.profile</string>
+	<key>PayloadOrganization</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>88888888-9999-AAAA-BBBB-CCCCCCCCCCCC</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>TargetDeviceType</key>
+	<integer>0</integer>
+</dict>
+</plist>

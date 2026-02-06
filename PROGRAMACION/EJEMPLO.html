@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Eyes Menu - Neon Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;800&family=Sacramento&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-image: url('https://i.pinimg.com/originals/8e/3c/52/8e3c52c7c8bb5b10f9e4a1a42c6c54d9.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e0e0e0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(20, 20, 40, 0.5), rgba(0, 0, 0, 0.85));
+            z-index: 0;
+        }
+
+        /* --- INTRO SECTION --- */
+        #intro-container {
+            position: absolute;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .intro-special-text {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.5rem;
+            color: #ff1493;
+            margin-bottom: 15px;
+            text-shadow: 
+                0 0 10px #ff1493,
+                0 0 20px #ff1493,
+                0 0 40px #ff69b4;
+            transform: rotate(-5deg);
+            animation: floatText 3s ease-in-out infinite;
+            z-index: 25;
+            text-align: center;
+        }
+
+        .gif-wrapper {
+            position: relative;
+            width: 280px;
+            height: 500px;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transform: scale(0.8);
+            opacity: 0;
+            animation: popIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .gif-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #continue-btn {
+            margin-top: 30px;
+            padding: 14px 35px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.0);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #continue-btn.visible {
+            opacity: 1;
+            pointer-events: all;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #continue-btn:hover {
+            background: #ff1493;
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.6);
+            transform: translateY(-2px);
+            color: black;
+        }
+
+        /* --- MENU SECTION --- */
+        #menu-container {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-panel {
+            width: 90%;
+            max-width: 420px;
+            background: rgba(30, 30, 35, 0.65);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border-radius: 40px;
+            padding: 40px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 40px 80px rgba(0,0,0,0.6),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: scale(0.9);
+            text-align: center;
+        }
+
+        .menu-title-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 35px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+            line-height: 1.2;
+        }
+
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .option-row:last-of-type {
+            border-bottom: none;
+            margin-bottom: 25px;
+        }
+
+        .option-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ccc;
+            text-align: left;
+        }
+
+        /* SWITCHES */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        input:checked + .slider {
+            background-color: #ff1493;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.4);
+            border-color: #ff1493;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+            background-color: #fff;
+        }
+
+        .action-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-top: 10px;
+            background: #ff1493;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3);
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        .action-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Animations */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: rotate(-5deg) translateY(0); }
+            50% { transform: rotate(-5deg) translateY(-10px); }
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes menuEntry {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .follow-img{width:90px}}
+    </style>
+</head>
+<body>
+<div id="ytOverlay" class="overlay">
+
+
+<!-- INTRO CONTAINER -->
+<div id="intro-container">
+    <div class="intro-special-text">Anime Dreams ✨</div>
+    
+    <div class="gif-wrapper">
+        <img src="https://i.pinimg.com/originals/37/72/ab/3772ab920ea4828d43e0216b8a405611.gif" alt="Anime Eyes">
+    </div>
+    <button id="continue-btn" onclick="startPanel()">Continuar</button>
+</div>
+
+<!-- MENU CONTAINER -->
+<div id="menu-container">
+    <div class="glass-panel" id="panel">
+        <div class="menu-title-text">Kawaii Settings 🌸</div>
+
+        <div class="option-row">
+            <span class="option-text">Sparkle Mode ✨</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="option-row">
+            <span class="option-text">Dream Filter 💫</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="option-row">
+            <span class="option-text">Neon Glow 🌟</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="option-row">
+            <span class="option-text">Magic Eyes 👁️</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <button class="action-button" onclick="alert('Settings Activated! ✨')">
+            ACTIVATE ALL
+        </button>
+    </div>
+</div>
+
+<script>
+    const btn = document.getElementById('continue-btn');
+    const intro = document.getElementById('intro-container');
+    const menu = document.getElementById('menu-container');
+    const panel = document.getElementById('panel');
+
+    window.onload = () => {
+        setTimeout(() => {
+            btn.classList.add('visible');
+        }, 10000); 
+    };
+
+    function startPanel() {
+        intro.style.opacity = '0';
+        intro.style.pointerEvents = 'none';
+
+        setTimeout(() => {
+            intro.style.display = 'none';
+            menu.style.display = 'flex';
+            panel.style.animation = 'menuEntry 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards';
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
+
+
+

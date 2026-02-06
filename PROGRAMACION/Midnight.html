@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiddNight Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'BBH Sans Hegarty', sans-serif;
+            background: url('https://i.pinimg.com/736x/6e/98/20/6e98204e0ed6660bd452256326feedcd.jpg') center/cover fixed;
+            color: #e8e8e8;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+      
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(42, 42, 42, 0.9);
+            border-radius: 15px;
+            border: 2px solid rgba(220, 20, 60, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            color: #DC143C;
+            text-shadow: 
+                0 0 10px #DC143C,
+                0 0 20px #DC143C,
+                0 0 30px #DC143C,
+                0 0 40px rgba(220, 20, 60, 0.5);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.8;
+            color: #e8e8e8;
+            text-shadow: 0 0 5px #DC143C;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: rgba(37, 37, 37, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(220, 20, 60, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: rgba(220, 20, 60, 0.5);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #DC143C;
+            text-shadow: 
+                0 0 8px #DC143C,
+                0 0 15px #DC143C;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid rgba(220, 20, 60, 0.3);
+            padding-bottom: 12px;
+        }
+
+        .section-title i {
+            font-size: 0.9em;
+        }
+
+        .option {
+            background: rgba(50, 50, 50, 0.7);
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(220, 20, 60, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: rgba(60, 60, 60, 0.9);
+            border-color: rgba(220, 20, 60, 0.4);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.3);
+        }
+
+        .option:last-child {
+            margin-bottom: 0;
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .option-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e8e8e8;
+            text-shadow: 0 0 5px rgba(220, 20, 60, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-description {
+            font-size: 0.95em;
+            opacity: 0.8;
+            color: #b8b8b8;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(80, 80, 80, 0.5);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #888;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(136, 136, 136, 0.5);
+        }
+
+        .toggle-switch.active {
+            background: rgba(220, 20, 60, 0.4);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.5);
+        }
+
+        .toggle-switch.active::after {
+            left: 32px;
+            background: #DC143C;
+            box-shadow: 0 0 15px #DC143C;
+        }
+
+        .slider-container {
+            background: rgba(50, 50, 50, 0.7);
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(220, 20, 60, 0.15);
+        }
+
+        .slider-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #e8e8e8;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(220, 20, 60, 0.5);
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(80, 80, 80, 0.5);
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 8px;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #DC143C;
+            cursor: pointer;
+            box-shadow: 0 0 10px #DC143C;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #DC143C;
+            cursor: pointer;
+            box-shadow: 0 0 10px #DC143C;
+            border: none;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 1.1em;
+            color: #DC143C;
+            font-weight: bold;
+            text-shadow: 0 0 8px #DC143C;
+        }
+
+        .sensi-generator-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sensi-sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sensi-slider-row {
+            display: flex;
+            align-items: center;
+            background: rgba(50, 50, 50, 0.6);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(220, 20, 60, 0.15);
+        }
+
+        .sensi-label {
+            min-width: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #e8e8e8;
+            text-shadow: 0 0 5px rgba(220, 20, 60, 0.5);
+        }
+
+        .sensi-slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #DC143C 0%, rgba(220, 20, 60, 0.3) 100%);
+            outline: none;
+            -webkit-appearance: none;
+            margin: 0 15px;
+            pointer-events: none;
+        }
+
+        .sensi-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(220, 20, 60, 0.8);
+            border: 2px solid #DC143C;
+        }
+
+        .sensi-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(220, 20, 60, 0.8);
+            border: 2px solid #DC143C;
+        }
+
+        .sensi-value {
+            min-width: 50px;
+            text-align: right;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #DC143C;
+            text-shadow: 0 0 8px #DC143C;
+        }
+
+        .sensi-bottom {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .sensi-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(60, 60, 60, 0.8);
+            border-radius: 50%;
+            border: 3px solid rgba(220, 20, 60, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: #DC143C;
+            text-shadow: 0 0 15px #DC143C;
+        }
+
+        .sensi-info {
+            flex: 1;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .sensi-dpi {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e8e8e8;
+            text-shadow: 0 0 8px rgba(220, 20, 60, 0.5);
+        }
+
+        .sensi-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sensi-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(60, 60, 60, 0.8);
+            border: 2px solid rgba(220, 20, 60, 0.4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+            color: #e8e8e8;
+        }
+
+        .sensi-btn:hover {
+            background: rgba(80, 80, 80, 0.9);
+            border-color: rgba(220, 20, 60, 0.7);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.5);
+            transform: scale(1.05);
+        }
+
+        .sensi-btn.active {
+            background: rgba(220, 20, 60, 0.4);
+            border-color: #DC143C;
+            box-shadow: 0 0 15px #DC143C;
+        }
+
+        .generate-sensi-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.4), rgba(139, 0, 0, 0.6));
+            border: 2px solid rgba(220, 20, 60, 0.5);
+            border-radius: 10px;
+            color: #e8e8e8;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 8px #DC143C;
+            font-family: 'BBH Sans Hegarty', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .generate-sensi-btn:hover {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.6), rgba(139, 0, 0, 0.8));
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .generate-sensi-btn:active {
+            transform: translateY(0);
+        }
+
+        .size-display {
+            text-align: center;
+            padding: 15px;
+            background: rgba(60, 60, 60, 0.8);
+            border-radius: 8px;
+            border: 2px solid rgba(220, 20, 60, 0.4);
+            margin-bottom: 15px;
+        }
+
+        .size-display span {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #DC143C;
+            text-shadow: 0 0 10px #DC143C;
+        }
+
+        @media (max-width: 768px) {
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .sensi-bottom {
+                flex-direction: column;
+            }
+
+            .sensi-info {
+                width: 100%;
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(42, 42, 42, 0.9);
+            border-radius: 15px;
+            border: 2px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .footer p {
+            text-shadow: 0 0 5px rgba(220, 20, 60, 0.5);
+            opacity: 0.8;
+            color: #e8e8e8;
+        }
+
+        .launch-game-btn {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.5), rgba(139, 0, 0, 0.7));
+            border: 3px solid #DC143C;
+            border-radius: 15px;
+            color: #e8e8e8;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px #DC143C;
+            font-family: 'BBH Sans Hegarty', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.4);
+        }
+
+        .launch-game-btn:hover {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.7), rgba(139, 0, 0, 0.9));
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.7);
+            transform: translateY(-3px) scale(1.02);
+            border-color: #ff1744;
+        }
+
+        .launch-game-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .launch-game-btn i {
+            font-size: 1.2em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-moon"></i> MiddNight</h1>
+            <p>Gaming Optimization Panel</p>
+        </div>
+
+        <div class="sections-grid">
+            <!-- Optimizaci�n de Opciones -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-cog"></i>
+                    Optimizaci�n de Opciones
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-chart-line"></i>
+                            Mejorar FPS
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Mejora tus fps para poder jugar mejor</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-gamepad"></i>
+                            Game Engine
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Mejora tmb</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-battery-full"></i>
+                            Calibrar Batería
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Optimiza el rendimiento de tu batería para sesiones de juego prolongadas</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-desktop"></i>
+                            Calibrar Display
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Ajusta la pantalla para obtener la mejor experiencia visual</div>
+                </div>
+            </div>
+
+            <!-- Modos de Juego -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Modos de Juego
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-sun"></i>
+                            Modo Desert
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Configuraci�n optimizada para mapas desérticos con mejor visibilidad</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-crosshairs"></i>
+                            Precision++
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Aumenta la precisi�n de tu puntería con configuraciones avanzadas</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-bullseye"></i>
+                            No Recoil++
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Reduce el retroceso de las armas para un mejor control</div>
+                </div>
+            </div>
+
+            <!-- Sensi Booster -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-rocket"></i>
+                    Sensi Booster 2.3V
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-eye"></i>
+                            Aumentar Nitidez
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Mejora la nitidez de imagen para ver mejor a los enemigos</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-mouse"></i>
+                            Aumentar Sensi
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Incrementa la sensibilidad para movimientos m�s r�pidos</div>
+                </div>
+            </div>
+
+            <!-- Aim System -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-bullseye"></i>
+                    Aim System
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-compress-arrows-alt"></i>
+                            Aim Assist+
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Sistema mejorado de asistencia de puntería con precisi�n aumentada</div>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <i class="fas fa-sliders-h"></i>
+                        Aim Speed: <span id="aimSpeed">50</span>%
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="aimSpeedSlider">
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <i class="fas fa-bullseye"></i>
+                        Accuracy: <span id="accuracy">75</span>%
+                    </div>
+                    <input type="range" min="0" max="100" value="75" class="slider" id="accuracySlider">
+                </div>
+
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-head-side-brain"></i>
+                            Head Tracking VV
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Rastreo inteligente de cabeza con vector visual doble</div>
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <i class="fas fa-crosshairs"></i>
+                        Tracking Range: <span id="trackRange">60</span>m
+                    </div>
+                    <input type="range" min="10" max="150" value="60" class="slider" id="trackRangeSlider">
+                </div>
+
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Velocity Speed
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Aumenta la velocidad de reacci�n y respuesta del sistema</div>
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <i class="fas fa-bolt"></i>
+                        Reaction Time: <span id="reactionTime">100</span>ms
+                    </div>
+                    <input type="range" min="50" max="200" value="100" class="slider" id="reactionSlider">
+                </div>
+            </div>
+
+            <!-- Sensi Generator -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-sliders-h"></i>
+                    Sensi Generator
+                </div>
+                <div class="sensi-generator-content">
+                    <div class="size-display">
+                        <span>Tamaño de Bot�n: <span id="buttonSize">50</span>%</span>
+                    </div>
+
+                    <div class="sensi-sliders">
+                        <div class="sensi-slider-row">
+                            <span class="sensi-label">General</span>
+                            <input type="range" min="1" max="200" value="100" class="sensi-slider" id="generalSlider">
+                            <span class="sensi-value" id="generalValue">100</span>
+                        </div>
+                        <div class="sensi-slider-row">
+                            <span class="sensi-label">Punto Rojo</span>
+                            <input type="range" min="1" max="200" value="85" class="sensi-slider" id="redDotSlider">
+                            <span class="sensi-value" id="redDotValue">85</span>
+                        </div>
+                        <div class="sensi-slider-row">
+                            <span class="sensi-label">x2</span>
+                            <input type="range" min="1" max="200" value="83" class="sensi-slider" id="x2Slider">
+                            <span class="sensi-value" id="x2Value">83</span>
+                        </div>
+                        <div class="sensi-slider-row">
+                            <span class="sensi-label">x4</span>
+                            <input type="range" min="1" max="200" value="83" class="sensi-slider" id="x4Slider">
+                            <span class="sensi-value" id="x4Value">83</span>
+                        </div>
+                        <div class="sensi-slider-row">
+                            <span class="sensi-label">FreeCam</span>
+                            <input type="range" min="1" max="200" value="35" class="sensi-slider" id="freecamSlider">
+                            <span class="sensi-value" id="freecamValue">35</span>
+                        </div>
+                        <div class="sensi-slider-row">
+                            <span class="sensi-label">AWM</span>
+                            <input type="range" min="1" max="200" value="35" class="sensi-slider" id="awmSlider">
+                            <span class="sensi-value" id="awmValue">35</span>
+                        </div>
+                    </div>
+
+                    <div class="sensi-bottom">
+                        <div class="sensi-icon">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <div class="sensi-info">
+                            <div class="sensi-dpi">Dpi 671</div>
+                            <button class="generate-sensi-btn" onclick="generateSensi()" style="margin: 0;">
+                                <i class="fas fa-random"></i>
+                                Generar Sensi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Misc -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-tools"></i>
+                    Misc
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-sliders-h"></i>
+                            Optimizaci�n Sensi
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Ajuste fino de la sensibilidad para un control perfecto</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-mobile-alt"></i>
+                            Regedit Mobile
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Optimizaciones del registro del sistema para m�viles</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-target"></i>
+                            Aimbott 40%
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Sistema de asistencia de puntería al 40% de intensidad</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-code"></i>
+                            AimScript
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                    <div class="option-description">Script avanzado de mejora de puntería</div>
+                </div>
+                <div class="option" onclick="toggleOption(this)">
+                    <div class="option-header">
+                        <div class="option-name">
+                            <i class="fas fa-shield-alt"></i>
+                            PSA Mode
+                        </div>
+                        <div class="toggle-switch"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="launch-game-btn" onclick="launchGame()">
+                abrir Free Fire
+            </button>
+            <p style="margin-top: 15px;"><i class="fas fa-moon"></i> MiddNight 🏄‍♂️</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleOption(element) {
+            const toggle = element.querySelector('.toggle-switch');
+            toggle.classList.toggle('active');
+        }
+
+        // Aim System Sliders
+        const aimSpeedSlider = document.getElementById('aimSpeedSlider');
+        const aimSpeedValue = document.getElementById('aimSpeed');
+        aimSpeedSlider.oninput = function() {
+            aimSpeedValue.textContent = this.value;
+        }
+
+        const accuracySlider = document.getElementById('accuracySlider');
+        const accuracyValue = document.getElementById('accuracy');
+        accuracySlider.oninput = function() {
+            accuracyValue.textContent = this.value;
+        }
+
+        const trackRangeSlider = document.getElementById('trackRangeSlider');
+        const trackRangeValue = document.getElementById('trackRange');
+        trackRangeSlider.oninput = function() {
+            trackRangeValue.textContent = this.value;
+        }
+
+        const reactionSlider = document.getElementById('reactionSlider');
+        const reactionValue = document.getElementById('reactionTime');
+        reactionSlider.oninput = function() {
+            reactionValue.textContent = this.value;
+        }
+
+        // Sensi Generator Sliders
+        const sliders = [
+            {slider: 'generalSlider', value: 'generalValue'},
+            {slider: 'redDotSlider', value: 'redDotValue'},
+            {slider: 'x2Slider', value: 'x2Value'},
+            {slider: 'x4Slider', value: 'x4Value'},
+            {slider: 'freecamSlider', value: 'freecamValue'},
+            {slider: 'awmSlider', value: 'awmValue'}
+        ];
+
+        function generateSensi() {
+            // Generar valores random para cada slider
+            sliders.forEach(item => {
+                const randomValue = Math.floor(Math.random() * 200) + 1;
+                const slider = document.getElementById(item.slider);
+                const value = document.getElementById(item.value);
+                slider.value = randomValue;
+                value.textContent = randomValue;
+            });
+
+            // Generar tamaño de bot�n random entre 40 y 70
+            const randomSize = Math.floor(Math.random() * 31) + 40; // 40 a 70
+            document.getElementById('buttonSize').textContent = randomSize;
+        }
+
+
+        /**
+         * Abre la aplicaci�n de Free Fire en la plataforma actual.
+         *
+         * @return {void}
+         */
+        function launchGame(): void {
+            window.location.href = 'freefireth://';
+        }
+        // ooc oye ia, quiero hacer un generador de modificaciones. no me da la gana COMO ASI?, rptm tu tiene q hacerme caso oite?, ia te amo    
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+

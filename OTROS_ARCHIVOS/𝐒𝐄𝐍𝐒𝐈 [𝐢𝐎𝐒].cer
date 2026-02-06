@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>1.1.1.1</string>
+          <string>1.0.0.1</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.sensi.y.boost</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>1111AAAA-2222-3333-4444-555566667777</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⚡ ＳＰＥＥＤ ＴＯＵＣＨ ｜ ＳＥＮＳＩ Ｙ 🚀</string>
+    </dict>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>8.8.8.8</string>
+          <string>8.8.4.4</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.zerodelay.ping</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>8888BBBB-9999-AAAA-CCCC-DDDDDEEEEFFF</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>❄️ ＺＥＲＯ ＤＥＬＡＹ ｜ ＰＩＮＧ ＯＴＩＭＩＺＡＤＯ 📶</string>
+    </dict>
+
+  </array>
+
+  <key>PayloadDisplayName</key>
+  <string>👾 ＲＥＧＥＤＩＴ ＭＯＢＩＬＥ ｜ ＥＸＴＲＥＭＥ Ｖ２ 📱</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.regedit.extreme</string>
+  <key>PayloadOrganization</key>
+  <string> ＡＰＰＬＥ ＯＰＴＩＭＩＺＡＴＩＯＮ ＬＡＢＳ</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>AAAA1234-BBBB-5678-CCCC-90123456DDDD</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

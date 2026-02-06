@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>iOS Purple Menu v2</title>
+    
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('https://i.pinimg.com/736x/dd/12/e3/dd12e3bd8032c3a6f69e48fa3075e42e.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: "Playfair Display", serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* --- NOTIFICACIONES (TOAST) --- */
+        #notification-area {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 90%;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: rgba(20, 5, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(189, 0, 255, 0.3);
+            border-left: 4px solid #bd00ff;
+            padding: 12px 20px;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, fadeOut 0.5s ease 2.5s forwards;
+        }
+
+        @keyframes slideDown { 
+            from { transform: translateY(-50px); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+        }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+
+        /* --- OVERLAY --- */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            transition: opacity 0.6s ease;
+        }
+
+        .gif-container {
+            width: 90%; 
+            max-width: 400px;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 0 50px rgba(189, 0, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gif-container img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        #overlay h1 {
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 20px #bd00ff;
+            animation: pulse 2s infinite;
+        }
+
+        /* --- MEN� CONTAINER --- */
+        .menu-container {
+            position: absolute;
+            width: 350px;
+            height: 500px; /* Un poco m�s alto para las configuraciones */
+            border-radius: 35px; 
+            background: rgba(15, 5, 25, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(189, 0, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .menu-visible { opacity: 1; transform: scale(1); }
+
+        .menu-header {
+            padding: 20px 0;
+            text-align: center;
+            cursor: grab;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.02);
+        }
+        
+        h2 {
+            font-weight: 800; font-style: italic; font-size: 1.6rem; color: #fff;
+            text-shadow: 2px 2px 0px rgba(189,0,255,0.5); margin: 0;
+        }
+
+        /* --- TABS --- */
+        .menu-body { display: flex; flex: 1; height: 100%; }
+        .sidebar {
+            width: 70px;
+            background: rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; align-items: center;
+            padding-top: 20px; gap: 25px;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .tab-icon {
+            font-size: 1.5rem; opacity: 0.4; transition: 0.3s; cursor: pointer; filter: grayscale(100%);
+        }
+        .tab-icon.active {
+            opacity: 1; filter: grayscale(0%); transform: scale(1.2); text-shadow: 0 0 15px #bd00ff;
+        }
+        .content-area { flex: 1; padding: 20px; overflow-y: auto; }
+        .content-area::-webkit-scrollbar { width: 0; }
+        .tab-content { display: none; flex-direction: column; gap: 15px; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- CONTROLES --- */
+        .control-group {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 15px;
+            border-radius: 18px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .group-title {
+            font-size: 0.75rem; color: rgba(189, 0, 255, 0.8); font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;
+        }
+        .switch-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.9rem; color: #e0d4ff;
+        }
+        .toggle-switch {
+            position: relative; display: inline-block; width: 42px; height: 24px;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider-switch {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.4); transition: .4s; border-radius: 30px;
+        }
+        .slider-switch:before {
+            position: absolute; content: ""; height: 18px; width: 18px;
+            left: 3px; bottom: 3px; background-color: #888; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider-switch { background-color: #bd00ff; }
+        input:checked + .slider-switch:before { transform: translateX(18px); background-color: #fff; box-shadow: 0 0 10px white; }
+
+        /* --- NUEVO: PANELES DE CONFIGURACI�N --- */
+        .config-panel {
+            display: none; /* Oculto por defecto */
+            background: rgba(0, 0, 0, 0.2);
+            margin-top: 5px;
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 2px solid #bd00ff;
+            animation: slideOpen 0.3s ease;
+        }
+        
+        @keyframes slideOpen {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .config-title {
+            font-size: 0.7rem; color: #aaa; margin-bottom: 5px; display: block;
+        }
+
+        .sub-options {
+            display: flex; gap: 5px; justify-content: space-between;
+        }
+
+        .option-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #ccc;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        .option-btn.selected {
+            background: #bd00ff; color: white; box-shadow: 0 0 5px #bd00ff;
+        }
+
+        /* --- SLIDERS --- */
+        .range-wrapper { width: 100%; }
+        .range-header {
+            display: flex; justify-content: space-between; font-size: 0.8rem; color: #ccc; margin-bottom: 5px;
+        }
+        input[type=range] {
+            -webkit-appearance: none; width: 100%; background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 16px; width: 16px; border-radius: 50%; background: #fff; -webkit-appearance: none;
+            margin-top: -5px; box-shadow: 0 0 8px #bd00ff;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; text-shadow: 0 0 30px #bd00ff; }
+            100% { opacity: 0.7; }
+        }
+
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay">
+
+    <!-- OVERLAY -->
+    <div id="overlay">
+        <div class="gif-container">
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Jvc2twa3RqdWdyeXk4M2pvbXVjeG55YWc3NDdlaDN6eThkeXozMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jzHFPlw89eTqU/giphy.gif" alt="vibe">
+        </div>
+        <h1>?? Ios internal ??</h1>
+    </div>
+
+    <audio id="audioPlayer" loop>
+        <source src="DBNT.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="menu-container" id="menu">
+        <div class="menu-header">
+            <h2>iOS Internal</h2>
+        </div>
+
+        <div class="menu-body">
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <div class="tab-icon active" onclick="switchTab('aim')">??</div>
+                <div class="tab-icon" onclick="switchTab('sens')">?</div>
+                <div class="tab-icon" onclick="switchTab('screen')">??</div>
+            </div>
+
+            <!-- CONTENIDO -->
+            <div class="content-area">
+                
+                <!-- TAB 1: AIMBOT -->
+                <div id="aim" class="tab-content active">
+                    <div class="control-group">
+                        <div class="group-title">Combat</div>
+                        
+                        <!-- AIM ASSIST + CONFIG -->
+                        <div class="switch-row">
+                            <span>Aim Assist</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="toggleFeature(this, 'config-aim', 'Aim Assist')">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                        <!-- Panel de Configuraci�n -->
+                        <div id="config-aim" class="config-panel">
+                            <span class="config-title">Smoothing Level</span>
+                            <input type="range" min="1" max="100" value="50">
+                            <div style="margin-top:8px;"></div>
+                            <span class="config-title">Target Bone</span>
+                            <div class="sub-options">
+                                <button class="option-btn selected">Head</button>
+                                <button class="option-btn">Neck</button>
+                                <button class="option-btn">Body</button>
+                            </div>
+                        </div>
+
+                        <!-- SILENT AIM + CONFIG -->
+                        <div class="switch-row">
+                            <span>Silent Aim</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="toggleFeature(this, 'config-silent', 'Silent Aim')">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                        <div id="config-silent" class="config-panel">
+                            <span class="config-title">Hit Chance: <span id="hitVal">100%</span></span>
+                            <input type="range" min="0" max="100" value="100" oninput="document.getElementById('hitVal').innerText = this.value + '%'">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="group-title">Settings</div>
+                        <div class="range-wrapper">
+                            <div class="range-header"><span>FOV Radius</span><span id="fovVal">120</span></div>
+                            <input type="range" min="10" max="360" value="120" oninput="updateVal('fovVal', this.value);">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: SENSITIVITY -->
+                <div id="sens" class="tab-content">
+                    <div class="control-group">
+                        <div class="group-title">Touch Control</div>
+                        <div class="range-wrapper">
+                            <div class="range-header"><span>X-Speed</span><span id="xVal">1.0</span></div>
+                            <input type="range" min="1" max="50" value="10" oninput="updateVal('xVal', this.value/10);">
+                        </div>
+                        <div class="range-wrapper">
+                            <div class="range-header"><span>Speed Over all</span><span id="yVal">1.0</span></div>
+                            <input type="range" min="1" max="50" value="10" oninput="updateVal('yVal', this.value/10);">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        
+                        <!-- NO RECOIL + CONFIG -->
+                        <div class="switch-row">
+                            <span>No Recoil (iOS)</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked onchange="toggleFeature(this, 'config-recoil', 'No Recoil')">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                        <div id="config-recoil" class="config-panel" style="display: block;">
+                            <span class="config-title">Strength</span>
+                            <div class="sub-options">
+                                <button class="option-btn">50%</button>
+                                <button class="option-btn selected">80%</button>
+                                <button class="option-btn">100%</button>
+                            </div>
+                        </div>
+
+                        <div class="switch-row">
+                            <span>Touch Delay Fix</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="notify('Delay Fix', this.checked)">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: SCREEN -->
+                <div id="screen" class="tab-content">
+                     <div class="control-group">
+                        <div class="group-title">Display</div>
+                        <div class="switch-row">
+                            <span>120 FPS Unlock</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="notify('120 FPS', this.checked)">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="group-title">the dead secret</div>
+                        
+                        <!-- PAYBACC OVER ALL + CONFIG -->
+                        <div class="switch-row">
+                            <span>Paybacc Over all</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="toggleFeature(this, 'config-paybacc', 'Best Speedy')">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                        <div id="config-paybacc" class="config-panel">
+                            <span class="config-title">Mode Selection</span>
+                            <div class="sub-options">
+                                <button class="option-btn">Legit</button>
+                                <button class="option-btn selected">Rage</button>
+                            </div>
+                        </div>
+
+                        <!-- ESP BOXES + CONFIG -->
+                        <div class="switch-row">
+                            <span>Show Boxes</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="toggleFeature(this, 'config-esp', 'ESP Boxes')">
+                                <span class="slider-switch"></span>
+                            </label>
+                        </div>
+                        <div id="config-esp" class="config-panel">
+                            <span class="config-title">Distance Limit: <span id="distVal">200m</span></span>
+                            <input type="range" min="50" max="1000" value="200" oninput="document.getElementById('distVal').innerText = this.value + 'm'">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIONES -->
+    <div id="notification-area"></div>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const menu = document.getElementById('menu');
+        const audio = document.getElementById('audioPlayer');
+        const header = document.querySelector('.menu-header');
+
+        // --- INICIO ---
+        overlay.addEventListener('click', () => {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                menu.classList.add('menu-visible');
+            }, 600);
+            
+            audio.volume = 0.4;
+            audio.play().catch(e => console.log("Audio error:", e));
+        });
+
+        // --- TABS ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-icon').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            
+            const icons = document.querySelectorAll('.tab-icon');
+            if(tabName === 'aim') icons[0].classList.add('active');
+            if(tabName === 'sens') icons[1].classList.add('active');
+            if(tabName === 'screen') icons[2].classList.add('active');
+        }
+
+        // --- LÓGICA DE CONFIGURACIONES ---
+        function toggleFeature(checkbox, configId, featureName) {
+            // Notificar estado
+            notify(featureName, checkbox.checked);
+            
+            // Mostrar/Ocultar Configuraci�n
+            const configPanel = document.getElementById(configId);
+            if(configPanel) {
+                if(checkbox.checked) {
+                    configPanel.style.display = "block";
+                } else {
+                    configPanel.style.display = "none";
+                }
+            }
+        }
+
+        // --- NOTIFICACIONES ---
+        function notify(feature, state) {
+            const area = document.getElementById('notification-area');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            const statusText = state ? '<span style="color:#0f0">ON</span>' : '<span style="color:#f00">OFF</span>';
+            toast.innerHTML = `<span>?</span> ${feature}: ${statusText}`;
+            area.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 3000);
+        }
+
+        function updateVal(id, val) {
+            document.getElementById(id).innerText = val;
+        }
+
+        // --- INTERACTIVIDAD BOTONES DE CONFIG ---
+        const optionBtns = document.querySelectorAll('.option-btn');
+        optionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Quitar selected de los hermanos
+                const parent = this.parentElement;
+                const siblings = parent.querySelectorAll('.option-btn');
+                siblings.forEach(sib => sib.classList.remove('selected'));
+                // Poner selected al actual
+                this.classList.add('selected');
+            });
+        });
+
+        // --- ARRASTRAR EN MÓVIL ---
+        let isDragging = false;
+        let initialX, initialY, currentX, currentY, xOffset = 0, yOffset = 0;
+
+        header.addEventListener("touchstart", dragStart, {passive: false});
+        document.addEventListener("touchend", dragEnd, {passive: false});
+        document.addEventListener("touchmove", drag, {passive: false});
+
+        header.addEventListener("mousedown", dragStart);
+        document.addEventListener("mouseup", dragEnd);
+        document.addEventListener("mousemove", drag);
+
+        function dragStart(e) {
+            if (e.type === "touchstart") {
+                initialX = e.touches[0].clientX - xOffset;
+                initialY = e.touches[0].clientY - yOffset;
+            } else {
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+            }
+            if (e.target === header || e.target.parentNode === header) {
+                isDragging = true;
+            }
+        }
+
+        function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault(); 
+                if (e.type === "touchmove") {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+                xOffset = currentX;
+                yOffset = currentY;
+                setTranslate(currentX, currentY, menu);
+            }
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0) scale(1)`; 
+        }
+    </script>
+</body>
+</html>
+
+
+
+

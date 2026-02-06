@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPREME PANEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8e2de2;
+            --secondary-color: #4a00e0;
+            --accent-color: #00f260;
+            --text-color: #ffffff;
+            --bg-overlay: rgba(10, 10, 15, 0.75);
+            --card-bg: rgba(20, 20, 30, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: url('https://i.pinimg.com/736x/8e/12/50/8e1250850d6306932f6eb8071cf53392.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Overlay Background Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-overlay);
+            z-index: -1;
+            backdrop-filter: blur(3px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, #a0a0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(74, 0, 224, 0.6);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Sections */
+        .panel-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .panel-section:nth-child(2) { animation-delay: 0.1s; }
+        .panel-section:nth-child(3) { animation-delay: 0.2s; }
+        .panel-section:nth-child(4) { animation-delay: 0.3s; }
+
+        .panel-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(74, 0, 224, 0.2);
+            border-color: rgba(142, 45, 226, 0.4);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 5px rgba(142, 45, 226, 0.5));
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        /* Options */
+        .option-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .option-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-label i {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.1);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            box-shadow: 0 0 15px var(--secondary-color);
+            border-color: transparent;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Range Slider */
+        .range-container {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding: 0 5px;
+        }
+
+        .range-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 8px;
+        }
+
+        .range-value {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Button */
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #1cb5e0, #000851);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 8, 81, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(28, 181, 224, 0.4);
+        }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .action-btn:hover::after {
+            left: 100%;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Overlay Lock */
+        .overlay-lock {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 10, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+        }
+
+        .lock-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(142, 45, 226, 0.2);
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .lock-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .lock-desc {
+            color: #aaa;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .unlock-btn {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .unlock-btn:hover {
+            transform: scale(1.05);
+            background: #cc0000;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Lock Overlay -->
+    <div class="overlay-lock" id="lockOverlay">
+        <div class="lock-card">
+            <i class="fas fa-lock lock-icon"></i>
+            <h2 class="lock-title">SISTEMA BLOQUEADO</h2>
+            <p class="lock-desc">Para acceder al panel SUPREME, debes verificar tu suscripción en nuestro canal oficial.</p>
+            <a href="#" class="unlock-btn" id="unlockBtn">
+                <i class="fab fa-youtube"></i> SUSCRIBIRSE PARA DESBLOQUEAR
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <header>
+            <h1>SUPREME</h1>
+            <div class="subtitle">Panel de Control V.5.0</div>
+        </header>
+
+        <!-- COMBAT SECTION -->
+        <section class="panel-section">
+            <div class="section-header">
+                <i class="fas fa-crosshairs section-icon"></i>
+                <div class="section-title">COMBAT</div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-bullseye"></i> Aimbot Lock</div>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-skull"></i> Auto Headshot</div>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="range-container">
+                <div class="range-header">
+                    <span>Aim Smooth</span>
+                    <span class="range-value" id="smoothVal">80%</span>
+                </div>
+                <input type="range" min="0" max="100" value="80" oninput="document.getElementById('smoothVal').innerText = this.value + '%'">
+            </div>
+
+            <div class="range-container">
+                <div class="range-header">
+                    <span>Aim FOV</span>
+                    <span class="range-value" id="fovVal">120</span>
+                </div>
+                <input type="range" min="10" max="360" value="120" oninput="document.getElementById('fovVal').innerText = this.value">
+            </div>
+        </section>
+
+        <!-- VISUALS SECTION -->
+        <section class="panel-section">
+            <div class="section-header">
+                <i class="fas fa-eye section-icon"></i>
+                <div class="section-title">VISUALS</div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-vector-square"></i> ESP Box</div>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-grip-lines"></i> ESP Lines</div>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-users"></i> Name Tags</div>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- SYSTEM SECTION -->
+        <section class="panel-section">
+            <div class="section-header">
+                <i class="fas fa-microchip section-icon"></i>
+                <div class="section-title">SYSTEM</div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-bolt"></i> FPS Boost</div>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-shield-alt"></i> Anti-Ban V2</div>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="option-row">
+                <div class="option-label"><i class="fas fa-wifi"></i> Lag Switch Fix</div>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <button class="action-btn" onclick="injectCheats()">
+            <i class="fas fa-rocket"></i> INJECTAR AHORA
+        </button>
+    </div>
+
+    <script>
+        // Unlock Logic
+        document.getElementById('unlockBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Open YouTube channel (placeholder link based on other files)
+            window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+            
+            // Simulate unlock delay
+            const btn = this;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> VERIFICANDO...';
+            
+            setTimeout(() => {
+                document.getElementById('lockOverlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('lockOverlay').style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+
+        // Injection Logic
+        function injectCheats() {
+            const btn = document.querySelector('.action-btn');
+            const originalText = btn.innerHTML;
+            
+            if(btn.innerText.includes("INJECTADO")) return;
+
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> INYECTANDO CÃ“DIGO...';
+            btn.style.background = 'linear-gradient(90deg, #333, #555)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> INJECTADO CON Ã‰XITO';
+                btn.style.background = 'linear-gradient(90deg, #00b09b, #96c93d)';
+                
+                // Optional: Show a toast or alert
+                alert("Â¡Configuración aplicada correctamente! Abre el juego ahora.");
+                
+                // Reset button after a while
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 5000);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
+
+

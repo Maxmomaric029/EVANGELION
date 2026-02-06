@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GhostTown Panel</title>
+  <link rel="stylesheet" href="ghostTown.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script defer src="ghostTown.js"></script>
+  <style>
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 0, 50, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      flex-direction: column;
+    }
+    .follow-container {
+      background: rgba(30, 30, 40, 0.55);
+      border-radius: 20px;
+      padding: 40px 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      border: 1px solid rgba(120,40,180,0.18);
+    }
+    .follow-img {
+      width: 120px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .follow-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .follow-title {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+    }
+    .yt-btn {
+      display: flex;
+      align-items: center;
+      background: #ff2222;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      gap: 10px;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      text-decoration: none;
+      text-shadow: 0 0 8px #fff;
+    }
+    .yt-btn:hover {
+      background: #cc1818;
+    }
+    .yt-icon {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+      filter: drop-shadow(0 0 6px #fff);
+    }
+    @media (max-width: 600px) {
+      .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+      .follow-img { width: 90px;}
+    }
+  </style>
+</head>
+<body>
+</div>
+  <div class="ghosttown-bg"></div>
+  <div class="ghosttown-menu-container">
+    <header class="ghosttown-header">
+      <h1><i class="fa-solid fa-ghost"></i> GhostTown</h1>
+      <p class="ghosttown-subtitle">Panel especial gris y negro</p>
+    </header>
+    <main class="ghosttown-menu">
+      <section class="ghosttown-section">
+        <h2 class="ghosttown-section-title"><i class="fa-solid fa-bolt"></i> Opciones principales</h2>
+        <div class="ghosttown-option" data-tooltip="Activa la velocidad X3">
+          <span class="ghosttown-option-title">SpeedX3</span>
+          <label class="switch">
+            <input type="checkbox" id="speedx3-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="ghosttown-tooltip">Activa la velocidad X3</span>
+        </div>
+        <div class="ghosttown-option" data-tooltip="Disparo persistente">
+          <span class="ghosttown-option-title">Still shooting</span>
+          <label class="switch">
+            <input type="checkbox" id="stillshooting-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="ghosttown-tooltip">Disparo persistente</span>
+        </div>
+      </section>
+      <section class="ghosttown-section">
+        <h2 class="ghosttown-section-title"><i class="fa-solid fa-crosshairs"></i> Aimbot Scripts</h2>
+        <div class="ghosttown-option" data-tooltip="Aimbot f�cil para headshots">
+          <span class="ghosttown-option-title">easyHead</span>
+          <label class="switch">
+            <input type="checkbox" id="easyhead-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="ghosttown-tooltip">Aimbot f�cil para headshots</span>
+        </div>
+        <div class="ghosttown-option" data-tooltip="Aimbot modo rage">
+          <span class="ghosttown-option-title">aimbotRage</span>
+          <label class="switch">
+            <input type="checkbox" id="aimbotrage-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="ghosttown-tooltip">Aimbot modo rage</span>
+        </div>
+        <div class="ghosttown-option" data-tooltip="Aimbot semi para AWP">
+          <span class="ghosttown-option-title">semiAimbotAwp</span>
+          <label class="switch">
+            <input type="checkbox" id="semiaimbotawp-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="ghosttown-tooltip">Aimbot semi para AWP</span>
+        </div>
+        <div class="ghosttown-option" data-tooltip="Aimbot completo script">
+          <span class="ghosttown-option-title">fullyAimbotScript</span>
+          <label class="switch">
+            <input type="checkbox" id="fullyaimbotscript-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="ghosttown-tooltip">Aimbot completo script</span>
+        </div>
+        <div class="ghosttown-option" data-tooltip="Aimbot para M1018">
+          <span class="ghosttown-option-title">aimbotM1018</span>
+          <label class="switch">
+            <input type="checkbox" id="aimbotm1018-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="ghosttown-tooltip">Aimbot para M1018</span>
+        </div>
+      </section>
+      <div class="ghosttown-whatsapp">
+        <a href="https://whatsapp.com/channel/0029Vb5rOa61HspvtNgejg03" target="_blank" title="Canal WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+    </main>
+    <footer class="ghosttown-footer">
+      <span>&copy; 2025 GhostTown Panel</span>
+    </footer>
+  </div>
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

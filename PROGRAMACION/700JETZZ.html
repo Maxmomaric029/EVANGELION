@@ -1,0 +1,1043 @@
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>Game Overlay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://i.pinimg.com/736x/d4/fb/ff/d4fbff78eb63c5ae1855846010d6e546.jpg') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        /* Floating Button */
+        .floating-btn {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: transparent;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .floating-btn .spotify-logo {
+            width: 32px;
+            height: 32px;
+            display: block;
+        }
+
+        /* Main Overlay Panel */
+        .overlay-panel {
+            position: fixed;
+            top: 50px;
+            right: -400px;
+            width: 380px;
+            height: calc(100vh - 100px);
+            background: url('https://i.pinimg.com/736x/d4/fb/ff/d4fbff78eb63c5ae1855846010d6e546.jpg') center center/cover no-repeat;
+            backdrop-filter: blur(0px);
+            border-radius: 15px 0 0 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 9998;
+            transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow-y: auto;
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay-panel.show {
+            right: 0;
+        }
+
+        /* Header */
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 8px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tab-btn i {
+            font-size: 16px;
+        }
+
+        .tab-icon-svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 0 20px 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Section Styles */
+        .section-title {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-group {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .option-item:last-child {
+            border-bottom: none;
+        }
+
+        .option-label {
+            color: #fff;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        /* Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Slider */
+        .range-slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .range-input {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .range-value {
+            color: #667eea;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        /* Radio Buttons */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .radio-item input[type="radio"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .radio-item input[type="radio"]:checked {
+            border-color: #667eea;
+        }
+
+        .radio-item input[type="radio"]:checked::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .radio-label {
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* Action Button */
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Scrollbar */
+        .overlay-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .overlay-panel::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .overlay-panel::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .overlay-panel {
+                width: 100%;
+                right: -100%;
+                border-radius: 0;
+            }
+            
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+                right: 15px;
+            }
+        }
+
+        /* Status indicator */
+        .status-indicator {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #4CAF50;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .status-indicator.inactive {
+            background: #f44336;
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <!-- Floating Button -->
+    <div class="floating-btn" id="floatingBtn">
+        <!-- Spotify SVG Logo -->
+        <svg class="spotify-logo" viewBox="0 0 168 168" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="84" cy="84" r="84" fill="#1ED760"/>
+            <path d="M120.1 115.2c-1.7 2.8-5.3 3.7-8.1 2-22.2-13.6-50.2-16.7-83.2-9.2-3.2.7-6.4-1.3-7.1-4.5-.7-3.2 1.3-6.4 4.5-7.1 35.5-7.9 66.2-4.4 90.2 10.4 2.8 1.7 3.7 5.3 2 8.1zm11.6-23.2c-2.1 3.4-6.5 4.5-9.9 2.4-25.4-15.6-64.2-20.1-94.2-11.1-3.8 1.1-7.8-1.1-8.9-4.9-1.1-3.8 1.1-7.8 4.9-8.9 33.8-9.8 75.1-5 103.7 12.2 3.4 2.1 4.5 6.5 2.4 9.9zm12.2-25.2c-29.1-17.2-77.5-18.8-105.1-10.4-4.4 1.3-9-1.2-10.3-5.6-1.3-4.4 1.2-9 5.6-10.3 31.2-9.2 84.1-7.4 117.2 11.5 4 2.4 5.3 7.7 2.9 11.7-2.4 4-7.7 5.3-11.7 2.9z" fill="#fff"/>
+        </svg>
+        <div class="status-indicator" id="statusIndicator"></div>
+    </div>
+
+    <!-- Main Overlay Panel -->
+    <div class="overlay-panel" id="overlayPanel">
+        <!-- Header -->
+        <div class="panel-header">
+            <div class="panel-title">You know who its - @doa.world</div>
+            <button class="close-btn" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="principal">
+                <svg class="tab-icon-svg" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16L3.54223 12.3383C1.93278 11.0162 1 9.04287 1 6.96005C1 3.11612 4.15607 0 8 0C11.8439 0 15 3.11612 15 6.96005C15 9.04287 14.0672 11.0162 12.4578 12.3383L8 16ZM3 6H5C6.10457 6 7 6.89543 7 8V9L3 7.5V6ZM11 6C9.89543 6 9 6.89543 9 8V9L13 7.5V6H11Z"/>
+                </svg>
+                Principal
+            </button>
+            <button class="tab-btn" data-tab="speedy">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"/>
+                </svg>
+                Speedy
+            </button>
+            <button class="tab-btn" data-tab="misc">
+                <i class="fab fa-twitch"></i>
+                Misc
+            </button>
+            <button class="tab-btn" data-tab="antiban">
+                <i class="fas fa-cloud"></i>
+                Antiban
+            </button>
+        </div>
+
+        <!-- Tab Contents -->
+        
+        <!-- Principal Tab -->
+        <div class="tab-content active" id="principal">
+            <div class="section-title">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16L3.54223 12.3383C1.93278 11.0162 1 9.04287 1 6.96005C1 3.11612 4.15607 0 8 0C11.8439 0 15 3.11612 15 6.96005C15 9.04287 14.0672 11.0162 12.4578 12.3383L8 16ZM3 6H5C6.10457 6 7 6.89543 7 8V9L3 7.5V6ZM11 6C9.89543 6 9 6.89543 9 8V9L13 7.5V6H11Z"/>
+                </svg>
+                QUE TIPO DE AIMBOT QUIERES USAR?
+            </div>
+            
+            <div class="option-group">
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="aimbot" value="cabeca">
+                        <span class="radio-label">Cabeça</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="aimbot" value="pescoco" checked>
+                        <span class="radio-label">Pescoço</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="aimbot" value="peito">
+                        <span class="radio-label">Peito</span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="applyAimbot()">
+                <i class="fas fa-crosshairs"></i> Aplicar Aimbot
+            </button>
+        </div>
+
+        <!-- Speedy Tab -->
+        <div class="tab-content" id="speedy">
+            <div class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"/>
+                </svg>
+                Configurações de Velocidade
+            </div>
+
+            <div class="option-group">
+                <div class="option-item">
+                    <span class="option-label">Speedy V2</span>
+                    <label class="switch">
+                        <input type="checkbox" id="speedyV2">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="option-item">
+                    <span class="option-label">Multiplicador</span>
+                </div>
+                <div class="range-slider">
+                    <input type="range" min="1" max="5" value="1" class="range-input" id="speedMultiplier">
+                    <div class="range-value">x<span id="speedMultiplierValue">1</span></div>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Speed Sensi Method</span>
+                </div>
+                <div class="range-slider">
+                    <input type="range" min="0" max="200" value="100" class="range-input" id="speedSensiMethod">
+                    <div class="range-value"><span id="speedSensiMethodValue">100</span></div>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Speed Sensi por Movimento</span>
+                    <label class="switch">
+                        <input type="checkbox" id="speedSensiMovement">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="applySpeedy()">
+                <i class="fas fa-bolt"></i> Aplicar Speedy
+            </button>
+        </div>
+
+        <!-- Misc Tab -->
+        <div class="tab-content" id="misc">
+            <div class="section-title">
+                <i class="fab fa-twitch"></i>
+                Configurações Diversas
+            </div>
+
+            <div class="option-group">
+                <div class="option-item">
+                    <span class="option-label">No Recoil</span>
+                    <label class="switch">
+                        <input type="checkbox" id="noRecoil">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">No Spread</span>
+                    <label class="switch">
+                        <input type="checkbox" id="noSpread">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Fake Lag</span>
+                    <label class="switch">
+                        <input type="checkbox" id="fakeLag">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="range-slider">
+                    <input type="range" min="0" max="150" value="0" class="range-input" id="fakeLagMs">
+                    <div class="range-value"><span id="fakeLagMsValue">0</span>ms</div>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Estirar Pantalla</span>
+                    <label class="switch">
+                        <input type="checkbox" id="stretchScreen">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Better Lock</span>
+                    <label class="switch">
+                        <input type="checkbox" id="betterLock">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Better Assist</span>
+                    <label class="switch">
+                        <input type="checkbox" id="betterAssist">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- Open Free Fire button -->
+                <div class="option-item">
+                    <button class="action-btn" style="margin-top:10px;" onclick="openFreeFire()">
+                        <i class="fas fa-gamepad"></i> Abrir Free Fire
+                    </button>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="applyMisc()">
+                <i class="fas fa-tools"></i> Aplicar Misc
+            </button>
+        </div>
+
+        <!-- Antiban Tab -->
+        <div class="tab-content" id="antiban">
+            <div class="section-title">
+                <i class="fas fa-cloud"></i>
+                Proteção Anti-Ban
+            </div>
+
+            <div class="option-group">
+                <div class="option-item">
+                    <span class="option-label">Fake Device</span>
+                    <label class="switch">
+                        <input type="checkbox" id="fakeDevice" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Antiban 60%</span>
+                    <label class="switch">
+                        <input type="checkbox" id="antiban60" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="option-item">
+                    <span class="option-label">Antiblacklist 100%</span>
+                    <label class="switch">
+                        <input type="checkbox" id="antiblacklist" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <button class="action-btn" onclick="clearReports()" style="margin-bottom: 10px;">
+                    <i class="fas fa-trash"></i> Limpiar Reportes
+                </button>
+            </div>
+
+            <button class="action-btn" onclick="applyAntiban()">
+                <i class="fas fa-shield-alt"></i> Aplicar Protecci�n
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let overlayVisible = false;
+        let currentTab = 'principal';
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+            updateSliderValues();
+        });
+
+        // Event listeners
+        function initializeEventListeners() {
+            // Floating button
+            document.getElementById('floatingBtn').addEventListener('click', toggleOverlay);
+            
+            // Close button
+            document.getElementById('closeBtn').addEventListener('click', hideOverlay);
+            
+            // Tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => switchTab(e.target.dataset.tab));
+            });
+
+            // Slider updates
+            document.getElementById('speedMultiplier').addEventListener('input', updateSpeedMultiplier);
+            document.getElementById('speedSensiMethod').addEventListener('input', updateSpeedSensiMethod);
+            document.getElementById('fakeLagMs').addEventListener('input', updateFakeLagMs);
+
+            // Prevent panel from closing when clicking inside
+            document.getElementById('overlayPanel').addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            // Close on outside click
+            document.addEventListener('click', (e) => {
+                if (overlayVisible && !e.target.closest('.overlay-panel') && !e.target.closest('.floating-btn')) {
+                    hideOverlay();
+                }
+            });
+        }
+
+        // Overlay functions
+        function toggleOverlay() {
+            if (overlayVisible) {
+                hideOverlay();
+            } else {
+                showOverlay();
+            }
+        }
+
+        function showOverlay() {
+            document.getElementById('overlayPanel').classList.add('show');
+            overlayVisible = true;
+            updateStatusIndicator(true);
+        }
+
+        function hideOverlay() {
+            document.getElementById('overlayPanel').classList.remove('show');
+            overlayVisible = false;
+            updateStatusIndicator(false);
+        }
+
+        function updateStatusIndicator(active) {
+            const indicator = document.getElementById('statusIndicator');
+            if (active) {
+                indicator.classList.remove('inactive');
+            } else {
+                indicator.classList.add('inactive');
+            }
+        }
+
+        // Tab functions
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+
+            currentTab = tabName;
+        }
+
+        // Slider functions
+        function updateSliderValues() {
+            updateSpeedMultiplier();
+            updateSpeedSensiMethod();
+            updateFakeLagMs();
+        }
+
+        function updateSpeedMultiplier() {
+            const value = document.getElementById('speedMultiplier').value;
+            document.getElementById('speedMultiplierValue').textContent = value;
+        }
+
+        function updateSpeedSensiMethod() {
+            const value = document.getElementById('speedSensiMethod').value;
+            document.getElementById('speedSensiMethodValue').textContent = value;
+        }
+
+        function updateFakeLagMs() {
+            const value = document.getElementById('fakeLagMs').value;
+            document.getElementById('fakeLagMsValue').textContent = value;
+        }
+
+        // Action functions
+        function applyAimbot() {
+            const selectedAimbot = document.querySelector('input[name="aimbot"]:checked').value;
+            showNotification(`Aimbot aplicado: ${selectedAimbot}`);
+            
+            // Aquí irían las llamadas a tu c�digo nativo
+            if (window.Overlay) {
+                window.Overlay.applyAimbot(selectedAimbot);
+            }
+        }
+
+        function applySpeedy() {
+            const speedyV2 = document.getElementById('speedyV2').checked;
+            const multiplier = document.getElementById('speedMultiplier').value;
+            const sensiMethod = document.getElementById('speedSensiMethod').value;
+            const sensiMovement = document.getElementById('speedSensiMovement').checked;
+            
+            const config = {
+                speedyV2,
+                multiplier: parseInt(multiplier),
+                sensiMethod: parseInt(sensiMethod),
+                sensiMovement
+            };
+            
+            showNotification('Configuraci�n Speedy aplicada');
+            
+            if (window.Overlay) {
+                window.Overlay.applySpeedy(JSON.stringify(config));
+            }
+        }
+
+        function applyMisc() {
+            const config = {
+                noRecoil: document.getElementById('noRecoil').checked,
+                noSpread: document.getElementById('noSpread').checked,
+                fakeLag: document.getElementById('fakeLag').checked,
+                fakeLagMs: parseInt(document.getElementById('fakeLagMs').value),
+                stretchScreen: document.getElementById('stretchScreen').checked,
+                betterLock: document.getElementById('betterLock').checked,
+                betterAssist: document.getElementById('betterAssist').checked
+            };
+            
+            showNotification('Configuraci�n Misc aplicada');
+            
+            if (window.Overlay) {
+                window.Overlay.applyMisc(JSON.stringify(config));
+            }
+        }
+
+        function applyAntiban() {
+            const config = {
+                fakeDevice: document.getElementById('fakeDevice').checked,
+                antiban60: document.getElementById('antiban60').checked,
+                antiblacklist: document.getElementById('antiblacklist').checked
+            };
+            
+            showNotification('Protecci�n Anti-ban aplicada');
+            
+            if (window.Overlay) {
+                window.Overlay.applyAntiban(JSON.stringify(config));
+            }
+        }
+
+        function clearReports() {
+            if (confirm('¿Est�s seguro de que quieres limpiar los reportes?')) {
+                showNotification('Reportes limpiados exitosamente');
+                
+                if (window.Overlay) {
+                    window.Overlay.clearReports();
+                }
+            }
+        }
+
+        // Notification system
+        function showNotification(message) {
+            // Remove existing notification
+            const existing = document.querySelector('.notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            `;
+            
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #4CAF50, #45a049);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 14px;
+                font-weight: bold;
+                animation: slideInDown 0.4s ease, fadeOut 0.4s ease 2.5s forwards;
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        // Cordova specific functions
+        document.addEventListener('deviceready', function() {
+            console.log('Cordova device ready');
+            
+            // Handle Android back button
+            document.addEventListener('backbutton', function(e) {
+                e.preventDefault();
+                if (overlayVisible) {
+                    hideOverlay();
+                } else {
+                    // Minimize overlay instead of closing app
+                    if (window.Overlay && window.Overlay.minimizeApp) {
+                        window.Overlay.minimizeApp();
+                    }
+                }
+            });
+
+            // Handle pause/resume
+            document.addEventListener('pause', function() {
+                console.log('App paused');
+            });
+
+            document.addEventListener('resume', function() {
+                console.log('App resumed');
+            });
+
+            // Request overlay permission
+            if (window.Overlay && window.Overlay.requestOverlayPermission) {
+                window.Overlay.requestOverlayPermission();
+            }
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInDown {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+            
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize floating button position (draggable)
+        // Make floating button NOT draggable (remove drag logic)
+        // (No code needed here)
+
+        // Save/load settings
+        function saveSettings() {
+            const settings = {
+                speedyV2: document.getElementById('speedyV2').checked,
+                speedMultiplier: document.getElementById('speedMultiplier').value,
+                speedSensiMethod: document.getElementById('speedSensiMethod').value,
+                speedSensiMovement: document.getElementById('speedSensiMovement').checked,
+                noRecoil: document.getElementById('noRecoil').checked,
+                noSpread: document.getElementById('noSpread').checked,
+                fakeLag: document.getElementById('fakeLag').checked,
+                fakeLagMs: document.getElementById('fakeLagMs').value,
+                stretchScreen: document.getElementById('stretchScreen').checked,
+                betterLock: document.getElementById('betterLock').checked,
+                betterAssist: document.getElementById('betterAssist').checked,
+                fakeDevice: document.getElementById('fakeDevice').checked,
+                antiban60: document.getElementById('antiban60').checked,
+                antiblacklist: document.getElementById('antiblacklist').checked
+            };
+
+            // In a real Cordova app, you would save to file or native storage
+            console.log('Settings saved:', settings);
+        }
+
+        // Auto-save settings when changed
+        document.querySelectorAll('input[type="checkbox"], input[type="range"], input[type="radio"]').forEach(input => {
+            input.addEventListener('change', saveSettings);
+        });
+
+        // Function to open Free Fire via custom URL scheme
+        function openFreeFire() {
+            window.location.href = 'freefireth://';
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

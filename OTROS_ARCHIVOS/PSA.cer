@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>ConsentText</key>
+    <dict>
+        <key>default</key>
+        <string>y recuerda chico, the world is yours and the rest is mine🔃
+        </string>
+    </dict>
+
+    <key>PayloadContent</key>
+    <array>
+        <!-- Opción 1: NextDNS -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerURL</key>
+                <string>https://dns.nextdns.io/d7ffed</string>
+                <key>ServiceType</key>
+                <string>HTTPS</string>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion1.next</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>A1111111-1111-1111-1111-000000000001</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>𝘴𝘦𝘯𝘴𝘪 𝘰𝘷𝘦𝘳 𝘢𝘭𝘭 💰🔃</string>
+        </dict>
+
+        <!-- Opción 2: NextDNS -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerURL</key>
+                <string>https://dns.nextdns.io/d7ffed</string>
+                <key>ServiceType</key>
+                <string>HTTPS</string>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion2.next</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>B2222222-2222-2222-2222-000000000002</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>𝘏𝘦𝘢𝘥𝘉𝘰𝘱🔃</string>
+        </dict>
+
+        <!-- Opción 3: NextDNS -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerURL</key>
+                <string>https://dns.nextdns.io/d7ffed</string>
+                <key>ServiceType</key>
+                <string>HTTPS</string>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion3.next</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>C3333333-3333-3333-3333-000000000003</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>𝖦-𝖫𝗈𝖼𝗄🔃</string>
+        </dict>
+        
+        <!-- Opción 4: NextDNS -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerURL</key>
+                <string>https://dns.nextdns.io/d7ffed</string>
+                <key>ServiceType</key>
+                <string>HTTPS</string>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion4.next</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>D4444444-4444-4444-4444-000000000004</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>𝘩𝘪𝘵𝘵.𝘰𝘷𝘦𝘳 🔃</string>
+        </dict>
+        
+        <!-- Opción 5: NextDNS -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerURL</key>
+                <string>https://dns.nextdns.io/d7ffed</string>
+                <key>ServiceType</key>
+                <string>HTTPS</string>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.dts.freefire.aimbotF44x</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>E5555555-5555-5555-5555-000000000005</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>𝘙𝘦𝘨𝘨 𝘷𝟤🔃</string>
+        </dict>
+        
+        <!-- Opción 6: NextDNS -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerURL</key>
+                <string>https://dns.nextdns.io/d7ffed</string>
+                <key>ServiceType</key>
+                <string>HTTPS</string>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.dts.freefire.aimbotF44x</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>F6666666-6666-6666-6666-000000000006</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>NextDNS Configuración 6</string>
+        </dict>
+
+    </array>  
+    <key>PayloadDisplayName</key>
+    <string>NextDNS Personalizado (6 Opciones)</string>
+    <key>PayloadIdentifier</key>
+    <string>com.dts.freefire.aimbotF44x</string>
+    <key>PayloadOrganization</key>
+    <string>Configuraciones Personalizadas</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>G7777777-7777-7777-7777-999999999999</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

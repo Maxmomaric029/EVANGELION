@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>208.67.222.222</string>
+				</array>
+				<key>ServerName</key>
+				<string>𝐒𝐞𝐧𝐬𝐢.𝐍𝐨𝐛𝐫𝐮 [𝐏𝐫𝐢𝐯] 👑</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.nobru.sensi.priv.br"true&gt;</string>
+					<string>nobru.apelao.capa</string>
+					<string>sensi.vip.ios</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝐒𝐞𝐧𝐬𝐢.𝐍𝐨𝐛𝐫𝐮 [𝐏𝐫𝐢𝐯] 👑</string>
+			<key>PayloadIdentifier</key>
+			<string>com.nobru.priv.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>G7G7G7G7-7777-0000-7777-G7G7G7G7G7G7</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Sensi Nobru Private</string>
+	<key>PayloadIdentifier</key>
+	<string>com.nobru.priv.config</string>
+	<key>PayloadOrganization</key>
+	<string>Nobru Gaming</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>H8H8H8H8-8888-1111-8888-H8H8H8H8H8H8</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

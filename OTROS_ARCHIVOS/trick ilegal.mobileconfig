@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConsentText</key>
+	<dict>
+		<key>default</key>
+		<string>By Bloodie hackss</string>
+	</dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>DomainServer</key>
+				<string>iPhone14,Max</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>1.0.0.1</string>
+					<string>1.1.1.1</string>
+				</array>
+				<key>ServerName</key>
+				<string>☣️ 𝐄𝐝𝐢𝐭 𝐕𝐢𝐨𝐥𝐞𝐧𝐜𝐞 (𝐕𝟗)</string>
+				<key>ServerOwner</key>
+				<array>
+					<string>Bloodie_Dev</string>
+				</array>
+				<key>ServerURL</key>
+				<string>https://dns.nextdns.io/Edit.Violence.Bloodie</string>
+				<key>ServerUser</key>
+				<array>
+					<string>Bloodie_Admin</string>
+					<string>Violence_User</string>
+				</array>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.trick.two9.mobile.touch_sampling_rate_240hz_override_system"&gt;</string>
+					<string>&lt;build:name"com.data.terror.insane.aim_lock_head_only_bypass_active_secure"&gt;</string>
+					<string>&lt;build:name"com.sensi.white444.full_vermelho.dpi_emulation_1440_force_render"&gt;</string>
+					<string>&lt;build:name"com.edit.violence.pure.packet_loss_prevention_aggressive_mode"&gt;</string>
+					<string>&lt;build:name"com.arquivo.dacruz.locked.aim_assist_magnetism_level_100_uncrack"&gt;</string>
+					<string>&lt;build:name"com.macro.venom.toxic.auto_click_delay_0ms_input_register"&gt;</string>
+					<string>&lt;build:name"com.pack.nobru.capa_max.gyro_stabilizer_off_drag_boost_on"&gt;</string>
+					<string>&lt;build:name"com.meta.tracker.hard.wall_hack_simulation_audio_visual_boost"&gt;</string>
+					<string>&lt;build:name"com.reedit.gold.version.max.memory_write_permission_elevation_root"&gt;</string>
+					<string>&lt;build:name"com.aimlock.data.v4.hidden.tunnel_encryption_anti_ban_layer_3"&gt;</string>
+					<string>com.trick.two9.mobile</string>
+					<string>com.data.terror.insane</string>
+					<string>com.sensi.white444.full-vermelho</string>
+					<string>com.edit.violence.pure</string>
+					<string>com.arquivo.dacruz.locked</string>
+					<string>com.macro.venom.toxic</string>
+					<string>com.pack.nobru.capa-max</string>
+					<string>com.meta.tracker.hard</string>
+					<string>com.reedit.gold.version-max</string>
+					<string>com.aimlock.data.v4</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>👺 𝐃𝐚𝐭𝐚 𝐓𝐞𝐫𝐫𝐨𝐫 [𝐈𝐧𝐬𝐚𝐧𝐞]</string>
+			<key>PayloadIdentifier</key>
+			<string>com.bloodie.data.terror</string>
+			<key>PayloadOrganization</key>
+			<string>By Bloodie hackss</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>E4E4E4E4-5D5D-6C6C-7B7B-8A8A8A8A8A8A</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadDisplayName</key>
+	<string>⚡ 𝐓𝐫𝐢𝐜𝐤 𝐓𝐰𝐨𝟗 [𝐑𝐞𝐚𝐥]</string>
+	<key>PayloadIdentifier</key>
+	<string>com.bloodie.trick.two9</string>
+	<key>PayloadOrganization</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>99999999-AAAA-BBBB-CCCC-DDDDDDDDDDDD</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>TargetDeviceType</key>
+	<integer>0</integer>
+</dict>
+</plist>

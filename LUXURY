@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID XIT | UNDERGROUND </title>
+    <style>
+        :root {
+            --void-white: #ffffff;
+            --void-gray: #444444;
+            --void-accent: #ff0000; /* Un rojo sangre muy sutil para las alertas */
+        }
+
+        body {
+            background: #000;
+            background-image: 
+                radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--void-white);
+            overflow: hidden;
+        }
+
+        /* Contenedor Orgánico / Redondeado */
+        .panel {
+            width: 320px;
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 60px;
+            padding: 45px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 1);
+            position: relative;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+            margin: 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .header p {
+            font-size: 0.5rem;
+            letter-spacing: 6px;
+            color: #444;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Nuevo estilo de Opciones: "Nódulos" */
+        .node-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .node {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 35px;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .node:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .node.active {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tipografía Fórmula XIT 4.0 Dark */
+        .node-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #aaa;
+            transition: 0.3s;
+        }
+
+        .node.active .node-label {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* Indicador de estado minimalista */
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #222;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        .node.active .dot {
+            background: #fff;
+            box-shadow: 0 0 12px #fff;
+        }
+
+        /* Botón de Ejecución "Underground" */
+        .execute-btn {
+            width: 100%;
+            margin-top: 40px;
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 20px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .execute-btn:hover {
+            letter-spacing: 6px;
+            background: #eee;
+        }
+
+        .status-footer {
+            margin-top: 30px;
+            font-size: 0.45rem;
+            color: #222;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <div class="header">
+        <h1>𝐕𝐎𝐈𝐃</h1>
+        <p>𝐔𝐍𝐃𝐄𝐑𝐆𝐑𝐎𝐔𝐍𝐃 </p>
+    </div>
+
+    <div class="node-container">
+        <div class="node active" onclick="this.classList.toggle('active')">
+            <span class="node-label">🇧🇷 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐅𝐮𝐥𝐥 𝐕𝐞𝐫𝐦𝐞𝐥𝐡𝐨 (𝐯𝟗)</span>
+            <div class="dot"></div>
+        </div>
+
+        <div class="node" onclick="this.classList.toggle('active')">
+            <span class="node-label">👺 𝐓𝐫𝐢𝐜𝐤 𝐀𝐛𝐬𝐮𝐫𝐝𝐨 [𝐎𝐍]</span>
+            <div class="dot"></div>
+        </div>
+
+        <div class="node active" onclick="this.classList.toggle('active')">
+            <span class="node-label">☠️ 𝐀𝐮𝐱𝐢𝐥𝐢𝐨 𝐈𝐧𝐬𝐚𝐧𝐨 [𝐕𝐈𝐏]</span>
+            <div class="dot"></div>
+        </div>
+
+        <div class="node" onclick="this.classList.toggle('active')">
+            <span class="node-label"> 𝐓𝐨𝐮𝐜𝐡 𝐢𝐎𝐒 𝐆𝐞𝐥𝐨 (𝐌𝐀𝐗)</span>
+            <div class="dot"></div>
+        </div>
+
+        <div class="node" onclick="this.classList.toggle('active')">
+            <span class="node-label">👁️ 𝐁𝐚𝐬𝐞 𝐁𝐥𝐢𝐧𝐝𝐚𝐝𝐚 𝐗𝐢𝐭</span>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <button class="execute-btn" onclick="this.innerHTML='𝐃𝐀𝐓𝐀 𝐈𝐍𝐉𝐄𝐂𝐓𝐄𝐃';">𝐒𝐲𝐧𝐜 𝐕𝐨𝐢𝐝</button>
+
+    <div class="status-footer">
+        𝐃𝐄𝐕𝐄𝐋𝐎𝐏𝐄𝐃 𝐈𝐍 𝐒𝐄𝐂𝐑𝐄𝐓 | 𝐔𝐍𝐃𝐄𝐓𝐄𝐂𝐓𝐄𝐃
+    </div>
+</div>
+
+</body>
+</html>

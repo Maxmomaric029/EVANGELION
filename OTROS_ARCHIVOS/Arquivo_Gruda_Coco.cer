@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>TLS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>9.9.9.9</string>
+				</array>
+				<key>ServerName</key>
+				<string>𝐀𝐫𝐪𝐮𝐢𝐯𝐨 // 𝐆𝐫𝐮𝐝𝐚𝐂𝐨𝐜𝐨 🩸</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.gruda.coco.arquivo.br"true&gt;</string>
+					<string>mira.trancada.coco</string>
+					<string>aim.lock.absurda</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝐀𝐫𝐪𝐮𝐢𝐯𝐨 // 𝐆𝐫𝐮𝐝𝐚𝐂𝐨𝐜𝐨 🩸</string>
+			<key>PayloadIdentifier</key>
+			<string>com.gruda.coco.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>E5E5E5E5-5555-EEEE-5555-E5E5E5E5E5E5</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Arquivo Gruda Coco</string>
+	<key>PayloadIdentifier</key>
+	<string>com.gruda.coco.config</string>
+	<key>PayloadOrganization</key>
+	<string>Gruda BR</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>F6F6F6F6-6666-FFFF-6666-F6F6F6F6F6F6</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

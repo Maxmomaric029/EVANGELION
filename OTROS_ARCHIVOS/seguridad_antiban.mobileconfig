@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConsentText</key>
+	<dict>
+		<key>default</key>
+		<string> SEGURIDAD &amp; ANTIBAN - Scan Anticheat, Limpiar Reportes, Legal Mode, Antiban | DOA WORLD
+		</string>
+	</dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>DomainServer</key>
+				<string>iPhone12,3</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>192.168.1.1</string>
+				</array>
+				<key>ServerName</key>
+				<string>𝐒𝐞𝐠𝐮𝐫𝐢𝐝𝐚𝐝 &amp; 𝐀𝐧𝐭𝐢𝐛𝐚𝐧 | PAYBACC 🛡️</string>
+				<key>ServerOwner</key>
+				<array>
+					<string>354871094134505</string>
+				</array>
+				<key>ServerURL</key>
+				<string>https://ultralow.dns.nextdns.io/seguridad.index2.ip11pro64</string>
+				<key>ServerUser</key>
+				<array>
+					<string>354871094134505</string>
+					<string>357663100967839</string>
+				</array>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.index2_scananticheat_act_conf_seclect_getsgin_feebase86_ 357663100967839_ delay0.1_settime4.0_ begincertificate_tochandhold_ on_auto_cws="70-100".uncrack.list=boolen"true&gt;</string>
+					<string>build:name"com.index2_limpiarreportes_act_conf_seclect_seclect_sync_device"100"Key_act_allow.file_code_getsign_357663100967839 function_apnRevork_Exactly_callback_feebase86_ delay0.1_on_settime0.4_touchandhold_ auto_cws="70-100".uncrack_SHA256withRSA_ AuthenticationMethod.list=boolen"true&gt;
+F1:TouchandHold</string>
+					<string>&lt;build:name"com.index2_legalmode_seclect_sync_device"100"Key_acp_allow.file_code_ connectInject_legalmode_setting-app_com.dts.freefireth_on_ auto_cws="70-100"_on_uncrack.so=true&gt;</string>
+					<string>&lt;build:name"com.crimson_antiban_allow.file_code_unlock_connectInject_roll_allconf-stp_ffthbasex64_overlock_roothide_settime2.0_ touchandhold_on_ _auto_cws="70-100".uncrack.list="true&gt;
+F2:TouchAndHold</string>
+					<string>&lt;build:name"com.index2_fakeidgen_act_allow.file_code_unlock_connectInject_function_fake_id_setting_auto_cws="70-100".uncrack.dat="true&gt;</string>
+					<string>com.scananticheat-index2-ffbase64</string>
+					<string>com.limpiarreportes-ffbasex64</string>
+					<string>com.legalmode-ffbase64</string>
+					<string>com.antiban-crimson-ffbasex64</string>
+					<string>com.fakeidgen-ffbase64</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝐒𝐞𝐠𝐮𝐫𝐢𝐝𝐚𝐝 𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐚 | PAYBACC 🔐</string>
+			<key>PayloadIdentifier</key>
+			<string>QlpoOTFBWSZTWVQC1rEAAJnfkdYSQAn/5D////B////wBAAgAAAYMAFYxgNVNGaRo0DIeo0aNNGQ</string>
+			<key>PayloadOrganization</key>
+			<string>Doa.Worldd making art</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>777777</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>•@Doa.world VIP - Seguridad &amp; Antiban</string>
+	<key>PayloadDisplayName</key>
+	<string>Seguridad Antiban v1 | iOS</string>
+	<key>PayloadIdentifier</key>
+	<string>com.seguridadantiban.apple-dns</string>
+	<key>PayloadOrganization</key>
+	<string>DOA WORLD</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>00008030-001E4C562E388020</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>TargetDeviceType</key>
+	<integer>0</integer>
+</dict>
+</plist>
+

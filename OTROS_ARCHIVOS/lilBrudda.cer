@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>172.16.1.1</string>
+          <string>172.16.1.2</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.speedyx</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>AAA90000-BBBB-9999-CCCC-AAAA99990000</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐒𝐩𝐞𝐞𝐝𝐲𝐗 ⚡💨</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>172.16.1.3</string>
+          <string>172.16.1.4</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.speedyx2</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>BBB90001-CCCC-0000-DDDD-BBBB00011122</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐒𝐩𝐞𝐞𝐝𝐲𝐗 𝑿2 💨🔥</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>DNS SpeedyX</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.dns.speedyx</string>
+  <key>PayloadOrganization</key>
+  <string>HackZone</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>FEDC0007-1234-5678-90AB-CDEF12340007</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

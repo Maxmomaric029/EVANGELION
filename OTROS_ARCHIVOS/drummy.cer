@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>ConsentText</key>
+    <dict>
+        <key>default</key>
+        <string>Al instalar este perfil, usted acepta los términos. Este perfil contiene seis configuraciones diferentes de DNS. La instalación solo activará una de las opciones. Usted confirma que ha revisado la lista de opciones y otorga su consentimiento para la modificación de la configuración de red del dispositivo.
+        </string>
+    </dict>
+
+    <key>PayloadContent</key>
+    <array>
+        <!-- Opción 1: Cloudflare Primario -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>1.1.1.1</string>
+                    <string>1.0.0.1</string>
+                </array>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion1</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>A1A1A1A1-B1B1-C1C1-D1D1-111111111111</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>DNS Opción 1: Rendimiento (Cloudflare)</string>
+        </dict>
+
+        <!-- Opción 2: Google Público -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>8.8.8.8</string>
+                    <string>8.8.4.4</string>
+                </array>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion2</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>B2B2B2B2-C2C2-D2D2-E2E2-222222222222</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>DNS Opción 2: Google Público</string>
+        </dict>
+
+        <!-- Opción 3: OpenDNS Seguridad -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>208.67.222.123</string>
+                    <string>208.67.220.123</string>
+                </array>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion3</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>C3C3C3C3-D3D3-E3E3-F3F3-333333333333</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>DNS Opción 3: Filtrado y Seguridad</string>
+        </dict>
+        
+        <!-- Opción 4: AdGuard (Sin anuncios/filtrado) -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>94.140.14.14</string>
+                    <string>94.140.15.15</string>
+                </array>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion4</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>D4D4D4D4-E4E4-F4F4-1414-444444444444</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>DNS Opción 4: Bloqueo de Anuncios</string>
+        </dict>
+        
+        <!-- Opción 5: Cisco Umbrella (Familiares) -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>208.67.222.222</string>
+                    <string>208.67.220.220</string>
+                </array>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion5</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>E5E5E5E5-F5F5-1515-2525-555555555555</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>DNS Opción 5: Modo Familiar</string>
+        </dict>
+        
+        <!-- Opción 6: DNS Cuaternario -->
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>9.9.9.9</string>
+                    <string>149.112.112.112</string>
+                </array>
+            </dict>
+            <key>PayloadIdentifier</key>
+            <string>com.config.dns.opcion6</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>F6F6F6F6-1616-2626-3636-666666666666</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>DNS Opción 6: Quad9 (Seguridad y Privacidad)</string>
+        </dict>
+
+    </array>  
+    <key>PayloadDisplayName</key>
+    <string>Perfil de Configuración DNS con 6 Opciones</string>
+    <key>PayloadIdentifier</key>
+    <string>com.ios.profile.dns.seisopciones</string>
+    <key>PayloadOrganization</key>
+    <string>Configuraciones de Red</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>G7G7G7G7-H7H7-I7I7-J7J7-777777777777</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

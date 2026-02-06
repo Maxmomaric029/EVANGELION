@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝑵𝒊𝒈 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://i.pinimg.com/736x/29/0f/1c/290f1c678eb5fef08fc78d5497c3d7b5.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #0ff rgba(0, 0, 0, 0.3);
+        }
+
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0ff, #0aa);
+            border-radius: 10px;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #0ff, #0dd);
+            box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+        }
+
+        #startScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+
+        #startScreen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #startText {
+            font-size: 48px;
+            color: #0ff;
+            text-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+
+        #mainContent {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: 30px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        #mainContent.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #mainContent::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #mainContent::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        #mainContent::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0ff, #0aa);
+            border-radius: 10px;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        #mainContent::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #0ff, #0dd);
+            box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+        }
+
+        #asciiArt {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            font-family: monospace;
+            font-size: 18px;
+            line-height: 1;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+            white-space: pre;
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        #asciiArt.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #asciiArt.hide {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            padding: 25px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 85vh;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #0ff rgba(0, 0, 0, 0.3);
+        }
+
+        .container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0ff, #0aa);
+            border-radius: 10px;
+            box-shadow: 0 0 8px #0ff;
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #0ff, #0dd);
+            box-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #0ff;
+            text-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            padding: 18px;
+            background: rgba(10, 10, 10, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            background: rgba(15, 15, 15, 0.5);
+            border-color: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #ddd;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            padding-left: 5px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .option:last-child {
+            border-bottom: none;
+        }
+
+        .option-label {
+            font-size: 15px;
+            color: #ddd;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .switch {
+            position: relative;
+            width: 45px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(50, 50, 50, 0.6);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .slider:hover {
+            background-color: rgba(70, 70, 70, 0.7);
+        }
+
+        input:disabled + .slider {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        input:disabled + .slider:hover {
+            background-color: rgba(50, 50, 50, 0.6);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 3px;
+            background-color: #999;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #0ff;
+            box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(21px);
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .sub-options {
+            margin-left: 25px;
+            margin-top: 12px;
+            padding-left: 12px;
+            border-left: 2px solid rgba(0, 255, 255, 0.3);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.4s ease;
+        }
+
+        .sub-options.active {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .slider-input {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 5px;
+            background: rgba(50, 50, 50, 0.6);
+            outline: none;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .slider-input:hover {
+            background: rgba(70, 70, 70, 0.7);
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #0ff;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #0ff;
+            transition: all 0.3s ease;
+        }
+
+        .slider-input::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+        }
+
+        .slider-input::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #0ff;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #0ff;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .slider-input::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+        }
+
+        .slider-value {
+            color: #0ff;
+            font-weight: bold;
+            min-width: 35px;
+            text-align: right;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        .speed-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: rgba(20, 20, 20, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .speed-option:hover {
+            background: rgba(30, 30, 30, 0.6);
+            border-color: rgba(0, 255, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .speed-option.active {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: #0ff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .speed-option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .speed-label {
+            color: #ddd;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .baneable {
+            color: #f55;
+            font-size: 11px;
+            margin-left: 8px;
+            text-shadow: 0 0 10px #f55;
+        }
+
+        #disclaimer {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-top: 15px;
+            margin-bottom: -10px;
+            text-shadow: 0 0 8px rgba(136, 136, 136, 0.5);
+            font-style: italic;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.5s;
+        }
+
+        #disclaimer.show {
+            opacity: 1;
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <div id="startScreen">
+        <div id="startText">Iniciar</div>
+    </div>
+
+    <div id="mainContent">
+        <pre id="asciiArt">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣤⣄⡀⠀⠀⣀⣀⣀⣤⣤⣤⣤⡄⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣾⠟⠛⠛⣿⣿⣿⣿⡿⠃⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⣤⣾⣿⠿⠛⠉⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣀⣤⠶⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣠⣶⣿⣿⡁⣀⣘⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢠⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠻⠿⠿⠿⠟⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠈⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀AUXILIAR⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
+        <div id="disclaimer"</div>
+        <div class="container">
+            <h1>𝑩𝒊𝒈 3</h1>
+
+            <div class="section">
+                <div class="section-title">Auxiliar</div>
+                <div class="option">
+                    <span class="option-label">Auxiliar Aimbot</span>
+                    <label class="switch">
+                        <input type="checkbox" id="auxAimbot">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="option">
+                    <span class="option-label">Auxiliar Mira x2</span>
+                    <label class="switch">
+                        <input type="checkbox" id="auxMirax2">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="option">
+                    <span class="option-label">Auxiliar Mira x4</span>
+                    <label class="switch">
+                        <input type="checkbox" id="auxMirax4">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="option">
+                    <span class="option-label">Auxiliar Sensi</span>
+                    <label class="switch">
+                        <input type="checkbox" id="auxSensi">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">AimSaturn</div>
+                <div class="option">
+                    <span class="option-label">Activar AimSaturn</span>
+                    <label class="switch">
+                        <input type="checkbox" id="aimSaturn">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="aimSaturnSub" class="sub-options">
+                    <div class="option">
+                        <span class="option-label">AimScope</span>
+                        <label class="switch">
+                            <input type="checkbox" id="aimScope">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">AimFOV</span>
+                        <div class="slider-container">
+                            <input type="range" class="slider-input" id="aimFov" min="0" max="100" value="50">
+                            <span class="slider-value" id="aimFovValue">50</span>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Fix Aim</span>
+                        <label class="switch">
+                            <input type="checkbox" id="fixAim">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Aim-Drag</span>
+                        <label class="switch">
+                            <input type="checkbox" id="aimDrag">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Smooth Aim</span>
+                        <label class="switch">
+                            <input type="checkbox" id="smoothAim">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Aim Prediction</span>
+                        <label class="switch">
+                            <input type="checkbox" id="aimPrediction">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Target Lock</span>
+                        <label class="switch">
+                            <input type="checkbox" id="targetLock">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Head Priority</span>
+                        <label class="switch">
+                            <input type="checkbox" id="headPriority">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Aim Bone Selector</span>
+                        <label class="switch">
+                            <input type="checkbox" id="aimBoneSelector">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div id="aimBoneSub" class="sub-options">
+                        <div class="speed-option" data-bone="head">
+                            <input type="radio" name="boneOption" id="boneHead" value="head" checked>
+                            <label class="speed-label" for="boneHead">Cabeza</label>
+                        </div>
+                        <div class="speed-option" data-bone="chest">
+                            <input type="radio" name="boneOption" id="boneChest" value="chest">
+                            <label class="speed-label" for="boneChest">Pecho</label>
+                        </div>
+                        <div class="speed-option" data-bone="neck">
+                            <input type="radio" name="boneOption" id="boneNeck" value="neck">
+                            <label class="speed-label" for="boneNeck">Cuello</label>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Aim Smoothness</span>
+                        <div class="slider-container">
+                            <input type="range" class="slider-input" id="aimSmoothness" min="1" max="100" value="50">
+                            <span class="slider-value" id="aimSmoothnessValue">50</span>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Aim Delay (ms)</span>
+                        <div class="slider-container">
+                            <input type="range" class="slider-input" id="aimDelay" min="0" max="500" value="0" step="10">
+                            <span class="slider-value" id="aimDelayValue">0</span>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">???
+                        </span>
+                        <label class="switch">
+                            <input type="checkbox" id="triggerbot">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">Silent Aim</span>
+                        <label class="switch">
+                            <input type="checkbox" id="silentAim">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Misc</div>
+                <div class="option">
+                    <span class="option-label">Backjump Trick</span>
+                    <label class="switch">
+                        <input type="checkbox" id="backjump">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="option">
+                    <span class="option-label">No Recoil</span>
+                    <label class="switch">
+                        <input type="checkbox" id="noRecoil">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="noRecoilSub" class="sub-options">
+                    <div class="option">
+                        <span class="option-label">No Recoil SCAR</span>
+                        <label class="switch">
+                            <input type="checkbox" id="noRecoilScar">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">No Recoil M4A1</span>
+                        <label class="switch">
+                            <input type="checkbox" id="noRecoilM4a1">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">No Recoil M1014</span>
+                        <label class="switch">
+                            <input type="checkbox" id="noRecoilM1014">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="option">
+                    <span class="option-label">Precision</span>
+                    <label class="switch">
+                        <input type="checkbox" id="precision">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="option">
+                    <span class="option-label">Fix Aim V2</span>
+                    <label class="switch">
+                        <input type="checkbox" id="fixAimV2">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="option">
+                    <span class="option-label">Speedy</span>
+                    <label class="switch">
+                        <input type="checkbox" id="speedy">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="speedySub" class="sub-options">
+                    <div class="speed-option" data-speed="x2">
+                        <input type="radio" name="speedOption" id="speedx2" value="x2">
+                        <label class="speed-label" for="speedx2">Speed x2</label>
+                    </div>
+                    <div class="speed-option" data-speed="x3">
+                        <input type="radio" name="speedOption" id="speedx3" value="x3">
+                        <label class="speed-label" for="speedx3">Speed x3</label>
+                    </div>
+                    <div class="speed-option" data-speed="x3.5">
+                        <input type="radio" name="speedOption" id="speedx35" value="x3.5">
+                        <label class="speed-label" for="speedx35">Speed x3.5 <span class="baneable">(baneable)</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Pr�ximamente</div>
+                <div class="option">
+                    <span class="option-label">ESP</span>
+                    <label class="switch">
+                        <input type="checkbox" id="esp" disabled>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="espSub" class="sub-options">
+                    <div class="option">
+                        <span class="option-label">ESP Box</span>
+                        <label class="switch">
+                            <input type="checkbox" id="espBox" disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">ESP Name</span>
+                        <label class="switch">
+                            <input type="checkbox" id="espName" disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">ESP Health</span>
+                        <label class="switch">
+                            <input type="checkbox" id="espHealth" disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <span class="option-label">ESP Distance</span>
+                        <label class="switch">
+                            <input type="checkbox" id="espDistance" disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                    <!-- Open Free Fire button (placed under ESP) -->
+                    <div style="display:flex;justify-content:center;padding-top:14px;">
+                        <button id="openFreefireBtn" aria-label="Abrir Free Fire" style="background:linear-gradient(180deg,#00ffff,#00d1d1);border:1px solid rgba(255,255,255,0.06);padding:10px 16px;border-radius:10px;color:#001;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(0,255,255,0.12);transition:transform .18s ease;">
+                            Abrir Free Fire
+                        </button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Big3.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const startScreen = document.getElementById('startScreen');
+        const mainContent = document.getElementById('mainContent');
+        const asciiArt = document.getElementById('asciiArt');
+        const container = document.querySelector('.container');
+        const bgMusic = document.getElementById('bgMusic');
+
+        startScreen.addEventListener('click', () => {
+            // Ocultar pantalla de inicio
+            startScreen.classList.add('hidden');
+            
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                mainContent.classList.add('active');
+                
+                // Mostrar ASCII en el centro
+                asciiArt.classList.add('show');
+                
+                // Reproducir música
+                bgMusic.play();
+                
+                // Después de 2 segundos, ocultar ASCII y mostrar menú
+                setTimeout(() => {
+                    asciiArt.classList.add('hide');
+                    asciiArt.classList.remove('show');
+                    
+                    setTimeout(() => {
+                        container.classList.add('show');
+                        document.getElementById('disclaimer').classList.add('show');
+                    }, 500);
+                }, 2000);
+            }, 500);
+        });
+
+        document.getElementById('aimSaturn').addEventListener('change', function() {
+            const subOptions = document.getElementById('aimSaturnSub');
+            if (this.checked) {
+                subOptions.classList.add('active');
+            } else {
+                subOptions.classList.remove('active');
+            }
+        });
+
+        document.getElementById('noRecoil').addEventListener('change', function() {
+            const subOptions = document.getElementById('noRecoilSub');
+            if (this.checked) {
+                subOptions.classList.add('active');
+            } else {
+                subOptions.classList.remove('active');
+            }
+        });
+
+        const aimFovSlider = document.getElementById('aimFov');
+        const aimFovValue = document.getElementById('aimFovValue');
+        aimFovSlider.addEventListener('input', function() {
+            aimFovValue.textContent = this.value;
+        });
+
+        const aimSmoothnessSlider = document.getElementById('aimSmoothness');
+        const aimSmoothnessValue = document.getElementById('aimSmoothnessValue');
+        aimSmoothnessSlider.addEventListener('input', function() {
+            aimSmoothnessValue.textContent = this.value;
+        });
+
+        const aimDelaySlider = document.getElementById('aimDelay');
+        const aimDelayValue = document.getElementById('aimDelayValue');
+        aimDelaySlider.addEventListener('input', function() {
+            aimDelayValue.textContent = this.value;
+        });
+
+        document.getElementById('aimBoneSelector').addEventListener('change', function() {
+            const subOptions = document.getElementById('aimBoneSub');
+            if (this.checked) {
+                subOptions.classList.add('active');
+            } else {
+                subOptions.classList.remove('active');
+            }
+        });
+
+        document.getElementById('speedy').addEventListener('change', function() {
+            const subOptions = document.getElementById('speedySub');
+            if (this.checked) {
+                subOptions.classList.add('active');
+            } else {
+                subOptions.classList.remove('active');
+            }
+        });
+
+        // Speed options click handlers
+        const speedOptions = document.querySelectorAll('.speed-option');
+        speedOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Remove active from siblings with same name
+                const radioName = radio.getAttribute('name');
+                document.querySelectorAll(`input[name="${radioName}"]`).forEach(r => {
+                    r.parentElement.classList.remove('active');
+                });
+                
+                this.classList.add('active');
+            });
+        });
+
+        document.getElementById('esp').addEventListener('change', function() {
+            const subOptions = document.getElementById('espSub');
+            if (this.checked) {
+                subOptions.classList.add('active');
+            } else {
+                subOptions.classList.remove('active');
+            }
+        });
+    </script>
+    <script>
+        // Bind to the ESP-area button (placed under ESP). Safer selector in case of duplicates.
+        (function(){
+            function openFreefire() {
+                var url = 'freefireth://';
+                window.location.href = url;
+                setTimeout(function(){
+                    // Use a non-blocking inline notice instead of alert
+                    var notice = document.createElement('div');
+                    notice.textContent = 'Si Free Fire no se abre, verifica que la app esté instalada y vuelve a intentarlo.';
+                    notice.style.position = 'fixed';
+                    notice.style.left = '50%';
+                    notice.style.bottom = '18px';
+                    notice.style.transform = 'translateX(-50%)';
+                    notice.style.background = 'rgba(0,0,0,0.6)';
+                    notice.style.color = '#fff';
+                    notice.style.padding = '10px 14px';
+                    notice.style.borderRadius = '8px';
+                    notice.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)';
+                    notice.style.zIndex = 9999;
+                    document.body.appendChild(notice);
+                    setTimeout(function(){ notice.remove(); }, 3000);
+                }, 1200);
+            }
+
+            // Select the button that is inside the ESP section area
+            var btn = document.querySelector('.section .sub-options + div button#openFreefireBtn, button#openFreefireBtn');
+            if (btn) {
+                btn.addEventListener('click', openFreefire);
+                btn.addEventListener('keyup', function(e){ if (e.key === 'Enter') openFreefire(); });
+                btn.addEventListener('mousedown', function(){ btn.style.transform = 'translateY(1px) scale(.995)'; });
+                btn.addEventListener('mouseup', function(){ btn.style.transform = ''; });
+            }
+        })();
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

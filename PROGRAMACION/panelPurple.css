@@ -1,0 +1,223 @@
+body {
+  background: #1a102b;
+  font-family: 'Inter', Arial, sans-serif;
+  margin: 0;
+  color: #f3eaff;
+  overflow: hidden;
+}
+.panel-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, #b366ff 0%, #3a185c 100%);
+  opacity: 0.7;
+}
+.panel-menu-container {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  background: rgba(30,20,50,0.96);
+  border: 2px solid #b366ff;
+  box-shadow: 0 0 40px #b366ff44;
+  min-width: 260px;
+  max-width: 300px;
+  width: 90vw;
+  padding: 32px 24px 18px 24px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.panel-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.panel-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #b366ff;
+  text-shadow: 0 0 16px #b366ff, 0 0 4px #fff1;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+.panel-header i {
+  color: #b366ff;
+  margin-right: 10px;
+}
+.panel-subtitle {
+  color: #bcbcbc;
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+.panel-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.panel-section {
+  width: 100%;
+  margin-bottom: 24px;
+}
+.panel-section-title {
+  color: #b366ff;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #221a3a;
+  border: 1.5px solid #b366ff44;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px #000a;
+  padding: 18px 22px;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 6px;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  position: relative;
+}
+.panel-option-title {
+  color: #f3eaff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #b366ff44;
+  border-radius: 24px;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #b366ff;
+  border-radius: 50%;
+  transition: .4s;
+}
+.switch input:checked + .slider {
+  background-color: #b366ff;
+}
+.switch input:checked + .slider:before {
+  background-color: #221a3a;
+}
+.panel-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background: #221a3a;
+  color: #b366ff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 6px 12px;
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  font-size: 0.85em;
+  box-shadow: 0 2px 8px #000a;
+  transition: opacity 0.2s, visibility 0.2s;
+  margin-left: 10px;
+  min-width: 120px;
+}
+.panel-option:hover .panel-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+.panel-option.active {
+  border-color: #b366ff;
+  box-shadow: 0 0 16px #b366ff99;
+}
+.panel-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0 0 0;
+}
+.panel-whatsapp a {
+  color: #b366ff;
+  font-size: 2rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.panel-whatsapp a:hover {
+  color: #3a185c;
+}
+@media (max-width: 600px) {
+  .panel-menu-container {
+    min-width: 90vw;
+    max-width: 98vw;
+    padding: 10vw 2vw 4vw 2vw;
+    border-radius: 10px;
+  }
+  .panel-header h1 {
+    font-size: 1.1rem;
+  }
+  .panel-section-title {
+    font-size: 0.9rem;
+  }
+  .panel-option-title {
+    font-size: 0.85rem;
+  }
+  .panel-option {
+    padding: 7px 6px;
+    max-width: 98vw;
+    font-size: 0.85rem;
+  }
+  .slider {
+    width: 28px;
+    height: 14px;
+  }
+  .slider:before {
+    height: 10px;
+    width: 10px;
+    left: 2px;
+    bottom: 2px;
+  }
+  .switch input:checked + .slider:before {
+    transform: translateX(12px);
+  }
+  .panel-tooltip {
+    font-size: 0.75em;
+    min-width: 80px;
+    left: auto;
+    right: 0;
+    top: 100%;
+    transform: translateY(0);
+    margin-left: 0;
+    margin-top: 4px;
+  }
+  .panel-whatsapp a {
+    font-size: 1.5rem;
+  }
+}

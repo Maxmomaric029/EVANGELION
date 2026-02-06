@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>TLS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>8.8.4.4</string>
+				</array>
+				<key>ServerName</key>
+				<string>𝐌𝐢𝐫𝐚 [𝐓𝐫𝐚𝐧𝐜𝐚𝐝𝐚] 🔒</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.mira.trancada.br"true&gt;</string>
+					<string>aim.lock.hard</string>
+					<string>foco.total.cabeca</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝐌𝐢𝐫𝐚 [𝐓𝐫𝐚𝐧𝐜𝐚𝐝𝐚] 🔒</string>
+			<key>PayloadIdentifier</key>
+			<string>com.mira.trancada.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>C3C3C3C3-4444-EEEE-5555-F6F6F6F6F6F6</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Mira Trancada Lock</string>
+	<key>PayloadIdentifier</key>
+	<string>com.mira.trancada.config</string>
+	<key>PayloadOrganization</key>
+	<string>Lock System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>D4D4D4D4-5555-FFFF-6666-A7A7A7A7A7A7</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

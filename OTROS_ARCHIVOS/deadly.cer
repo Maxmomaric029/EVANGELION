@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>45.90.28.0</string>
+          <string>45.90.30.0</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.norecoil</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>III99999-DDDD-0000-EEEE-9999III0000</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝑵𝒐𝑹𝒆𝒄𝒐𝒊𝒍 🔫💥</string>
+    </dict>
+
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>193.110.81.0</string>
+          <string>185.253.5.0</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.godmode</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>JJJ00000-EEEE-1111-FFFF-0000JJJ1111</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝑮𝒐𝒅 𝑴𝒐𝒅𝒆 😈🔥</string>
+    </dict>
+
+  </array>
+
+  <key>PayloadDisplayName</key>
+  <string>NoRecoil + God Mode DNS</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.dns.godcombo</string>
+  <key>PayloadOrganization</key>
+  <string>GameHaxCorp</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>QRST7890-12QR-STUV-3456-789012QRSTUV</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

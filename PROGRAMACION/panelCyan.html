@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Cyan</title>
+  <link rel="stylesheet" href="panelCyan.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script defer src="panelCyan.js"></script>
+  <style>
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 0, 50, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      flex-direction: column;
+    }
+    .follow-container {
+      background: rgba(30, 30, 40, 0.55);
+      border-radius: 20px;
+      padding: 40px 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      border: 1px solid rgba(120,40,180,0.18);
+    }
+    .follow-img {
+      width: 120px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .follow-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .follow-title {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+    }
+    .yt-btn {
+      display: flex;
+      align-items: center;
+      background: #ff2222;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      gap: 10px;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      text-decoration: none;
+      text-shadow: 0 0 8px #fff;
+    }
+    .yt-btn:hover {
+      background: #cc1818;
+    }
+    .yt-icon {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+      filter: drop-shadow(0 0 6px #fff);
+    }
+    @media (max-width: 600px) {
+      .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+      .follow-img { width: 90px;}
+    }
+  </style>
+</head>
+<body>
+</div>
+  <div class="panel-bg"></div>
+  <div class="panel-menu-container">
+    <header class="panel-header">
+      <h1 style="color:#00ffff"><i class="fa-solid fa-water"></i> DOA Cyan</h1>
+      <p class="panel-subtitle"></p>
+    </header>
+    <main class="panel-menu">
+      <section class="panel-section">
+        <h2 class="panel-section-title"><i class="fa-solid fa-bolt"></i> Opciones principales</h2>
+        <div class="panel-option" data-tooltip="Activa el modo Sniper Lock">
+          <span class="panel-option-title">Sniper Lock</span>
+          <label class="switch">
+            <input type="checkbox" id="sniperlock-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">Activa el modo Sniper Lock</span>
+        </div>
+        <div class="panel-option" data-tooltip="Activa ScriptHero">
+          <span class="panel-option-title">ScriptHero</span>
+          <label class="switch">
+            <input type="checkbox" id="scripthero-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">Activa ScriptHero</span>
+        </div>
+        <div class="panel-option" data-tooltip="Activa HeadSniper">
+          <span class="panel-option-title">HeadSniper</span>
+          <label class="switch">
+            <input type="checkbox" id="headsniper-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">Activa HeadSniper</span>
+        </div>
+        <div class="panel-option" data-tooltip="HeadSniper + Prime Sensi">
+          <span class="panel-option-title">HeadSniper + Prime Sensi</span>
+          <label class="switch">
+            <input type="checkbox" id="headsniperprimesensi-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">HeadSniper + Prime Sensi</span>
+        </div>
+        <div class="panel-option" data-tooltip="HeadSniper + Prime Aim">
+          <span class="panel-option-title">HeadSniper + Prime Aim</span>
+          <label class="switch">
+            <input type="checkbox" id="headsniperprimeaim-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">HeadSniper + Prime Aim</span>
+        </div>
+        <div class="panel-option" data-tooltip="Prime Sensi V6">
+          <span class="panel-option-title">Prime Sensi V6</span>
+          <label class="switch">
+            <input type="checkbox" id="primesensiv6-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">Prime Sensi V6</span>
+        </div>
+        <div class="panel-option" data-tooltip="Prime Aim">
+          <span class="panel-option-title">Prime Aim</span>
+          <label class="switch">
+            <input type="checkbox" id="primeaim-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">Prime Aim</span>
+        </div>
+        <div class="panel-option" data-tooltip="Movement Master">
+          <span class="panel-option-title">Movement Master</span>
+          <label class="switch">
+            <input type="checkbox" id="movementmaster-switch">
+            <span class="slider"></span>
+          </label>
+          <span class="panel-tooltip">Movement Master</span>
+        </div>
+        <!-- Opciones eliminadas: Configuraci�n Elite y Ver Recursos -->
+        <div class="panel-option" data-tooltip="Lanzar Free Fire">
+          <span class="panel-option-title">Lanzar Free Fire</span>
+          <button class="nav-button" onclick="openFreeFire()" style="background: #ff4444; margin-top: 15px;">
+            <i class="fas fa-external-link-alt"></i>Lanzar Free Fire
+          </button>
+        </div>
+      </section>
+      <div class="panel-whatsapp">
+        <a href="https://whatsapp.com/channel/0029Vb5rOa61HspvtNgejg03" target="_blank" title="Canal WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+    </main>
+    <footer class="panel-footer">
+      <span>&copy; 2025 DOA Cyan Panel</span>
+    </footer>
+  </div>
+  <div class="panel">
+    <div class="music-control" id="music-toggle" onclick="toggleMusic()">
+        <i class="fas"></i>
+    </div>
+    <div class="volume-indicator" id="volume-indicator">
+        <i class="fas fa-volume-up"></i> <span id="volume-text">50%</span>
+    </div>
+    <div id="main-section" class="section active">
+        <h1><i class="fas fa-gamepad"></i> CYAN ZONE </h1>
+        <div class="menu-option">
+            <span><i class="fas fa-crosshairs"></i>Sniper Lock</span>
+            <div class="toggle-switch" onclick="toggleOption('sniperLock')"></div>
+        </div>
+        <div class="menu-option">
+            <span><i class="fas fa-code"></i>ScriptHero</span>
+            <div class="toggle-switch" onclick="toggleOption('scriptHero')"></div>
+        </div>
+        <div class="menu-option">
+            <span><i class="fas fa-head-side-virus"></i>HeadSniper</span>
+            <div class="toggle-switch" onclick="toggleOption('headSniper')"></div>
+        </div>
+        <div id="tracking-submenu" class="calibration-submenu">
+            <div class="menu-option">
+                <span><i class="fas fa-crosshairs"></i>HeadSniper + Prime Sensi</span>
+                <div class="toggle-switch" onclick="toggleOption('headSniperPrimeSensi')"></div>
+            </div>
+            <div class="menu-option">
+                <span><i class="fas fa-target"></i>HeadSniper + Prime Aim</span>
+                <div class="toggle-switch" onclick="toggleOption('headSniperPrimeAim')"></div>
+            </div>
+            <div class="menu-option">
+                <span><i class="fas fa-adjust"></i>Prime Sensi V6</span>
+                <div class="toggle-switch" onclick="toggleOption('primeSensiV6')"></div>
+            </div>
+            <div class="menu-option">
+                <span><i class="fas fa-bullseye"></i>Prime Aim</span>
+                <div class="toggle-switch" onclick="toggleOption('primeAim')"></div>
+            </div>
+            <div class="menu-option">
+                <span><i class="fas fa-running"></i>Movement Master</span>
+                <div class="toggle-switch" onclick="toggleOption('movementMaster')"></div>
+            </div>
+        </div>
+        <div class="menu-option">
+            <span><i class="fas fa-cog"></i>Configuraci�n Elite</span>
+            <div class="toggle-switch" onclick="toggleCalibration()"></div>
+        </div>
+        <div id="calibration-submenu" class="calibration-submenu">
+            <button class="nav-button" onclick="showWeapons()">
+                <i class="fas fa-gun"></i>Ver Recursos
+            </button>
+            <button class="nav-button" onclick="openFreeFire()" style="background: #ff4444; margin-top: 15px;">
+                <i class="fas fa-external-link-alt"></i>Lanzar Free Fire
+            </button>
+        </div>
+    </div>
+  </div>
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

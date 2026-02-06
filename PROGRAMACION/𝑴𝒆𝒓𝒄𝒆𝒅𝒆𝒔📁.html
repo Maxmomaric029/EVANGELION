@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercedes Client V4 - Kay Flock Ed.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta Cyberpunk Oscura */
+            --primary: #9b59b6; /* Morado Hacker */
+            --secondary: #3498db; /* Azul Tech */
+            --accent: #e74c3c; /* Rojo Peligro */
+            --glass: rgba(16, 16, 24, 0.85);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #ecf0f1;
+            --text-muted: #95a5a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #000;
+            
+            /* AQUÍ ESTÁ TU NUEVO FONDO */
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), /* Capa oscura para leer texto */
+                url("https://media1.tenor.com/m/A-LNWbhIv9IAAAAd/ugeechie-kay-flock.gif"); 
+            
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        .menu-container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 
+                0 0 50px rgba(155, 89, 182, 0.2),
+                0 0 0 1px rgba(255,255,255,0.05) inset;
+            position: relative;
+            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Línea de energía superior */
+        .menu-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 20px; right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .version-tag {
+            font-size: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(155, 89, 182, 0.4);
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: #2ecc71;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #2ecc71;
+            border-radius: 50%;
+            box-shadow: 0 0 5px #2ecc71;
+            animation: pulse 2s infinite;
+        }
+
+        /* Navegaci�n */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: rgba(155, 89, 182, 0.15);
+            border-color: rgba(155, 89, 182, 0.3);
+            color: #fff;
+            text-shadow: 0 0 5px rgba(155, 89, 182, 0.5);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Tarjetas de Opciones */
+        .option-group {
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        /* Estilos de Fuente Personalizados (La F�rmula) */
+        .font-bold-serif {
+            font-family: 'Times New Roman', serif;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+        
+        .font-mono {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--secondary);
+        }
+
+        .font-small-caps {
+            font-variant: small-caps;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .label-row i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+            color: var(--text-muted);
+        }
+
+        .val-display {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--secondary);
+            background: rgba(52, 152, 219, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        /* Sliders */
+        .slider-wrapper {
+            position: relative;
+            height: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--primary);
+            margin-top: -6px;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+        }
+
+        /* Switches */
+        .switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider-switch {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.1);
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider-switch:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider-switch {
+            background: var(--primary);
+            box-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+        }
+
+        input:checked + .slider-switch:before {
+            transform: translateX(20px);
+        }
+
+        /* Submenus */
+        .submenu {
+            margin-top: 10px;
+            padding-left: 10px;
+            border-left: 2px solid var(--secondary);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .submenu.open { max-height: 300px; padding-bottom: 5px; }
+        
+        .weapon-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-top: 8px;
+            color: var(--text-muted);
+        }
+
+        /* Bot�n Launch */
+        .launch-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), #8e44ad);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .launch-btn:active { transform: scale(0.98); }
+
+        /* Notificaciones */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .toast {
+            background: rgba(15, 15, 20, 0.95);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
+            color: #fff;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s, fadeOut 0.3s 2.5s forwards;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes fadeOut { to { opacity: 0; transform: translateX(20px); } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
+
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+
+    <div class="menu-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand">
+                <i class="fas fa-microchip" style="color: var(--primary);"></i>
+                <div class="title">
+                    <h1>𝕸𝖊𝖗𝖈𝖊𝖉𝖊𝖘 <span class="version-tag">V4.0</span></h1>
+                </div>
+            </div>
+            <div class="status-pill">
+                <div class="status-dot"></div>
+                PAYBACC OVER ALL
+            </div>
+        </div>
+
+        <!-- Navegaci�n -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('aim')">AIMBOT</button>
+            <button class="tab-btn" onclick="switchTab('visual')">VISUAL</button>
+            <button class="tab-btn" onclick="switchTab('system')">SYSTEM</button>
+        </div>
+
+        <!-- SECCIÓN: AIMBOT -->
+        <div id="aim" class="content-section active">
+            <!-- Opci�n 1: AimLock (Estilo Bold Serif) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-bold-serif"><i class="fas fa-crosshairs"></i> 💀 𝐀𝐢𝐦𝐋𝐨𝐜𝐤 𝐔𝐥𝐭𝐫𝐚 [𝟏𝟎𝟎%]</span>
+                    <label class="switch">
+                        <input type="checkbox" onchange="notify('AimLock Ultra', this.checked)">
+                        <span class="slider-switch"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Opci�n 2: HeadTrick (Estilo Premium) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-bold-serif"><i class="fas fa-skull"></i> 🩸 𝐇𝐞𝐚𝐝𝐓𝐫𝐢𝐜𝐤 𝐌𝐚𝐭𝐫𝐢𝐱 <𝐯𝟓.𝟎></span>
+                    <span class="val-display" id="ht-val">50%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" min="0" max="100" value="50" oninput="updateVal('ht-val', this.value)">
+                </div>
+            </div>
+
+            <!-- Opci�n 3: Regedit (Estilo C�digo/Archivo) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-mono"><i class="fas fa-file-code"></i> 💾 𝚛𝚎𝚐𝚎𝚍𝚒ᴛ_𝚊𝚒𝚖.𝚍𝚕𝚕</span>
+                    <span class="val-display" id="reg-val">Safe</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" min="0" max="100" value="75" oninput="updateVal('reg-val', this.value)">
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: VISUAL / MISC -->
+        <div id="visual" class="content-section">
+            <!-- Opci�n 1: FOV (Reemplazo de iPad View) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-small-caps"><i class="fas fa-eye"></i> 🔭 𝐅𝐎𝐕 𝐄𝐱𝐩𝐚𝐧𝐝𝐞𝐫 (𝟏𝟐𝟎�)</span>
+                    <span class="val-display" id="fov-val">Off</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" min="0" max="100" value="0" oninput="updateVal('fov-val', this.value)">
+                </div>
+            </div>
+
+            <!-- Opci�n 2: Calibrar Armas (Macro Engine) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-bold-serif"><i class="fas fa-cogs"></i> 🔫 𝐖𝐞𝐚𝐩𝐨𝐧 𝐌𝐚𝐜𝐫𝐨 𝐄𝐧𝐠𝐢𝐧𝐞</span>
+                    <label class="switch">
+                        <input type="checkbox" onchange="toggleSubmenu('weapons-sub', this.checked)">
+                        <span class="slider-switch"></span>
+                    </label>
+                </div>
+                <div id="weapons-sub" class="submenu">
+                    <div class="weapon-row">
+                        <span>Desert Eagle (OneTap)</span>
+                        <span style="color:var(--primary)">ACTIVE</span>
+                    </div>
+                    <div class="weapon-row">
+                        <span>M1014 (Rapid)</span>
+                        <span style="color:var(--primary)">ACTIVE</span>
+                    </div>
+                    <div class="weapon-row">
+                        <span>SMP (No Recoil)</span>
+                        <span style="color:var(--primary)">ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: SYSTEM -->
+        <div id="system" class="content-section">
+            <!-- Opci�n 1: Touch Response (Small Caps) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-small-caps"><i class="fas fa-fingerprint"></i> 📱 ᴛᴏᴜᴄʜ_ʀᴇsᴘᴏɴsᴇ_0ᴍs</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider-switch"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Opci�n 2: FPS (Técnico) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-small-caps"><i class="fas fa-bolt"></i> ? 𝐅𝐏𝐒 𝐔𝐧𝐥𝐨𝐜𝐤𝐞𝐫 (𝟏𝟐𝟎𝐇𝐳)</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider-switch"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Opci�n 3: Anti-Ban (Security) -->
+            <div class="option-group">
+                <div class="label-row">
+                    <span class="font-mono"><i class="fas fa-shield-alt"></i> 🛡️ 𝐀𝐧𝐭𝐢-𝐁𝐚𝐧 𝐆𝐡𝐨𝐬𝐭</span>
+                    <span class="val-display" style="color:#2ecc71">ON</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="launch-btn" onclick="launchGame()">
+    <i class="fas fa-terminal"></i> 𝐋𝐚𝐮𝐧𝐜𝐡 𝐆𝐚𝐦𝐞
+        </button>
+    </div>
+
+    <div class="toast-container" id="toast-area"></div>
+
+    <script>
+        function updateVal(id, val) {
+            document.getElementById(id).innerText = val + "%";
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function toggleSubmenu(id, state) {
+            const el = document.getElementById(id);
+            if(state) {
+                el.classList.add('open');
+                notify("Macro Engine Loaded", true);
+            } else {
+                el.classList.remove('open');
+            }
+        }
+
+        function notify(msg, type) {
+            const area = document.getElementById('toast-area');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            const icon = type ? '<i class="fas fa-check-circle" style="color:#2ecc71"></i>' : '<i class="fas fa-info-circle"></i>';
+            toast.innerHTML = `${icon} <span>${msg}</span>`;
+            area.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // LA MAGIA: Secuencia de Inyecci�n Falsa
+        function launchGame() {
+            const btn = document.querySelector('.launch-btn');
+            const originalText = btn.innerHTML;
+            
+            // Lista de archivos falsos según la f�rmula
+            const logs = [
+                "? ᴄᴏɴɴᴇᴄᴛɪɴɢ ᴛᴏ sᴇʀᴠᴇʀ...",
+                "💀 𝐈𝐧𝐣𝐞𝐜𝐭𝐢𝐧𝐠 𝐀𝐢𝐦𝐁𝐨𝐭.𝐫𝐞𝐠...",
+                "💾 𝐔𝐩𝐝𝐚𝐭𝐢𝐧𝐠 𝐇𝐢𝐭𝐛𝐨𝐱 𝐃𝐚𝐭𝐚...",
+                "🛡️ 𝐁𝐲𝐩𝐚𝐬𝐬𝐢𝐧𝐠 𝐒𝐞𝐜𝐮𝐫𝐢𝐭𝐲...",
+                "✅ 𝐒𝐔𝐂𝐂𝐄𝐒𝐒!"
+            ];
+
+            let i = 0;
+            btn.style.background = 'linear-gradient(90deg, #e67e22, #f1c40f)'; // Color Naranja (Cargando)
+            
+            const interval = setInterval(() => {
+                if (i < logs.length) {
+                    btn.innerHTML = `<i class="fas fa-cog fa-spin"></i> ${logs[i]}`;
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    btn.style.background = 'linear-gradient(90deg, #2ecc71, #27ae60)'; // Color Verde (Éxito)
+                    btn.innerHTML = '<i class="fas fa-check"></i> 𝐆𝐀𝐌𝐄 𝐋𝐀𝐔𝐍𝐂𝐇𝐄𝐃';
+                    
+                    notify("Inject Success", true);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'freefireth://'; // Intenta abrir el juego
+                        // Resetear bot�n
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = '';
+                        }, 2000);
+                    }, 1000);
+                }
+            }, 700); // Velocidad de cambio de texto
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

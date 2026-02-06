@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Gaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-image: url('https://i.pinimg.com/736x/61/a1/5e/61a15e5352b9c92d6d6e9643d7ee7d5f.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Orbitron', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Pantalla de carga */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 50%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            perspective: 1000px;
+        }
+
+        .loading-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 48px;
+            font-weight: 900;
+            color: #9c27b0;
+            text-shadow: 0 0 30px rgba(156, 39, 176, 0.8), 0 0 60px rgba(156, 39, 176, 0.5);
+            opacity: 0;
+            transform: scale(0.5);
+            position: absolute;
+        }
+
+        .loading-text.glizzy {
+            animation: textAppear 1s ease-in-out 0s forwards;
+        }
+
+        .loading-text.slayer {
+            animation: textAppear 1s ease-in-out 1.2s forwards;
+        }
+
+        .loading-text.raven {
+            animation: textAppear 1s ease-in-out 2.4s forwards;
+        }
+
+        @keyframes textAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(-200px) translateZ(-500px) scale(0.3);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(0px) translateZ(0px) scale(1.2);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(0px) translateZ(0px) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(0px) translateZ(-800px) scale(0.1);
+            }
+        }
+
+        /* Pantalla de m�sica */
+        .music-start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 50%, #000000 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            flex-direction: column;
+        }
+
+        .start-music-button {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            border: none;
+            border-radius: 50px;
+            padding: 20px 40px;
+            color: white;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: 900;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.5);
+            transition: all 0.3s ease;
+            animation: buttonPulse 2s infinite;
+        }
+
+        .start-music-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(156, 39, 176, 0.7);
+        }
+
+        .start-music-button i {
+            margin-right: 15px;
+            font-size: 28px;
+        }
+
+        .music-prompt-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 32px;
+            font-weight: 700;
+            color: #9c27b0;
+            text-shadow: 0 0 20px rgba(156, 39, 176, 0.8);
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(156, 39, 176, 0.5);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 12px 35px rgba(156, 39, 176, 0.7);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes panelFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes loadingToMusic {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .panel {
+            background: rgba(128, 128, 128, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+            width: 450px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 
+                        0 0 20px rgba(128, 128, 128, 0.1) inset;
+            border: 2px solid rgba(128, 128, 128, 0.3);
+            position: relative;
+            opacity: 0;
+        }
+
+        /* Control de m�sica flotante */
+        .music-control {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(156, 39, 176, 0.8);
+            border: 2px solid rgba(156, 39, 176, 0.6);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+
+        .music-control:hover {
+            background: rgba(156, 39, 176, 1);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.5);
+        }
+
+        .music-control i {
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .music-control.playing i::before {
+            content: "\f04c"; /* pause icon */
+        }
+
+        .music-control:not(.playing) i::before {
+            content: "\f04b"; /* play icon */
+        }
+
+        /* Indicador de volumen */
+        .volume-indicator {
+            position: absolute;
+            top: 70px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 5px 10px;
+            color: white;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: 700;
+        }
+
+        .volume-indicator.show {
+            opacity: 1;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 28px;
+            font-weight: 900;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .menu-option {
+            background: rgba(128, 128, 128, 0.3);
+            border: 2px solid rgba(128, 128, 128, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-option:hover {
+            background: rgba(128, 128, 128, 0.4);
+            border-color: rgba(156, 39, 176, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.3);
+        }
+
+        .menu-option i {
+            margin-right: 10px;
+            color: #9c27b0;
+            font-size: 18px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #616161;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(128, 128, 128, 0.5);
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #9c27b0;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-switch.active {
+            background: #388e3c;
+            border-color: rgba(56, 142, 60, 0.8);
+        }
+
+        .toggle-switch.active::before {
+            transform: translateX(30px);
+            background: #ffffff;
+        }
+
+        .nav-button {
+            background: #9c27b0;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 25px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.3);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .nav-button:hover {
+            background: #7b1fa2;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+        }
+
+        .nav-button i {
+            margin-right: 8px;
+        }
+
+        .back-button {
+            background: #9c27b0;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background: #7b1fa2;
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.5);
+        }
+
+        .weapons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .weapon-item {
+            background: rgba(128, 128, 128, 0.2);
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            border-radius: 6px;
+            padding: 10px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .weapon-item:hover {
+            background: rgba(156, 39, 176, 0.3);
+            border-color: #9c27b0;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+
+        .weapon-category {
+            color: #66bb6a;
+            font-weight: 900;
+            margin: 15px 0 10px 0;
+            text-align: center;
+            font-size: 18px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .calibration-submenu {
+            background: rgba(128, 128, 128, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            display: none;
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) inset;
+        }
+
+        .calibration-submenu.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <!-- Pantalla de carga -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-text glizzy">GLIZZY</div>
+        <div class="loading-text slayer">SLAYER</div>
+        <div class="loading-text raven">RAVEN</div>
+    </div>
+
+    <!-- Pantalla de reproducir música -->
+    <div class="music-start-screen" id="musicStartScreen">
+        <div class="music-prompt-text"></div>
+        <button class="start-music-button" id="startMusicBtn" onclick="startMusic()">
+            <i class="fas fa-play"></i>inciar L O V E.
+        </button>
+    </div>
+
+    <!-- Audio element para la m�sica de fondo -->
+    <audio id="background-music" loop>
+        <source src="musica.m4a" type="audio/mp4">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div class="panel">
+        <!-- Control de m�sica flotante -->
+        <div class="music-control" id="music-toggle" onclick="toggleMusic()">
+            <i class="fas"></i>
+        </div>
+        
+        <!-- Indicador de volumen -->
+        <div class="volume-indicator" id="volume-indicator">
+            <i class="fas fa-volume-up"></i> <span id="volume-text">50%</span>
+        </div>
+
+        <!-- Secci�n Principal -->
+        <div id="main-section" class="section active">
+            <h1><i class="fas fa-gamepad"></i> BROTHERLY LOVE </h1>
+            
+            <div class="menu-option">
+                <span><i class="fas fa-crosshairs"></i>Aimlock Fully</span>
+                <div class="toggle-switch" onclick="toggleOption('aimlock')"></div>
+            </div>
+            
+            <div class="menu-option">
+                <span><i class="fas fa-code"></i>Aimscript</span>
+                <div class="toggle-switch" onclick="toggleOption('aimscript')"></div>
+            </div>
+            
+            <div class="menu-option">
+                <span><i class="fas fa-head-side-virus"></i>Tracking Head</span>
+                <div class="toggle-switch" onclick="toggleOption('tracking')"></div>
+            </div>
+            
+            <div id="tracking-submenu" class="calibration-submenu">
+                <div class="menu-option">
+                    <span><i class="fas fa-crosshairs"></i>Tracking Head + Better Sensi</span>
+                    <div class="toggle-switch" onclick="toggleOption('trackingSensi')"></div>
+                </div>
+                <div class="menu-option">
+                    <span><i class="fas fa-target"></i>Tracking Head + Better Aimbot</span>
+                    <div class="toggle-switch" onclick="toggleOption('trackingAimbot')"></div>
+                </div>
+                <div class="menu-option">
+                    <span><i class="fas fa-adjust"></i>Better Sensi V4</span>
+                    <div class="toggle-switch" onclick="toggleOption('betterSensi')"></div>
+                </div>
+                <div class="menu-option">
+                    <span><i class="fas fa-bullseye"></i>Better Aimbot</span>
+                    <div class="toggle-switch" onclick="toggleOption('betterAimbot')"></div>
+                </div>
+                <div class="menu-option">
+                    <span><i class="fas fa-running"></i>Better Movement</span>
+                    <div class="toggle-switch" onclick="toggleOption('betterMovement')"></div>
+                </div>
+            </div>
+            
+            <div class="menu-option">
+                <span><i class="fas fa-cog"></i>Calibraci�n</span>
+                <div class="toggle-switch" onclick="toggleCalibration()"></div>
+            </div>
+            
+            <div id="calibration-submenu" class="calibration-submenu">
+                <button class="nav-button" onclick="showWeapons()">
+                    <i class="fas fa-gun"></i>Ver Armas Disponibles
+                </button>
+                
+                <button class="nav-button" onclick="openFreeFire()" style="background: #ff4444; margin-top: 15px;">
+                    <i class="fas fa-external-link-alt"></i>Abrir Free Fire
+                </button>
+            </div>
+        </div>
+
+        <!-- Secci�n de Armas -->
+        <div id="weapons-section" class="section">
+            <button class="nav-button back-button" onclick="showSection('main-section')">
+                <i class="fas fa-arrow-left"></i>Volver
+            </button>
+            
+            <h1><i class="fas fa-gun"></i> Armas Disponibles</h1>
+            
+            <div class="weapon-category">SMG (SUBFUSILES)</div>
+            <div class="weapons-grid">
+                <div class="weapon-item" onclick="selectWeapon('P90')">P90</div>
+                <div class="weapon-item" onclick="selectWeapon('MP40')">MP40</div>
+                <div class="weapon-item" onclick="selectWeapon('UMP')">UMP</div>
+                <div class="weapon-item" onclick="selectWeapon('Vector')">Vector</div>
+                <div class="weapon-item" onclick="selectWeapon('Thompson')">Thompson</div>
+                <div class="weapon-item" onclick="selectWeapon('MP5')">MP5</div>
+            </div>
+
+            <div class="weapon-category">ESCOPETAS</div>
+            <div class="weapons-grid">
+                <div class="weapon-item" onclick="selectWeapon('M1887')">M1887</div>
+                <div class="weapon-item" onclick="selectWeapon('SPAS12')">SPAS12</div>
+                <div class="weapon-item" onclick="selectWeapon('M1014')">M1014</div>
+                <div class="weapon-item" onclick="selectWeapon('MAG-7')">MAG-7</div>
+                <div class="weapon-item" onclick="selectWeapon('M1873')">M1873</div>
+                <div class="weapon-item" onclick="selectWeapon('Double Barrel')">Double Barrel</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activeOptions = new Set();
+        let calibrationOpen = false;
+        let trackingOpen = false;
+        let musicPlaying = false;
+        let backgroundMusic = document.getElementById('background-music');
+        let musicToggle = document.getElementById('music-toggle');
+        let volumeIndicator = document.getElementById('volume-indicator');
+        let volumeText = document.getElementById('volume-text');
+        let loadingScreen = document.getElementById('loadingScreen');
+        let musicStartScreen = document.getElementById('musicStartScreen');
+
+        // Configurar volumen inicial
+        backgroundMusic.volume = 0.5;
+
+        // Mostrar pantalla de música después de la animaci�n de carga
+        setTimeout(() => {
+            loadingScreen.style.animation = 'loadingToMusic 1s ease-in-out forwards';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                musicStartScreen.style.display = 'flex';
+            }, 1000);
+        }, 4000);
+
+        // Funci�n para iniciar la música y mostrar el panel
+        function startMusic() {
+            // Siempre mostrar el panel, con o sin música
+            musicStartScreen.style.animation = 'fadeOut 1s ease-in-out forwards';
+            setTimeout(() => {
+                musicStartScreen.style.display = 'none';
+                document.querySelector('.panel').style.animation = 'panelFadeIn 1s ease-in-out forwards';
+            }, 1000);
+
+            // Intentar reproducir música
+            backgroundMusic.play().then(() => {
+                musicToggle.classList.add('playing');
+                musicPlaying = true;
+                console.log('Música iniciada correctamente');
+            }).catch(error => {
+                console.error('Error al reproducir música:', error);
+                console.log('Continuando sin audio...');
+                // El panel ya se est� mostrando independientemente del audio
+            });
+        }
+
+        // Funci�n para pausar/reanudar música
+        function toggleMusic() {
+            if (musicPlaying && !backgroundMusic.paused) {
+                backgroundMusic.pause();
+                musicToggle.classList.remove('playing');
+                musicPlaying = false;
+                showVolumeIndicator('Música pausada');
+            } else {
+                backgroundMusic.play().then(() => {
+                    musicToggle.classList.add('playing');
+                    musicPlaying = true;
+                    showVolumeIndicator('Música reproduciéndose');
+                }).catch(error => {
+                    console.error('Error al reproducir música:', error);
+                });
+            }
+        }
+
+        // Mostrar indicador de volumen temporalmente
+        function showVolumeIndicator(message) {
+            if (message) {
+                volumeText.textContent = message;
+            } else {
+                volumeText.textContent = Math.round(backgroundMusic.volume * 100) + '%';
+            }
+            volumeIndicator.classList.add('show');
+            setTimeout(() => {
+                volumeIndicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // Controles de teclado para el volumen
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowUp' && event.ctrlKey) {
+                event.preventDefault();
+                if (backgroundMusic.volume < 1) {
+                    backgroundMusic.volume = Math.min(1, backgroundMusic.volume + 0.1);
+                    showVolumeIndicator();
+                }
+            } else if (event.key === 'ArrowDown' && event.ctrlKey) {
+                event.preventDefault();
+                if (backgroundMusic.volume > 0) {
+                    backgroundMusic.volume = Math.max(0, backgroundMusic.volume - 0.1);
+                    showVolumeIndicator();
+                }
+            } else if (event.key === ' ' && event.ctrlKey) {
+                event.preventDefault();
+                toggleMusic();
+            }
+        });
+
+        // Auto-reproducir si se pausa autom�ticamente
+        backgroundMusic.addEventListener('ended', function() {
+            backgroundMusic.play();
+        });
+
+        backgroundMusic.addEventListener('pause', function() {
+            if (musicPlaying) {
+                setTimeout(() => {
+                    backgroundMusic.play();
+                }, 100);
+            }
+        });
+
+        // Detectar errores de carga
+        backgroundMusic.addEventListener('error', function() {
+            console.error('No se pudo cargar el archivo de música');
+            showVolumeIndicator('Archivo no encontrado');
+        });
+
+        // Iniciar sin verificaciones
+        window.addEventListener('load', function() {
+            console.log('Panel de gaming cargado');
+        });
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function toggleOption(option) {
+            const toggleSwitch = event.target;
+            
+            if (activeOptions.has(option)) {
+                activeOptions.delete(option);
+                toggleSwitch.classList.remove('active');
+                console.log(`${option} desactivado`);
+                
+                // Si desactivamos tracking, ocultar su submenú
+                if (option === 'tracking') {
+                    const trackingSubmenu = document.getElementById('tracking-submenu');
+                    trackingSubmenu.classList.remove('show');
+                    trackingOpen = false;
+                }
+            } else {
+                activeOptions.add(option);
+                toggleSwitch.classList.add('active');
+                console.log(`${option} activado`);
+                
+                // Si activamos tracking, mostrar su submenú
+                if (option === 'tracking') {
+                    const trackingSubmenu = document.getElementById('tracking-submenu');
+                    trackingSubmenu.classList.add('show');
+                    trackingOpen = true;
+                }
+            }
+        }
+
+        function toggleCalibration() {
+            const submenu = document.getElementById('calibration-submenu');
+            const toggleSwitch = event.target;
+            calibrationOpen = !calibrationOpen;
+            
+            if (calibrationOpen) {
+                submenu.classList.add('show');
+                toggleSwitch.classList.add('active');
+            } else {
+                submenu.classList.remove('show');
+                toggleSwitch.classList.remove('active');
+            }
+        }
+
+        function showWeapons() {
+            showSection('weapons-section');
+        }
+
+        function selectWeapon(weaponName) {
+            event.target.style.background = 'rgba(102, 187, 106, 0.5)';
+            event.target.style.borderColor = '#66bb6a';
+            event.target.style.boxShadow = '0 4px 15px rgba(102, 187, 106, 0.4)';
+            
+            setTimeout(() => {
+                event.target.style.background = 'rgba(128, 128, 128, 0.2)';
+                event.target.style.borderColor = 'rgba(128, 128, 128, 0.3)';
+                event.target.style.boxShadow = 'none';
+            }, 1000);
+            
+            console.log(`Arma seleccionada: ${weaponName}`);
+            alert(`Has seleccionado: ${weaponName}`);
+        }
+
+        function openFreeFire() {
+            try {
+                window.open('freefireth://', '_blank');
+                console.log('Intentando abrir Free Fire...');
+            } catch (error) {
+                console.error('Error al abrir Free Fire:', error);
+                alert('No se pudo abrir Free Fire. Asegúrate de que esté instalado.');
+            }
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

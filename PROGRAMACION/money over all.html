@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #8b2fc9;
+            --secondary-color: #b24ce3;
+            --primary-rgb: 139, 47, 201;
+            --secondary-rgb: 178, 76, 227;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .panel {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            box-shadow: 0 0 30px var(--primary-color);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-family: 'Brush Script MT', cursive;
+            font-style: italic;
+        }
+
+        .close-btn {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sidebar {
+            width: 180px;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-btn {
+            padding: 18px 20px;
+            background: rgba(40, 40, 40, 0.8);
+            border: none;
+            color: #b0b0b0;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-btn:hover {
+            background: rgba(60, 60, 60, 0.8);
+            color: white;
+        }
+
+        .sidebar-btn.active {
+            background: linear-gradient(90deg, rgba(var(--primary-rgb), 0.3) 0%, rgba(var(--secondary-rgb), 0.2) 100%);
+            border-left-color: var(--primary-color);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(30, 30, 30, 0.7);
+            min-height: 400px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .option-group {
+            margin-bottom: 25px;
+        }
+
+        .option-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 12px 0;
+        }
+
+        .option-label {
+            color: #d0d0d0;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-label i {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(60, 60, 60, 0.8);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: left 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            left: 27px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .radio-circle.active {
+            background: var(--primary-color);
+        }
+
+        .radio-circle.active::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .radio-label {
+            color: #d0d0d0;
+            font-size: 15px;
+        }
+
+        .slider-container {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            background: rgba(60, 60, 60, 0.8);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(var(--primary-rgb), 0.3);
+        }
+
+        .color-selector-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(var(--primary-rgb), 0.3);
+        }
+
+        .color-selector-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .color-selector-option:hover {
+            opacity: 0.8;
+        }
+
+        .color-selector-label {
+            color: #d0d0d0;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-selector-label i:first-child {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .arrow-icon {
+            color: #d0d0d0;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .arrow-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .color-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .color-dropdown.open {
+            max-height: 600px;
+        }
+
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin: 5px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .color-item:hover {
+            background: rgba(0, 0, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        .color-item.active {
+            border-left-color: var(--primary-color);
+            background: rgba(var(--primary-rgb), 0.2);
+        }
+
+        .color-preview {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .color-name {
+            color: #d0d0d0;
+            font-size: 15px;
+            flex: 1;
+        }
+
+        .color-check {
+            color: var(--primary-color);
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .color-item.active .color-check {
+            opacity: 1;
+        }
+
+        .info-text {
+            color: #d0d0d0;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .info-row {
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 500px;
+        }
+
+        .info-label {
+            color: var(--primary-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 120px;
+            font-size: 14px;
+        }
+
+        .info-label i {
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #d0d0d0;
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .info-notice {
+            margin-top: 20px;
+            padding: 12px 15px;
+            background: rgba(var(--primary-rgb), 0.15);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 6px;
+            max-width: 500px;
+        }
+
+        .info-notice-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .launch-button {
+            width: 100%;
+            max-width: 280px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            margin: 40px auto;
+        }
+
+        .launch-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.7);
+        }
+
+        .launch-button:active {
+            transform: translateY(0);
+        }
+
+        .launch-button i {
+            font-size: 20px;
+        }
+
+        .launch-description {
+            text-align: center;
+            color: #d0d0d0;
+            font-size: 14px;
+            margin-top: -20px;
+            margin-bottom: 20px;
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <div class="panel">
+        <div class="header">
+            <div class="header-left">
+                <div class="header-icon">
+                    <i class="fas fa-star" style="color: var(--primary-color); font-size: 16px;"></i>
+                </div>
+                <span class="header-title">MONEY OVER ALL</span>
+            </div>
+            <div class="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="sidebar">
+                <button class="sidebar-btn active" data-section="aim">Aim</button>
+                <button class="sidebar-btn" data-section="settings">Settings</button>
+                <button class="sidebar-btn" data-section="misc">Misc</button>
+                <button class="sidebar-btn" data-section="info">Info</button>
+                <button class="sidebar-btn" data-section="launch">Launch</button>
+            </div>
+
+            <div class="main-content">
+                <div class="section active" id="aim">
+                    <h3 class="section-title">Aim Settings</h3>
+                    
+                    <div class="option-group">
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-crosshairs"></i>
+                                Aimbot Rage
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-circle-notch"></i>
+                                Exibir Fov
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-bullseye"></i>
+                                Aim Fov
+                            </span>
+                            <div class="slider-container">
+                                <input type="range" class="slider" min="0" max="100" value="0">
+                                <span class="slider-value">0</span>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-location-arrow"></i>
+                                Aim Position
+                            </span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-skull"></i>
+                                Cabeça
+                            </span>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">Tipo de Aimbot:</span>
+                        </div>
+
+                        <div class="option-row">
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <div class="radio-circle"></div>
+                                    <span class="radio-label">Ao Olhar</span>
+                                </div>
+                                <div class="radio-option">
+                                    <div class="radio-circle active"></div>
+                                    <span class="radio-label">Ao Atirar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="settings">
+                    <h3 class="section-title">Game Settings</h3>
+                    
+                    <div class="option-group">
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-sliders-h"></i>
+                                Sensitivity Boost
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-tachometer-alt"></i>
+                                FPS Optimizer
+                            </span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                Field of View
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-mouse"></i>
+                                Mouse Acceleration
+                            </span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-wifi"></i>
+                                Network Boost
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-compress-alt"></i>
+                                Resolution Scale
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="misc">
+                    <h3 class="section-title">Misc Settings</h3>
+                    
+                    <div class="option-group">
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-hand-rock"></i>
+                                No Recoil
+                            </span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-running"></i>
+                                Speed Boost
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-bolt"></i>
+                                Quick Reload
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-shield-alt"></i>
+                                Damage Boost
+                            </span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+
+                        <div class="option-row">
+                            <span class="option-label">
+                                <i class="fas fa-clock"></i>
+                                Fire Rate
+                            </span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="color-selector-section">
+                        <div class="color-selector-option" id="colorToggle">
+                            <span class="color-selector-label">
+                                <i class="fas fa-palette"></i>
+                                Panel Color Theme
+                            </span>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </div>
+                        <div class="color-dropdown" id="colorDropdown">
+                            <div class="color-item active" data-primary="#8b2fc9" data-secondary="#b24ce3" data-rgb="139, 47, 201" data-rgb2="178, 76, 227">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #8b2fc9, #b24ce3);"></div>
+                                <span class="color-name">Purple</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#e91e63" data-secondary="#f44336" data-rgb="233, 30, 99" data-rgb2="244, 67, 54">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #e91e63, #f44336);"></div>
+                                <span class="color-name">Red</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#2196f3" data-secondary="#03a9f4" data-rgb="33, 150, 243" data-rgb2="3, 169, 244">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #2196f3, #03a9f4);"></div>
+                                <span class="color-name">Blue</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#4caf50" data-secondary="#8bc34a" data-rgb="76, 175, 80" data-rgb2="139, 195, 74">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #4caf50, #8bc34a);"></div>
+                                <span class="color-name">Green</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#ff9800" data-secondary="#ffc107" data-rgb="255, 152, 0" data-rgb2="255, 193, 7">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #ff9800, #ffc107);"></div>
+                                <span class="color-name">Orange</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#9c27b0" data-secondary="#e91e63" data-rgb="156, 39, 176" data-rgb2="233, 30, 99">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #9c27b0, #e91e63);"></div>
+                                <span class="color-name">Pink</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#00bcd4" data-secondary="#00e5ff" data-rgb="0, 188, 212" data-rgb2="0, 229, 255">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #00bcd4, #00e5ff);"></div>
+                                <span class="color-name">Cyan</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#f44336" data-secondary="#ff5722" data-rgb="244, 67, 54" data-rgb2="255, 87, 34">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #f44336, #ff5722);"></div>
+                                <span class="color-name">Deep Red</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#673ab7" data-secondary="#9c27b0" data-rgb="103, 58, 183" data-rgb2="156, 39, 176">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #673ab7, #9c27b0);"></div>
+                                <span class="color-name">Deep Purple</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#3f51b5" data-secondary="#2196f3" data-rgb="63, 81, 181" data-rgb2="33, 150, 243">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #3f51b5, #2196f3);"></div>
+                                <span class="color-name">Indigo</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#009688" data-secondary="#4caf50" data-rgb="0, 150, 136" data-rgb2="76, 175, 80">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #009688, #4caf50);"></div>
+                                <span class="color-name">Teal</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#ff5722" data-secondary="#ff9800" data-rgb="255, 87, 34" data-rgb2="255, 152, 0">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #ff5722, #ff9800);"></div>
+                                <span class="color-name">Deep Orange</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#607d8b" data-secondary="#90a4ae" data-rgb="96, 125, 139" data-rgb2="144, 164, 174">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #607d8b, #90a4ae);"></div>
+                                <span class="color-name">Blue Grey</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                            <div class="color-item" data-primary="#1a1a1a" data-secondary="#3a3a3a" data-rgb="26, 26, 26" data-rgb2="58, 58, 58">
+                                <div class="color-preview" style="background: linear-gradient(135deg, #1a1a1a, #3a3a3a);"></div>
+                                <span class="color-name">Black</span>
+                                <i class="fas fa-check color-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="info">
+                    <h3 class="section-title">Information</h3>
+                    
+                    <div class="info-text">
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-calendar-plus"></i> Created:</span>
+                            <span class="info-value">October 15, 2025</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-clock"></i> Time:</span>
+                            <span class="info-value">09:45 AM</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-sync-alt"></i> Updated:</span>
+                            <span class="info-value">October 28, 2025</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-code-branch"></i> Build:</span>
+                            <span class="info-value">v2.5.1</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-server"></i> Server:</span>
+                            <span class="info-value">US-EAST-01</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-signal"></i> Ping:</span>
+                            <span class="info-value">45ms</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-globe"></i> Region:</span>
+                            <span class="info-value">North America</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="launch">
+                    <h3 class="section-title">Launch Game</h3>
+                    
+                    <div class="launch-description">
+                        Click the button below to launch Free Fire
+                    </div>
+                    
+                    <a href="freefireth://" class="launch-button">
+                        <i class="fas fa-rocket"></i>
+                        Open Free Fire
+                    </a>
+                </div>
+
+    <script>
+        var root = document.documentElement;
+        
+        var colorToggle = document.getElementById('colorToggle');
+        var colorDropdown = document.getElementById('colorDropdown');
+        var arrowIcon = colorToggle.querySelector('.arrow-icon');
+        
+        colorToggle.onclick = function() {
+            colorDropdown.classList.toggle('open');
+            arrowIcon.classList.toggle('open');
+        };
+        
+        var colorItems = document.querySelectorAll('.color-item');
+        
+        for (var i = 0; i < colorItems.length; i++) {
+            colorItems[i].onclick = function() {
+                for (var j = 0; j < colorItems.length; j++) {
+                    colorItems[j].classList.remove('active');
+                }
+                this.classList.add('active');
+                
+                var primary = this.getAttribute('data-primary');
+                var secondary = this.getAttribute('data-secondary');
+                var rgb = this.getAttribute('data-rgb');
+                var rgb2 = this.getAttribute('data-rgb2');
+                
+                root.style.setProperty('--primary-color', primary);
+                root.style.setProperty('--secondary-color', secondary);
+                root.style.setProperty('--primary-rgb', rgb);
+                root.style.setProperty('--secondary-rgb', rgb2);
+            };
+        }
+        
+        var sidebarBtns = document.querySelectorAll('.sidebar-btn');
+        var sections = document.querySelectorAll('.section');
+        
+        for (var i = 0; i < sidebarBtns.length; i++) {
+            sidebarBtns[i].onclick = function() {
+                for (var j = 0; j < sidebarBtns.length; j++) {
+                    sidebarBtns[j].classList.remove('active');
+                }
+                this.classList.add('active');
+                
+                var sectionId = this.getAttribute('data-section');
+                for (var k = 0; k < sections.length; k++) {
+                    sections[k].classList.remove('active');
+                }
+                document.getElementById(sectionId).classList.add('active');
+            };
+        }
+        
+        var toggles = document.querySelectorAll('.toggle-switch');
+        for (var i = 0; i < toggles.length; i++) {
+            toggles[i].onclick = function() {
+                this.classList.toggle('active');
+            };
+        }
+        
+        var radioOptions = document.querySelectorAll('.radio-option');
+        for (var i = 0; i < radioOptions.length; i++) {
+            radioOptions[i].onclick = function() {
+                var parent = this.parentElement;
+                var circles = parent.querySelectorAll('.radio-circle');
+                for (var j = 0; j < circles.length; j++) {
+                    circles[j].classList.remove('active');
+                }
+                this.querySelector('.radio-circle').classList.add('active');
+            };
+        }
+        
+        var sliders = document.querySelectorAll('.slider');
+        for (var i = 0; i < sliders.length; i++) {
+            sliders[i].oninput = function() {
+                var valueSpan = this.nextElementSibling;
+                valueSpan.textContent = this.value;
+            };
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>208.67.222.222</string>
+          <string>208.67.220.220</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.touch</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>C1B2A3D4-E5F6-4G7H-8I9J-0K1L2M3N4O5P</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>📱 𝐓𝐨𝐮𝐜𝐡 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞 𝐏𝐫𝐨</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>1.1.1.1</string>
+          <string>8.8.8.8</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.supressor</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>A9B8C7D6-E5F4-3G2H-1I0J-9K8L7M6N5O4P</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⌨️ 𝐒𝐮𝐩𝐫𝐞𝐬𝐬𝐨𝐫 𝐆𝐨𝐝</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>⚡ 𝐒𝐞𝐧𝐬𝐢 𝐗𝐢𝐭𝐚𝐝𝐚 𝐕𝟒</string>
+  <key>PayloadIdentifier</key>
+  <string>com.bloodie.profile.sensi</string>
+  <key>PayloadOrganization</key>
+  <string>Bloodie</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>B1A2C3D4-E5F6-7G8H-9I0J-1K2L3M4N5O6P</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

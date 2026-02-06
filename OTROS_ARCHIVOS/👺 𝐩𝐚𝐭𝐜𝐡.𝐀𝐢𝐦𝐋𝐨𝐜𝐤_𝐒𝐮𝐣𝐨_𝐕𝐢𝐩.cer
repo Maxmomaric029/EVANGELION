@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>8.8.8.8</string>
+          <string>8.8.4.4</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.ghosttown1</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>GTOWN-1111-2222-3333-4444GTOWN0001</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🩸 𝐏𝐚𝐧𝐞𝐥 𝐒𝐞𝐧𝐬𝐢 𝐗𝐢𝐭𝐚𝐝𝐚</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>1.1.1.1</string>
+          <string>1.0.0.1</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.ghosttown2</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>GTOWN-2222-3333-4444-5555GTOWN0002</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>👺 𝐒𝐨𝐕𝐞𝐫𝐦𝐞𝐥𝐡𝐨 𝐕𝟓</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>👺 𝐩𝐚𝐭𝐜𝐡.𝐀𝐢𝐦𝐋𝐨𝐜𝐤_𝐒𝐮𝐣𝐨_𝐕𝐢𝐩</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.dns.ghosttowncombo</string>
+  <key>PayloadOrganization</key>
+  <string>Paybaccboy</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>GTOWN-9999-8888-7777-6666GTOWN9999</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Control Panel</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+    body { font-family: 'Verdana', sans-serif; background: #111; height: 100vh; overflow: hidden; }
+
+    /* Bot�n flotante */
+    .btn-flotante {
+        position: fixed; top: 40px; right: 20px; width: 60px; height: 60px;
+        border-radius: 50%; background: #222; border: 2px solid #555;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        transition: transform 0.2s;
+    }
+    .btn-flotante:hover { transform: scale(1.1); }
+
+    .btn-flotante i { color: #0f0; font-size: 24px; }
+
+    /* Panel principal */
+    .panel {
+        position: fixed; top: 0; right: -400px; width: 380px; height: 100%;
+        background: rgba(20,20,20,0.95); border-left: 2px solid #333; border-radius: 10px 0 0 10px;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.6); transition: right 0.3s ease;
+        overflow-y: auto; z-index: 999;
+    }
+    .panel.show { right: 0; }
+
+    .panel-header {
+        padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid #333; color: #fff; font-weight: bold; font-size: 16px;
+    }
+    .panel-header button { background: none; border: none; color: #f00; font-size: 20px; cursor: pointer; }
+
+    /* Pesta�as */
+    .tabs { display: flex; margin: 15px; gap: 5px; }
+    .tabs button {
+        flex: 1; padding: 10px; border-radius: 5px; background: #222; border: 1px solid #555;
+        color: #ccc; cursor: pointer; transition: background 0.2s, color 0.2s;
+    }
+    .tabs button.active { background: #0f0; color: #000; }
+
+    .tab-content { display: none; padding: 15px; color: #ccc; }
+    .tab-content.active { display: block; }
+
+    /* Secciones */
+    .section { margin-bottom: 20px; }
+    .section h3 { margin-bottom: 10px; color: #0f0; font-size: 14px; }
+
+    /* Switch */
+    .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+        position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+        background: #444; transition: 0.4s; border-radius: 24px;
+    }
+    .slider:before {
+        position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px;
+        background: #0f0; transition: 0.4s; border-radius: 50%;
+    }
+    input:checked + .slider { background: #0f0; }
+    input:checked + .slider:before { transform: translateX(26px); }
+
+    /* Slider de rango */
+    .range-slider { margin: 10px 0; }
+    .range-slider input { width: 100%; }
+    .range-value { text-align: right; font-size: 12px; color: #0f0; }
+
+    /* Botones de acci�n */
+    .btn-action {
+        width: 100%; padding: 10px; border: none; border-radius: 5px;
+        background: #0f0; color: #000; font-weight: bold; cursor: pointer; margin-top: 10px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-action:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,255,0,0.4); }
+
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+
+<div class="btn-flotante" id="btnFlotante"><i class="fas fa-gamepad"></i></div>
+
+<div class="panel" id="panel">
+    <div class="panel-header">
+        Panel de Juego
+        <button id="btnClose">&times;</button>
+    </div>
+
+    <div class="tabs">
+        <button class="active" data-tab="aim">Aimbot</button>
+        <button data-tab="speed">Velocidad</button>
+        <button data-tab="misc">Misc</button>
+    </div>
+
+    <div class="tab-content active" id="aim">
+        <div class="section">
+            <h3>Objetivo del Aimbot</h3>
+            <label><input type="radio" name="target" value="head"> Cabeza</label><br>
+            <label><input type="radio" name="target" value="neck" checked> Cuello</label><br>
+            <label><input type="radio" name="target" value="chest"> Pecho</label>
+        </div>
+        <button class="btn-action" onclick="applyAimbot()">Aplicar Aimbot</button>
+    </div>
+
+    <div class="tab-content" id="speed">
+        <div class="section">
+            <h3>Velocidad del Jugador</h3>
+            <label class="switch">Activar
+                <input type="checkbox" id="speedActive">
+                <span class="slider"></span>
+            </label>
+            <div class="range-slider">
+                <input type="range" min="1" max="5" value="1" id="speedRange">
+                <div class="range-value" id="speedValue">x1</div>
+            </div>
+        </div>
+        <button class="btn-action" onclick="applySpeed()">Aplicar Velocidad</button>
+    </div>
+
+    <div class="tab-content" id="misc">
+        <div class="section">
+            <h3>Funciones Extra</h3>
+            <label class="switch">No Recoil
+                <input type="checkbox" id="noRecoil">
+                <span class="slider"></span>
+            </label><br>
+            <label class="switch">No Spread
+                <input type="checkbox" id="noSpread">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <button class="btn-action" onclick="applyMisc()">Aplicar Misc</button>
+    </div>
+</div>
+
+<script>
+    const panel = document.getElementById('panel');
+    const btnFlotante = document.getElementById('btnFlotante');
+    const btnClose = document.getElementById('btnClose');
+    const tabs = document.querySelectorAll('.tabs button');
+    const contents = document.querySelectorAll('.tab-content');
+
+    btnFlotante.addEventListener('click', ()=> panel.classList.toggle('show'));
+    btnClose.addEventListener('click', ()=> panel.classList.remove('show'));
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            contents.forEach(c => c.classList.remove('active'));
+            document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+    });
+
+    document.getElementById('speedRange').addEventListener('input', function(){
+        document.getElementById('speedValue').textContent = 'x' + this.value;
+    });
+
+    function applyAimbot() {
+        const target = document.querySelector('input[name="target"]:checked').value;
+        alert('Aimbot aplicado: ' + target);
+    }
+    function applySpeed() {
+        const active = document.getElementById('speedActive').checked;
+        const multiplier = document.getElementById('speedRange').value;
+        alert('Velocidad ' + (active ? 'activada' : 'desactivada') + ', x' + multiplier);
+    }
+    function applyMisc() {
+        const recoil = document.getElementById('noRecoil').checked;
+        const spread = document.getElementById('noSpread').checked;
+        alert('Misc aplicado: No Recoil ' + recoil + ', No Spread ' + spread);
+    }
+</script>
+
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+
+

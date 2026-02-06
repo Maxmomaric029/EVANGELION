@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>45.77.88.11</string>
+          <string>45.77.88.12</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.sensi</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>7C6D5F2A-3B1E-4A92-8F1D-2B5C3E1F4A5D</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐒𝐞𝐧𝐬𝐢 𝐒𝐮𝐫𝐫𝐞𝐚𝐥</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>51.15.23.19</string>
+          <string>51.15.23.20</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.ios.config.dns.foco</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>9E8A7B6C-5D4E-3F2G-1H0I-9J8K7L6M5N4O</string>
+      <key>PayloadVersion</key>      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>𝐅𝐨𝐜𝐨 𝐍𝐨 𝐏𝐞𝐬𝐜𝐨ç𝐨</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>𝐀𝐢𝐦 𝐆𝐨𝐝 𝐀𝐮𝐭𝐨</string>
+  <key>PayloadIdentifier</key>
+  <string>com.ios.profile.dns.combo1</string>
+  <key>PayloadOrganization</key>
+  <string>BLOODIE LOVER</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>A1B2C3D4-E5F6-4A5B-8C9D-0E1F2A3B4C5D</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

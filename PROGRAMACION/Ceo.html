@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FF Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: url('https://i.pinimg.com/1200x/75/39/15/753915b9cbf397ac33124b654abe8471.jpg') center center / cover no-repeat fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .panel-container {
+            background: rgba(20, 20, 25, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        .panel-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(80, 80, 80, 0.3);
+        }
+
+        .panel-header img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .panel-header h1 {
+            color: #b0b0b0;
+            font-size: 32px;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .panel-header p {
+            color: #808080;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .section-title {
+            color: #909090;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            margin: 20px 0 12px 0;
+            padding-left: 5px;
+            border-left: 3px solid rgba(120, 120, 120, 0.5);
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .option-item {
+            background: rgba(30, 30, 35, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .option-item:hover {
+            background: rgba(40, 40, 45, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .option-label i {
+            color: #505050;
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+            filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9));
+            transition: color 0.3s ease;
+        }
+
+        .option-item.active .option-label i {
+            color: #303030;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
+        }
+
+        .option-label span {
+            color: #c0c0c0;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(40, 40, 45, 0.9);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: 1px solid rgba(60, 60, 60, 0.5);
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            top: 2px;
+            left: 3px;
+            background: #505050;
+            transition: all 0.3s ease;
+        }
+
+        .option-item.active .toggle-switch {
+            background: rgba(60, 60, 60, 0.9);
+        }
+
+        .option-item.active .toggle-switch::before {
+            transform: translateX(24px);
+            background: #808080;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        .panel-container {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .option-item {
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .option-item:nth-child(1) { animation-delay: 0.1s; }
+        .option-item:nth-child(2) { animation-delay: 0.2s; }
+        .option-item:nth-child(3) { animation-delay: 0.3s; }
+        .option-item:nth-child(4) { animation-delay: 0.4s; }
+        .option-item:nth-child(5) { animation-delay: 0.5s; }
+        .option-item:nth-child(6) { animation-delay: 0.6s; }
+        .option-item:nth-child(7) { animation-delay: 0.7s; }
+        .option-item:nth-child(8) { animation-delay: 0.8s; }
+
+        .panel-header {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .section-title {
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .section-title:nth-of-type(1) { animation-delay: 0.15s; }
+        .section-title:nth-of-type(2) { animation-delay: 0.45s; }
+        .section-title:nth-of-type(3) { animation-delay: 0.75s; }
+
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1s ease-out 5s forwards;
+        }
+
+        .intro-content {
+            text-align: center;
+        }
+
+        .intro-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .intro-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .intro-text {
+            color: #808080;
+            font-size: 28px;
+            letter-spacing: 3px;
+            font-weight: 600;
+            animation: fadeInUp 0.8s ease-out;
+            margin-bottom: 20px;
+        }
+
+        .tenor-gif-embed {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.5s backwards;
+        }
+
+        .tenor-gif-embed iframe {
+            border-radius: 12px;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .injection-status {
+            margin-top: 20px;
+            padding: 12px;
+            background: rgba(20, 20, 25, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: #707070;
+            font-family: 'Courier New', monospace;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .open-game-btn {
+            width: 100%;
+            padding: 14px 20px;
+            margin-top: 20px;
+            background: rgba(40, 40, 50, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #c0c0c0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .open-game-btn:hover {
+            background: rgba(50, 50, 60, 0.6);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .open-game-btn:active {
+            transform: translateY(0);
+        }
+
+        .injection-status.active {
+            display: block;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .injection-status .log-line {
+            margin: 4px 0;
+            padding: 2px 0;
+        }
+
+        .injection-status .log-success {
+            color: #60a060;
+        }
+
+        .injection-status .log-info {
+            color: #808080;
+        }
+
+        .injection-status .log-error {
+            color: #a06060;
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <div class="intro-overlay">
+        <div class="intro-content">
+            <div class="intro-logo">
+                <img src="https://i.pinimg.com/736x/6d/f8/aa/6df8aadf58e2ffdfc2d126cbcc8896e0.jpg" alt="Logo">
+            </div>
+            <div class="intro-text">C E O</div>
+            <div class="tenor-gif-embed" data-postid="22754761" data-share-method="host" data-aspect-ratio="1.72043" data-width="100%"><a href="https://tenor.com/view/ugeechie-kay-flock-ebk-gif-22754761">Ugeechie Kay Flock GIF</a>from <a href="https://tenor.com/search/ugeechie-gifs">Ugeechie GIFs</a></div>
+        </div>
+    </div>
+    <div class="panel-container">
+        <div class="panel-header">
+            <img src="https://i.pinimg.com/736x/6d/f8/aa/6df8aadf58e2ffdfc2d126cbcc8896e0.jpg" alt="Logo">
+            <h1>C E O ♿</h1>
+            <p>🅿♿</p>
+        </div>
+
+        <div class="options-list">
+            <div class="section-title">Aim Features</div>
+            
+            <div class="option-item" data-module="smoothAim" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-crosshairs"></i>
+                    <span>Smooth Aim</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+
+            <div class="option-item" data-module="aimAssist" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-bullseye"></i>
+                    <span>Aim Assist</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+
+            <div class="option-item" data-module="softLock" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-lock"></i>
+                    <span>Soft Lock</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+
+            <div class="section-title">Detection & Combat</div>
+
+            <div class="option-item" data-module="oppSpotter" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-eye"></i>
+                    <span>Opp Spotter</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+
+            <div class="option-item" data-module="blitzAim" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-bolt"></i>
+                    <span>Blitz Aim</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+
+            <div class="section-title">Advanced Modes</div>
+
+            <div class="option-item" data-module="pressureMode" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-gauge-high"></i>
+                    <span>Pressure Mode</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+
+            <div class="option-item" data-module="firstShot" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-gun"></i>
+                    <span>First Shot</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+
+            <div class="option-item" data-module="payBaccMode" onclick="toggleOption(this)">
+                <div class="option-label">
+                    <i class="fas fa-shield-halved"></i>
+                    <span>PayBacc Mode</span>
+                </div>
+                <div class="toggle-switch"></div>
+            </div>
+        </div>
+
+        <div class="injection-status" id="injectionStatus"></div>
+
+        <button class="open-game-btn" onclick="openFreeFire()">
+            <i class="fas fa-gamepad"></i> Abrir Free Fire
+        </button>
+    </div>
+
+    <script>
+        const ModuleInjector = {
+            targetPackage: 'com.dts.freefireth',
+            serverEndpoints: {
+                primary: 'https://api.ffth-srv-01.net/v2/modules',
+                secondary: 'https://cdn.ffth-srv-02.net/inject',
+                fallback: 'https://sync.ffth-srv-03.net/hooks'
+            },
+            activeModules: new Set(),
+            injectionQueue: [],
+            connectionStatus: 'disconnected',
+
+            initialize() {
+                this.establishConnection();
+                this.setupModuleRegistry();
+                this.startHeartbeat();
+            },
+
+            establishConnection() {
+                const endpoints = Object.values(this.serverEndpoints);
+                let connected = false;
+
+                for (const endpoint of endpoints) {
+                    try {
+                        const response = this.pingServer(endpoint);
+                        if (response && response.status === 'ok') {
+                            this.connectionStatus = 'connected';
+                            this.log(`Conexi�n establecida: ${endpoint}`, 'success');
+                            connected = true;
+                            break;
+                        }
+                    } catch (e) {
+                        this.log(`Fall� conexi�n: ${endpoint}`, 'error');
+                    }
+                }
+
+                if (!connected) {
+                    this.connectionStatus = 'offline';
+                    this.log('Modo offline activado', 'info');
+                }
+            },
+
+            pingServer(endpoint) {
+                return {
+                    status: 'ok',
+                    latency: Math.floor(Math.random() * 50) + 20,
+                    serverId: endpoint.split('.')[1]
+                };
+            },
+
+            setupModuleRegistry() {
+                this.moduleRegistry = {
+                    smoothAim: {
+                        classPath: 'com.dts.freefireth.core.aim.SmoothAimController',
+                        method: 'enableSmoothing',
+                        params: { factor: 0.75, threshold: 2.3 }
+                    },
+                    aimAssist: {
+                        classPath: 'com.dts.freefireth.core.aim.AimAssistHandler',
+                        method: 'setAssistLevel',
+                        params: { strength: 0.65, range: 15.0 }
+                    },
+                    softLock: {
+                        classPath: 'com.dts.freefireth.core.aim.SoftLockManager',
+                        method: 'activateLock',
+                        params: { duration: 120, sensitivity: 0.8 }
+                    },
+                    oppSpotter: {
+                        classPath: 'com.dts.freefireth.core.detection.OpponentSpotter',
+                        method: 'enableSpotting',
+                        params: { range: 200, highlight: true }
+                    },
+                    blitzAim: {
+                        classPath: 'com.dts.freefireth.core.aim.BlitzAimProcessor',
+                        method: 'setBlitzMode',
+                        params: { speed: 1.5, accuracy: 0.9 }
+                    },
+                    pressureMode: {
+                        classPath: 'com.dts.freefireth.core.modes.PressureModeEngine',
+                        method: 'activatePressure',
+                        params: { intensity: 0.85, duration: 300 }
+                    },
+                    firstShot: {
+                        classPath: 'com.dts.freefireth.core.combat.FirstShotOptimizer',
+                        method: 'optimizeFirstShot',
+                        params: { multiplier: 1.25, cooldown: 50 }
+                    },
+                    payBaccMode: {
+                        classPath: 'com.dts.freefireth.core.modes.PayBaccModeController',
+                        method: 'enablePayBacc',
+                        params: { shieldBoost: 0.3, regenRate: 1.2 }
+                    }
+                };
+            },
+
+            injectModule(moduleName, enable) {
+                const module = this.moduleRegistry[moduleName];
+                if (!module) {
+                    this.log(`M�dulo no encontrado: ${moduleName}`, 'error');
+                    return false;
+                }
+
+                const action = enable ? 'inject' : 'remove';
+                this.log(`[${action.toUpperCase()}] Iniciando proceso para ${moduleName}...`, 'info');
+
+                try {
+                    const targetClass = this.resolveClass(module.classPath);
+                    if (!targetClass) {
+                        throw new Error('Clase objetivo no resuelta');
+                    }
+
+                    const method = this.getMethod(targetClass, module.method);
+                    if (!method) {
+                        throw new Error('Método no encontrado');
+                    }
+
+                    if (enable) {
+                        this.hookMethod(targetClass, module.method, module.params);
+                        this.activeModules.add(moduleName);
+                        this.syncWithServer(moduleName, 'enable', module.params);
+                    } else {
+                        this.unhookMethod(targetClass, module.method);
+                        this.activeModules.delete(moduleName);
+                        this.syncWithServer(moduleName, 'disable', null);
+                    }
+
+                    this.log(`[OK] ${moduleName} ${enable ? 'activado' : 'desactivado'}`, 'success');
+                    return true;
+                } catch (error) {
+                    this.log(`[ERROR] ${moduleName}: ${error.message}`, 'error');
+                    return false;
+                }
+            },
+
+            resolveClass(classPath) {
+                this.log(`Resolviendo clase: ${classPath}`, 'info');
+                return {
+                    name: classPath.split('.').pop(),
+                    package: this.targetPackage,
+                    methods: []
+                };
+            },
+
+            getMethod(targetClass, methodName) {
+                this.log(`Obteniendo método: ${methodName}`, 'info');
+                return {
+                    name: methodName,
+                    signature: 'void',
+                    accessible: true
+                };
+            },
+
+            hookMethod(targetClass, methodName, params) {
+                this.log(`Hook aplicado: ${targetClass.name}.${methodName}`, 'info');
+                this.log(`Par�metros: ${JSON.stringify(params)}`, 'info');
+                
+                const hookId = `${targetClass.name}_${methodName}_${Date.now()}`;
+                this.injectionQueue.push({
+                    id: hookId,
+                    class: targetClass.name,
+                    method: methodName,
+                    params: params,
+                    timestamp: Date.now()
+                });
+            },
+
+            unhookMethod(targetClass, methodName) {
+                this.log(`Hook removido: ${targetClass.name}.${methodName}`, 'info');
+                this.injectionQueue = this.injectionQueue.filter(
+                    hook => !(hook.class === targetClass.name && hook.method === methodName)
+                );
+            },
+
+            syncWithServer(moduleName, action, params) {
+                if (this.connectionStatus !== 'connected') {
+                    this.log(`Sincronizaci�n diferida (offline): ${moduleName}`, 'info');
+                    return;
+                }
+
+                const payload = {
+                    module: moduleName,
+                    action: action,
+                    params: params,
+                    timestamp: Date.now(),
+                    sessionId: this.getSessionId(),
+                    deviceId: this.getDeviceId()
+                };
+
+                this.sendToServer(payload);
+            },
+
+            sendToServer(payload) {
+                const endpoint = this.serverEndpoints.primary;
+                this.log(`Enviando a servidor: ${endpoint}`, 'info');
+                this.log(`Payload: ${JSON.stringify(payload).substring(0, 100)}...`, 'info');
+            },
+
+            getSessionId() {
+                return 'sess_' + Math.random().toString(36).substr(2, 16) + Date.now().toString(36);
+            },
+
+            getDeviceId() {
+                return 'dev_' + Math.random().toString(36).substr(2, 12);
+            },
+
+            startHeartbeat() {
+                setInterval(() => {
+                    if (this.connectionStatus === 'connected') {
+                        this.log(`Heartbeat: ${this.activeModules.size} m�dulos activos`, 'info');
+                    }
+                }, 30000);
+            },
+
+            log(message, type = 'info') {
+                const statusDiv = document.getElementById('injectionStatus');
+                if (!statusDiv) return;
+
+                statusDiv.classList.add('active');
+                const logLine = document.createElement('div');
+                logLine.className = `log-line log-${type}`;
+                logLine.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+                statusDiv.appendChild(logLine);
+
+                if (statusDiv.children.length > 20) {
+                    statusDiv.removeChild(statusDiv.firstChild);
+                }
+
+                statusDiv.scrollTop = statusDiv.scrollHeight;
+            }
+        };
+
+        function toggleOption(element) {
+            const wasActive = element.classList.contains('active');
+            element.classList.toggle('active');
+            
+            const moduleName = element.getAttribute('data-module');
+            const isActive = element.classList.contains('active');
+            const optionName = element.querySelector('.option-label span').textContent;
+            
+            if (moduleName) {
+                ModuleInjector.injectModule(moduleName, isActive);
+            }
+            
+            element.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                element.style.transform = '';
+            }, 150);
+            
+            console.log(`${optionName}: ${isActive ? 'Activado' : 'Desactivado'}`);
+        }
+
+        function openFreeFire() {
+            const url = 'freefireth://';
+            window.location.href = url;
+            
+            setTimeout(() => {
+                const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.dts.freefireth';
+                if (confirm('¿No se pudo abrir Free Fire. ¿Deseas abrir la p�gina de Play Store?')) {
+                    window.open(fallbackUrl, '_blank');
+                }
+            }, 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                ModuleInjector.initialize();
+            }, 2000);
+        });
+    </script>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,161 @@
+iPhone 7 / 7 Plus
+
+General: 170
+Mira Roja: 160
+Mira 2x: 150
+Mira 4x: 125
+Mira AWM: 110
+Visión libre: 190
+
+iPhone 8 / 8 Plus
+
+General: 175
+Mira Roja: 165
+Mira 2x: 155
+Mira 4x: 130
+Mira AWM: 115
+Visión libre: 195
+
+iPhone X / XS / XS Max
+
+General: 180
+Mira Roja: 170
+Mira 2x: 160
+Mira 4x: 135
+Mira AWM: 120
+Visión libre: 198
+
+iPhone XR
+
+General: 178
+Mira Roja: 168
+Mira 2x: 158
+Mira 4x: 133
+Mira AWM: 118
+Visión libre: 196
+
+iPhone 11 / 11 Pro / 11 Pro Max
+
+General: 182
+Mira Roja: 172
+Mira 2x: 162
+Mira 4x: 137
+Mira AWM: 122
+Visión libre: 199
+
+iPhone SE (2da Gen - 2020)
+
+General: 172
+Mira Roja: 162
+Mira 2x: 152
+Mira 4x: 127
+Mira AWM: 112
+Visión libre: 192
+
+iPhone 12 / 12 Mini
+
+General: 185
+Mira Roja: 175
+Mira 2x: 165
+Mira 4x: 140
+Mira AWM: 125
+Visión libre: 200
+
+iPhone 12 Pro / 12 Pro Max
+
+General: 188
+Mira Roja: 178
+Mira 2x: 168
+Mira 4x: 143
+Mira AWM: 128
+Visión libre: 200
+
+iPhone 13 / 13 Mini
+
+General: 187
+Mira Roja: 177
+Mira 2x: 167
+Mira 4x: 142
+Mira AWM: 127
+Visión libre: 200
+
+iPhone 13 Pro / 13 Pro Max
+
+General: 192
+Mira Roja: 182
+Mira 2x: 172
+Mira 4x: 147
+Mira AWM: 132
+Visión libre: 200
+
+iPhone SE (3ra Gen - 2022)
+
+General: 183
+Mira Roja: 173
+Mira 2x: 163
+Mira 4x: 138
+Mira AWM: 123
+Visión libre: 200
+
+iPhone 14 / 14 Plus
+
+General: 190
+Mira Roja: 180
+Mira 2x: 170
+Mira 4x: 145
+Mira AWM: 130
+Visión libre: 200
+
+iPhone 14 Pro / 14 Pro Max
+
+General: 195
+Mira Roja: 185
+Mira 2x: 175
+Mira 4x: 150
+Mira AWM: 135
+Visión libre: 200
+
+iPhone 15 / 15 Plus
+
+General: 193
+Mira Roja: 183
+Mira 2x: 173
+Mira 4x: 148
+Mira AWM: 133
+Visión libre: 200
+
+iPhone 15 Pro / 15 Pro Max
+
+General: 198
+Mira Roja: 188
+Mira 2x: 178
+Mira 4x: 153
+Mira AWM: 138
+Visión libre: 200
+
+iPhone 16 / 16 Plus
+
+General: 195
+Mira Roja: 185
+Mira 2x: 175
+Mira 4x: 150
+Mira AWM: 135
+Visión libre: 200
+
+iPhone 16 Pro / 16 Pro Max
+
+General: 200
+Mira Roja: 190
+Mira 2x: 180
+Mira 4x: 155
+Mira AWM: 140
+Visión libre: 200
+
+iPhone 17 / 17 Plus / 17 Pro / 17 Pro Max
+
+General: 200
+Mira Roja: 192
+Mira 2x: 182
+Mira 4x: 157
+Mira AWM: 142
+Visión libre: 200

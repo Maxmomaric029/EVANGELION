@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTILIDAD & BYPASS  | PREMIUM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --accent: #007aff; --glass: rgba(10, 10, 10, 0.85); --border: rgba(255, 255, 255, 0.1); }
+        body { margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif; background: #000 url('https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg') center/cover no-repeat; color: white; overflow: hidden; }
+        .panel-ios { width: 330px; background: var(--glass); backdrop-filter: blur(30px); border-radius: 40px; border: 1px solid var(--border); padding: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.8); text-align: center; }
+        .header h2 { font-size: 1.4rem; margin: 0; background: linear-gradient(180deg, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header span { font-size: 0.6rem; color: var(--accent); text-transform: uppercase; letter-spacing: 4px; font-weight: 800; }
+        .scroll-area { margin: 25px 0; max-height: 400px; overflow-y: auto; padding-right: 5px; }
+        .scroll-area::-webkit-scrollbar { width: 4px; }
+        .scroll-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        .cell { background: rgba(255, 255, 255, 0.04); border-radius: 20px; padding: 14px 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; transition: 0.3s; }
+        .cell:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--accent); }
+        .cell-label { font-size: 0.8rem; font-weight: 600; color: #efefef; text-align: left; }
+        .switch { position: relative; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #39393d; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #007aff; }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .btn-inject { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 20px; font-weight: 800; font-size: 0.9rem; cursor: pointer; box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3); transition: 0.3s; }
+        .btn-inject:active { transform: scale(0.95); opacity: 0.8; }
+    </style>
+</head>
+<body>
+<div class="panel-ios">
+    <div class="header">
+        <h2>𝐔𝐓𝐈𝐋𝐈𝐃𝐀𝐃 & 𝐁𝐘𝐏𝐀𝐒𝐒</h2>
+        <span>𝐒𝐘𝐒𝐓𝐄𝐌 𝐏𝐑𝐎𝐓𝐄𝐂𝐓𝐈𝐎𝐍 </span>
+    </div>
+    <div class="scroll-area">
+        <div class="cell"><span class="cell-label">🔌 AntiBan System Pro</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="cell"><span class="cell-label">🛡️ Shield Bypass</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="cell"><span class="cell-label">❄️ Ice Wall [Fast]</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="cell"><span class="cell-label">⚡ Speed Hack [Legit]</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="cell"><span class="cell-label">🧬 DNA Modify</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="cell"><span class="cell-label">🎮 Game Booster [Max]</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="cell"><span class="cell-label">📉 Zero Delay [Ping]</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    </div>
+    <button class="btn-inject" onclick="this.innerHTML='𝐒𝐘𝐒𝐓𝐄𝐌 𝐒𝐀𝐅𝐄';">𝐈𝐍𝐉𝐄𝐂𝐓 𝐔𝐓𝐈𝐋𝐈𝐓𝐘</button>
+</div>
+</body>
+</html>

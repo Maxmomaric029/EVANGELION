@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>ConsentText</key>
+    <dict>
+        <key>default</key>
+        <string>PRECISION RESPONSE - Ultra Aim, Quick Touch, Response Boost | Paybacc (solo VIP)</string>
+    </dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>DNSProtocol</key>
+                <string>HTTPS</string>
+                <key>DomainServer</key>
+                <string>iPhone13,4</string>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>192.168.1.2</string>
+                </array>
+                <key>ServerName</key>
+                <string> 𝑈𝑙𝑡𝑟𝑎 𝑎𝑖𝑚𝑏𝑜𝑡❗ | APEX 🎯</string>
+                <key>ServerOwner</key>
+                <array>
+                    <string>358742095245616</string>
+                </array>
+                <key>ServerURL</key>
+                <string>https://ultrafast.dns.nextdns.io/precision.apex.ip12promax</string>
+                <key>ServerUser</key>
+                <array>
+                    <string>358742095245616</string>
+                    <string>359554101078950</string>
+                </array>
+                <key>SupplementalMatchDomains</key>
+                <array>
+                    <string>&lt;build:name"com.apex_ultraaim_act_conf_priority_getsign_feebase128_359554101078950_delay0.05_settime3.5_begincertificate_touchresponse_on_auto_cws="80-120"_sensitivity="high"_uncrack.list=boolen"true&gt;</string>
+                    <string>&lt;build:name"com.apex_quicktouch_act_conf_seclect_sync_device"120"Key_act_allow.file_code_getsign_359554101078950_function_touchInject_Exactly_callback_feebase128_delay0.08_on_settime0.3_touchresponse_auto_cws="80-120"_latency="ultralow"_uncrack_SHA256withRSA_AuthenticationMethod.list=boolen"true&gt;F1:QuickResponse</string>
+                    <string>&lt;build:name"com.apex_responseboost_seclect_sync_device"120"Key_acp_allow.file_code_connectInject_response_setting-app_com.dts.freefireth_on_auto_cws="80-120"_latency="optimized"_on_uncrack.so=true&gt;</string>
+                    <string>&lt;build:name"com.apex_aimassist_allow.file_code_unlock_connectInject_roll_allconf-stp_ffthbasex128_overlock_roothide_settime1.8_touchresponse_on_auto_cws="80-120"_precision="max"_uncrack.list="true&gt;F2:AimLock</string>
+                    <string>&lt;build:name"com.apex_sensibilitymax_act_allow.file_code_unlock_connectInject_function_touch_sensitivity_setting_auto_cws="80-120"_threshold="0.02"_uncrack.dat="true&gt;</string>
+                    <string>&lt;build:name"com.apex_inputlag_reduce_act_conf_priority_kernel_inject_frame_sync_359554101078950_delay0.03_buffer="disabled"_vsync="off"_auto_cws="80-120"_uncrack.bin="true&gt;</string>
+                    <string>&lt;build:name"com.apex_taptofire_instant_allow.file_code_getsign_touchInject_fire_delay0.01_settime0.2_auto_cws="80-120"_uncrack.dat="true&gt;</string>
+                    <string>com.ultraaim-apex-ffbase128</string>
+                    <string>com.quicktouch-apex-ffbasex128</string>
+                    <string>com.responseboost-ffbase128</string>
+                    <string>com.aimassist-ffbasex128</string>
+                    <string>com.sensibilitymax-ffbase128</string>
+                    <string>com.inputlag-apex-reduce</string>
+                    <string>com.taptofire-apex-inst
+                    <string>com.apex_quicktouch_act_conf_seclect_sync_device</string>
+                    <string>com.apex_responseboost_seclect_sync_device</string>
+                    <string>com.apex_aimassist_allow</string>
+                    <string>com.apex_sensibilitymax_act_allow</string>
+                    <string>com.apex_inputlag_reduce_act_conf_priority_kernel_inject_frame_sync_359554101078950_delay0.03_buffer="disabled"_vsync="off"_auto_cws="80-120"_uncrack.bin="true</string>
+                    <string>com.apex_taptofire_instant_allow</string>
+                </array>
+            </dict>
+            <key>PayloadDisplayName</key>
+            <string>𝐀𝐩𝐞𝐱 𝐏𝐫𝐞𝐜𝐢𝐬𝐢𝐨𝐧 | APEX 🎯</string>
+            <key>PayloadIdentifier</key>
+            <string>RlpoOTFBWSZTWWRC2sMABKofldZTRAo/6E////C////xCBBhABBZNBGYyNWOGaRp0EJfp0bNOHR</string>
+            <key>PayloadOrganization</key>
+            <string>Doa.Worldd making art</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>555555</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>•@Paybacc VIP - Precision over all</string>
+    <key>PayloadDisplayName</key>
+    <string>Precision Response v1 | iOS</string>
+    <key>PayloadIdentifier</key>
+    <string>com.precisionresponse.apple-dns</string>
+    <key>PayloadOrganization</key>
+    <string>DOA WORLD</string>
+    <key>PayloadScope</key>
+    <string>System</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>00008030-002F5D673F49902E</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    <key>TargetDeviceType</key>
+    <integer>0</integer>
+</dict>
+</plist>

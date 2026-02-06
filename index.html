@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>EVANGELION NEON</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face { font-family: 'Akira'; src: url('https://db.onlinewebfonts.com/t/akira.woff2') format('woff2'); }
+        :root { --n-blue: #00f7ff; --bg: #03030b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px 140px;
+            background-image: url('https://i.pinimg.com/736x/b2/16/c3/b216c3aec6227a7aff0aad630575d391.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, #fff 20%, var(--n-blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 15px rgba(0, 247, 255, 0.6));
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+        .main-container { width: 100%; max-width: 500px; }
+        
+        .cards-container { 
+            display: none; 
+            flex-direction: column; 
+            gap: 25px; 
+            animation: slideIn 0.3s ease-out; 
+            width: 100%; 
+        }
+        .cards-container.active { display: flex; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .card {
+            position: relative;
+            background: #000;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            aspect-ratio: 9 / 16;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .card:active { transform: scale(0.96); border-color: var(--n-blue); }
+        
+        .card-img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .card-info { 
+            padding: 25px; 
+            position: relative; 
+            z-index: 1; 
+            margin-top: auto;
+            background: linear-gradient(to top, rgba(0,0,0,1) 15%, rgba(0,0,0,0.5) 50%, transparent 100%);
+            backdrop-filter: blur(2px);
+        }
+        .card-info h3 {
+            font-family: 'Akira', sans-serif;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 0 0 15px rgba(0,0,0,1);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .card-info p { 
+            color: var(--n-blue); 
+            font-size: 0.8rem; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0,0,0,1);
+        }
+
+        .bottom-dock {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 25px;
+            border: 1px solid rgba(255,255,255,0.15);
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+        }
+        .dock-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.4);
+            font-size: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        .dock-btn.active {
+            color: var(--n-blue);
+            background: rgba(0, 247, 255, 0.1);
+            transform: translateY(-12px);
+            filter: drop-shadow(0 0 15px var(--n-blue));
+        }
+        .dock-btn span { font-size: 0.6rem; font-weight: 900; margin-top: 2px; }
+    </style>
+</head>
+<body>
+
+    <h1>EVANGELION</h1>
+
+    <div class="main-container">
+        <!-- SECCIÓN 0: HTMLS (TODOS) -->
+        <div class="cards-container active" id="c0">
+            <!-- PANELES PREMIUM NUEVOS -->
+            <a href="BRASIL_CAPA.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>SECCIÓN BRASIL</h3><p>PURO CAPA </p></div></a>
+            <a href="AIM_HARD.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>AIMLOCKS</h3><p>HARD AIM </p></div></a>
+            <a href="REGEDIT_AGR.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>REGEDIT</h3><p>AGRESSIVE </p></div></a>
+            <a href="UTILITY_BYPASS.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>UTILIDAD</h3><p>BYPASS </p></div></a>
+            <a href="SENSIS_SMOOTH.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>SENSIS</h3><p>SMOOTH </p></div></a>
+            
+            <!-- ANTERIORES RE-AÑADIDOS -->
+            <a href="bad dayz/index.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>BAD DAYZ</h3><p>PREMIUM PANEL</p></div></a>
+            <a href="PROGRAMACION/index3.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>REVENGE MENU</h3><p>ADVANCED</p></div></a>
+            <a href="Esperanza.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>ESPERANZA</h3><p>SYSTEM CODE</p></div></a>
+            <a href="Fear.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>FEAR</h3><p>SECURITY</p></div></a>
+            <a href="𝐋𝐞𝐠𝐢𝐭 𝐌𝐨𝐝𝐞 𝐎𝐧.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>LEGIT MODE</h3><p>LOW PROFILE</p></div></a>
+            <a href="PROGRAMACION/700JETZZ.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>700JETZZ</h3><p>CONTROL</p></div></a>
+            <a href="PROGRAMACION/VERTIGO.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>VERTIGO</h3><p>SHIFT</p></div></a>
+            <a href="PROGRAMACION/𝐅𝐞𝐫𝐫𝐚𝐫𝐢✝.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>FERRARI</h3><p>SPEED</p></div></a>
+            <a href="PROGRAMACION/𝑴𝒆𝒓𝒄𝒆𝒅𝒆𝒔📁.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>MERCEDES</h3><p>VIP</p></div></a>
+            <a href="PROGRAMACION/zenith.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>ZENITH</h3><p>MAX</p></div></a>
+            <a href="PROGRAMACION/Supreme_Panel.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>SUPREME</h3><p>ALL ACCESS</p></div></a>
+            <a href="PROGRAMACION/ah.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>AH</h3><p>MODULE</p></div></a>
+            <a href="PROGRAMACION/Big3.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>BIG3</h3><p>DATA</p></div></a>
+            <a href="PROGRAMACION/Big4.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>BIG4</h3><p>DATA</p></div></a>
+            <a href="PROGRAMACION/big5.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>BIG5</h3><p>DATA</p></div></a>
+            <a href="PROGRAMACION/Bird.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>BIRD</h3><p>FLY</p></div></a>
+            <a href="PROGRAMACION/Ceo.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>CEO</h3><p>BOSS</p></div></a>
+            <a href="PROGRAMACION/checkthefootage.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>FOOTAGE</h3><p>WATCH</p></div></a>
+            <a href="PROGRAMACION/clash royale.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>CLASH</h3><p>ROYALE</p></div></a>
+            <a href="PROGRAMACION/Crimson.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>CRIMSON</h3><p>CORE</p></div></a>
+            <a href="PROGRAMACION/dirty.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>DIRTY</h3><p>RAW</p></div></a>
+            <a href="PROGRAMACION/EJEMPLO.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>EJEMPLO</h3><p>SAMPLE</p></div></a>
+            <a href="PROGRAMACION/generador de sensis.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>SENSI</h3><p>GEN</p></div></a>
+            <a href="PROGRAMACION/ghostTown.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>GHOST TOWN</h3><p>VOID</p></div></a>
+            <a href="PROGRAMACION/index2.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>INDEX 2</h3><p>SEC</p></div></a>
+            <a href="PROGRAMACION/index4.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>INDEX 4</h3><p>SEC</p></div></a>
+            <a href="PROGRAMACION/index5.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>INDEX 5</h3><p>SEC</p></div></a>
+            <a href="PROGRAMACION/index6.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>INDEX 6</h3><p>SEC</p></div></a>
+            <a href="PROGRAMACION/index7.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>INDEX 7</h3><p>SEC</p></div></a>
+            <a href="PROGRAMACION/index9.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>INDEX 9</h3><p>SEC</p></div></a>
+            <a href="PROGRAMACION/IPA.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>IPA</h3><p>APP</p></div></a>
+            <a href="PROGRAMACION/IsYaReady.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>IS YA READY</h3><p>READY</p></div></a>
+            <a href="PROGRAMACION/last dance.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>LAST DANCE</h3><p>FINAL</p></div></a>
+            <a href="PROGRAMACION/Midnight.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>MIDNIGHT</h3><p>NIGHT</p></div></a>
+            <a href="PROGRAMACION/midsun.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>MIDSUN</h3><p>DAY</p></div></a>
+            <a href="PROGRAMACION/money over all.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>MONEY</h3><p>M.O.A</p></div></a>
+            <a href="PROGRAMACION/nazzy.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>NAZZY</h3><p>USER</p></div></a>
+            <a href="PROGRAMACION/NebulaTech.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>NEBULA</h3><p>TECH</p></div></a>
+            <a href="PROGRAMACION/new era.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>NEW ERA</h3><p>ERA</p></div></a>
+            <a href="PROGRAMACION/Onjetz.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>ONJETZ</h3><p>SYSTEM</p></div></a>
+            <a href="PROGRAMACION/orden.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>ORDEN</h3><p>ORDER</p></div></a>
+            <a href="PROGRAMACION/pago.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>PAGO</h3><p>PAY</p></div></a>
+            <a href="PROGRAMACION/Pain.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>PAIN</h3><p>CORE</p></div></a>
+            <a href="PROGRAMACION/scarlet.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>SCARLET</h3><p>RED</p></div></a>
+            <a href="PROGRAMACION/snowfalling.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>SNOW</h3><p>FALL</p></div></a>
+            <a href="PROGRAMACION/time.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>TIME</h3><p>CLOCK</p></div></a>
+            <a href="PROGRAMACION/trickXbaby.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>TRICK</h3><p>BABY</p></div></a>
+            <a href="PROGRAMACION/𝙇 𝙄 𝐄 🤷‍♀️.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>LIE</h3><p>TRUTH</p></div></a>
+            <a href="PROGRAMACION/panel8.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>PANEL 8</h3><p>CONTROL</p></div></a>
+            <a href="PROGRAMACION/panelBlack.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>PANEL BLACK</h3><p>VOID</p></div></a>
+            <a href="PROGRAMACION/panelBlue.html" class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>PANEL BLUE</h3><p>CYAN</p></div></a>
+            <a href="PROGRAMACION/panelCyan.html" class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>PANEL CYAN</h3><p>LIGHT</p></div></a>
+            <a href="PROGRAMACION/panelRed.html" class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>PANEL RED</h3><p>DANGER</p></div></a>
+            <a href="ruta.html" class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>RUTA</h3><p>PATH</p></div></a>
+            <a href="simon dice.html" class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>SIMON DICE</h3><p>GAME</p></div></a>
+        </div>
+
+        <!-- SECCIÓN 1: CERTIFICADOS -->
+        <div class="cards-container" id="c1">
+            <a href="🩸𝐅𝐮𝐥𝐥 𝐕𝐞𝐫𝐦𝐞𝐥𝐡𝐨 𝐕𝟗.cer" download class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>FULL RED V9</h3><p>DOWNLOAD</p></div></a>
+            <a href="DNA DO HEADD.cer" download class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>DNA HEAD</h3><p>DOWNLOAD</p></div></a>
+            <a href="REI DO CAPA.cer" download class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>REI CAPA</h3><p>DOWNLOAD</p></div></a>
+            <a href="𝐒𝐞𝐧𝐬𝐢 𝐒𝐮𝐫𝐫𝐞𝐚𝐥.cer" download class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>SENSI SURREAL</h3><p>DOWNLOAD</p></div></a>
+            <a href="WHO IS ME.cer" download class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>WHO IS ME</h3><p>DOWNLOAD</p></div></a>
+            <a href="norecoil_nospread.mobileconfig" download class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>NO RECOIL</h3><p>INSTALL</p></div></a>
+            <a href="OTROS_ARCHIVOS/AimDns.cer" download class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>AIM DNS</h3><p>DOWNLOAD</p></div></a>
+            <a href="OTROS_ARCHIVOS/optimizacion.mobileconfig" download class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>OPTIMIZACION</h3><p>DOWNLOAD</p></div></a>
+            <a href="OTROS_ARCHIVOS/seguridad_antiban.mobileconfig" download class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>ANTIBAN</h3><p>DOWNLOAD</p></div></a>
+        </div>
+
+        <!-- SECCIÓN 2: SCRIPTS -->
+        <div class="cards-container" id="c2">
+            <a href="PROGRAMACION/script.js" download class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>MAIN SCRIPT</h3><p>JS CORE</p></div></a>
+            <a href="PROGRAMACION/𝐵𝑙𝑜𝑜𝑑𝘩𝑜𝑢𝑛𝑑6️⃣1️⃣.js" download class="card"><img src="https://i.pinimg.com/736x/f8/7f/c2/f87fc241617dc61620c45895c7c93348.jpg" class="card-img"><div class="card-info"><h3>BLOODHOUND</h3><p>JS RASTREO</p></div></a>
+            <a href="PROGRAMACION/Goatz🐐.js" download class="card"><img src="https://i.pinimg.com/1200x/91/a5/14/91a514588c574a6145090606c1666c24.jpg" class="card-img"><div class="card-info"><h3>GOATZ</h3><p>JS PERF</p></div></a>
+            <a href="PROGRAMACION/hell.js" download class="card"><img src="https://i.pinimg.com/1200x/26/c0/ec/26c0ecbd98d95d840fbbbe0175db9aa1.jpg" class="card-img"><div class="card-info"><h3>HELL ENGINE</h3><p>JS EXEC</p></div></a>
+            <a href="PROGRAMACION/destiny.js" download class="card"><img src="https://i.pinimg.com/736x/dd/56/4b/dd564bfe4cbfbbf42dd3a4f952b4165b.jpg" class="card-img"><div class="card-info"><h3>DESTINY</h3><p>JS PREDICT</p></div></a>
+            <a href="PROGRAMACION/dragPanel.js" download class="card"><img src="https://i.pinimg.com/736x/f5/b8/60/f5b860bd40c758f5be5291c69bd560f4.jpg" class="card-img"><div class="card-info"><h3>DRAG PANEL</h3><p>JS UI</p></div></a>
+        </div>
+    </div>
+
+    <nav class="bottom-dock">
+        <button class="dock-btn active" onclick="tab(0, this)"><i class="fas fa-file-code"></i><span>HTML</span></button>
+        <button class="dock-btn" onclick="tab(1, this)"><i class="fas fa-shield-halved"></i><span>CERTS</span></button>
+        <button class="dock-btn" onclick="tab(2, this)"><i class="fas fa-terminal"></i><span>SCRIPTS</span></button>
+    </nav>
+
+    <script>
+        function tab(idx, btn) {
+            document.querySelectorAll('.dock-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.cards-container').forEach(c => c.classList.remove('active'));
+            document.getElementById('c' + idx).classList.add('active');
+            if (window.navigator.vibrate) window.navigator.vibrate(10);
+        }
+    </script>
+</body>
+</html>

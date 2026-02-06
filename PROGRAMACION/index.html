@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>PAYBACC // NAVIDAD 🎄</title>
+<!-- Fuentes -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+  :root {
+    --accent: #dc2626;
+    --accent-secondary: #16a34a;
+    --bg: #0f0f0f;
+    --text: #ffffff;
+    --christmas: #c41e3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a1a0a 100%);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+    /* Evita el scroll mientras carga */
+    overflow-y: hidden; 
+    padding-bottom: 120px;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(22, 163, 74, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  body.loaded {
+    overflow-y: auto;
+  }
+
+  /* --- LOADER SCREEN --- */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a1a0a 100%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+
+  #loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .loader-text {
+    font-family: 'Anton', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #dc2626, #16a34a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: twinkle 1.5s infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .loader-bar-bg {
+    width: 200px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loader-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #dc2626, #16a34a);
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: width 0.2s linear;
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+  }
+
+  .loader-percent {
+    font-family: 'Manrope', monospace;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 10px;
+  }
+
+  /* Ruido de fondo */
+  .noise {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* --- FALLING SNOW --- */
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    color: #fff;
+    font-size: 1em;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 2;
+    text-shadow: 0 0 5px rgba(220, 38, 38, 0.3);
+  }
+
+  /* --- HERO SECTION --- */
+  .hero {
+    height: 50vh; /* Ajustado para m�vil */
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+    background: radial-gradient(circle at center, rgba(220, 38, 38, 0.05) 0%, transparent 70%);
+  }
+
+  .saturn-halo {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 3px solid rgba(220, 38, 38, 0.8);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    box-shadow: 
+      0 0 80px rgba(220, 38, 38, 0.6), 
+      0 0 120px rgba(22, 163, 74, 0.4),
+      inset 0 0 80px rgba(220, 38, 38, 0.2);
+    animation: haloRotate 15s linear infinite;
+  }
+
+  @keyframes haloRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .big-title {
+    font-family: 'Anton', sans-serif;
+    /* Clamp ajustado para iPhone SE hasta Pro Max */
+    font-size: clamp(3.5rem, 13vw, 10rem); 
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -1px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(to bottom, #dc2626, #16a34a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(220, 38, 38, 0.8)) drop-shadow(0 0 25px rgba(22, 163, 74, 0.5));
+    animation: titleGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(220, 38, 38, 0.8)) drop-shadow(0 0 25px rgba(22, 163, 74, 0.5)); }
+    50% { filter: drop-shadow(0 0 25px rgba(220, 38, 38, 1)) drop-shadow(0 0 40px rgba(22, 163, 74, 0.7)); }
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-top: 15px;
+    color: #16a34a;
+    font-weight: 700;
+    animation: subtitlePulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes subtitlePulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  /* --- DOCK FLOTANTE (iOS Safe Area) --- */
+  .dock-container {
+    position: fixed;
+    bottom: 20px;
+    /* Ajuste crítico para iPhone sin bot�n home */
+    bottom: calc(20px + env(safe-area-inset-bottom)); 
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+    pointer-events: none; /* Permite tocar a los lados del dock */
+  }
+
+  .dock {
+    pointer-events: auto;
+    background: rgba(15, 15, 15, 0.9);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 8px;
+    border-radius: 100px;
+    display: flex;
+    gap: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+
+  .dock-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .dock-btn .material-symbols-outlined { font-size: 1.5rem; }
+
+  .dock-btn.active {
+    background: #fff;
+    color: #000;
+  }
+
+  /* --- FEED --- */
+  .page { display: none; padding-top: 0; }
+  .page.active { display: block; }
+
+  .stream-list {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .stream-item {
+    position: relative;
+    width: 100%;
+    height: 55vh; /* M�s alto en m�vil para ver bien el GIF */
+    display: flex;
+    text-decoration: none;
+    color: #fff;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stream-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: transform 0.5s ease;
+    filter: grayscale(100%);
+  }
+  
+  /* En m�vil, permitimos un poco de color al tocar */
+  .stream-item:active .stream-bg,
+  .stream-item:hover .stream-bg {
+    filter: grayscale(0%);
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  .stream-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, #000 0%, transparent 50%, rgba(0,0,0,0.4) 100%);
+    z-index: 2;
+  }
+
+  .stream-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 25px;
+    width: 100%;
+  }
+
+  .stream-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  .item-id {
+    font-family: 'Manrope', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-bottom: 5px;
+    display: block;
+    font-weight: 700;
+  }
+
+  .item-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 3.5rem; /* Grande para m�vil */
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+
+  .item-tag {
+    background: #fff;
+    color: #000;
+    padding: 4px 8px;
+    font-weight: 800;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .item-desc {
+    font-size: 0.9rem;
+    color: #ddd;
+    line-height: 1.3;
+    font-weight: 300;
+  }
+
+  /* Tablets & Desktop adjustment */
+  @media (min-width: 768px) {
+    .stream-item { height: 45vh; }
+    .hero { height: 60vh; }
+    .dock-btn { width: auto; padding: 0 25px; border-radius: 100px; }
+    .dock-btn::after { content: attr(data-label); font-size: 0.8rem; font-weight: 700; margin-left: 8px; text-transform: uppercase; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="loader">
+  <div class="loader-text">LOADING</div>
+  <div class="loader-bar-bg">
+    <div class="loader-bar-fill" id="loaderBar"></div>
+  </div>
+  <div class="loader-percent" id="loaderPercent">0%</div>
+</div>
+
+<div class="noise"></div>
+
+<header class="hero">
+  <div class="saturn-halo"></div>
+  <h1 class="big-title">PAYBACC BOYZ</h1>
+  <p class="subtitle">🎄 FELIZ NAVIDAD 2025 🎄</p>
+</header>
+
+<main>
+  
+  <div id="paneles" class="page active">
+    <div class="stream-list">
+      
+      <a href="orden.html" class="stream-item">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjBxaDRubm5hYXlidmJ5enJmdXp2cDE3cHhydTgwOW0xMDRzd2trOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MnIO9NK5QwKRvVvfE7/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">01 // SYS</span>
+          <div class="stream-header">
+            <h2 class="item-title">ØRDEN</h2>
+            <div class="item-meta"><span class="item-tag">Red</span></div>
+          </div>
+          <p class=\"item-desc\">Who is you?</p>
+        </div>
+      </a>
+
+      <a href="pinterestBlack.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Z3liYnllbGdtbzVoNXdocHlqbGo1eG5sYWM2YzRnc3Vqdmc2ZXNiaSZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/3JXpOOlv6OLIarCT6I/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">02 // VIS</span>
+          <div class="stream-header">
+            <h2 class="item-title">BLACK</h2>
+            <div class="item-meta"><span class="item-tag">Dark</span></div>
+          </div>
+          <p class=\"item-desc\">I'm like you!</p>
+        </div>
+      </a>
+
+      <a href="onjetz.html" class="stream-item">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTc3eW1seW1peGcydmNqOXRvOGQ5OXB1Z25rOGs2cDU3OXYza3pyZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RX36qtKwbW49VkeFgr/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">03 // GLT</span>
+          <div class="stream-header">
+            <h2 class="item-title">FAME</h2>
+            <div class="item-meta"><span class="item-tag">New</span></div>
+          </div>
+          <p class=\"item-desc\">We are the same.</p>
+        </div>
+      </a>
+
+      <a href="index2.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aW1jYTd0dHo0MmRtZTE0NXpncTQ0Y3B6OXdqNndudWJ2bnpnbWV1NCZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/Arif04uM5ro7gjtObj/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">04 // CLR</span>
+          <div class="stream-header">
+            <h2 class="item-title">RED</h2>
+            <div class="item-meta"><span class="item-tag">Hot</span></div>
+          </div>
+          <p class=\"item-desc\">Different colors.</p>
+        </div>
+      </a>
+
+      <a href="index3.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aW1jYTd0dHo0MmRtZTE0NXpncTQ0Y3B6OXdqNndudWJ2bnpnbWV1NCZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/sfcEFIAiekTmliOyKD/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">05 // CLR</span>
+          <div class="stream-header">
+            <h2 class="item-title">BLUE</h2>
+            <div class="item-meta"><span class="item-tag">Cold</span></div>
+          </div>
+          <p class=\"item-desc\">Same soul.</p>
+        </div>
+      </a>
+
+      <a href="index4.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3M3R5bnhjeTIya3JkM2V4OTVveDZtZ3FjYzlrc3RjMzlkdThjejY5YyZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/jAZlhubCO4zQGeSGOp/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">06 // CLR</span>
+          <div class="stream-header">
+            <h2 class="item-title">PURP</h2>
+            <div class="item-meta"><span class="item-tag">Royal</span></div>
+          </div>
+          <p class=\"item-desc\">Royal essence.</p>
+        </div>
+      </a>
+
+      <a href="index5.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3M3R5bnhjeTIya3JkM2V4OTVveDZtZ3FjYzlrc3RjMzlkdThjejY5YyZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/kQKOG7ZORzHulCUBvj/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">07 // CLR</span>
+          <div class="stream-header">
+            <h2 class="item-title">BLACK</h2>
+            <div class="item-meta"><span class="item-tag">Null</span></div>
+          </div>
+          <p class=\"item-desc\">Void returns.</p>
+        </div>
+      </a>
+
+      <a href="index6.html" class="stream-item">
+        <img src="https://media.giphy.com/media/vKl91cZC6YKJD9w8ke/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">08 // CLR</span>
+          <div class="stream-header">
+            <h2 class="item-title">CYAN</h2>
+            <div class="item-meta"><span class="item-tag">Light</span></div>
+          </div>
+          <p class=\"item-desc\">Light ignites.</p>
+        </div>
+      </a>
+
+      <a href="index7.html" class="stream-item">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXo0NXJnMzhrZ2xyOXB6NXQ3Z2VsOXNtbXpqbDJkZ25hNWZvN2k0byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QADlWVIHqVqS6NsJCe/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">09 // ORB</span>
+          <div class="stream-header">
+            <h2 class="item-title">SATURN</h2>
+            <div class="item-meta"><span class="item-tag">Ring</span></div>
+          </div>
+          <p class=\"item-desc\">Universe speaks.</p>
+        </div>
+      </a>
+
+      <a href="index9.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aXNoNjQ1dzE0bDhtdjEwNnY2OG5seDN3MjFleDY0Zjc3Mzd6azNkayZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/TSLzATouBaUKU9n13b/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">10 // SPD</span>
+          <div class="stream-header">
+            <h2 class="item-title">SPEEDY</h2>
+            <div class="item-meta"><span class="item-tag">Fast</span></div>
+          </div>
+          <p class=\"item-desc\">Velocity unleashed.</p>
+        </div>
+      </a>
+
+      <a href="𝐅𝐞𝐫𝐫𝐚𝐫𝐢✝.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ejJ4ZG90YXRzdzB4N2RoN2tuN3Q1YzZhN3dhbnZ4M2h0dWFqaGk5byZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/1v2lXOfPBqKygjlkCM/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">11 // VIBE</span>
+          <div class="stream-header">
+            <h2 class="item-title">FERRARI</h2>
+            <div class="item-meta"><span class="item-tag">4AM</span></div>
+          </div>
+          <p class=\"item-desc\">Dreams craft reality.</p>
+        </div>
+      </a>
+
+      <a href="NebulaTech.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cmoxaHB5b2tjdHZoNzd6N2RkenRvbGt0cG90NnhyNmc5ODRvajZiMSZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/Q6rzeNkQv8ADgXAQlF/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">12 // SYS</span>
+          <div class="stream-header">
+            <h2 class="item-title">NEBULA</h2>
+            <div class="item-meta"><span class="item-tag">Tech</span></div>
+          </div>
+          <p class=\"item-desc\">Stars align here.</p>
+        </div>
+      </a>
+
+      <a href="ah.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cmoxaHB5b2tjdHZoNzd6N2RkenRvbGt0cG90NnhyNmc5ODRvajZiMSZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/IzR9o1CxrNYTU1g71p/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">13 // LUV</span>
+          <div class="stream-header">
+            <h2 class="item-title">BROTHER</h2>
+            <div class="item-meta"><span class="item-tag">Love</span></div>
+          </div>
+          <p class=\"item-desc\">Bond unbreakable.</p>
+        </div>
+      </a>
+
+      <a href="Crimson.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Zjl3eWdma2IyazBpazN1bjl6b3hib29pM21qMmNvdXowNTdjZnh4byZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/C27WX7H8gqgcZqx1LU/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">14 // BLD</span>
+          <div class="stream-header">
+            <h2 class="item-title">CRIMSON</h2>
+            <div class="item-meta"><span class="item-tag">V1</span></div>
+          </div>
+          <p class=\"item-desc\">Blood and fire.</p>
+        </div>
+      </a>
+
+      <a href="time.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Zjl3eWdma2IyazBpazN1bjl6b3hib29pM21qMmNvdXowNTdjZnh4byZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/kQKOG7ZORzHulCUBvj/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">15 // BLD</span>
+          <div class="stream-header">
+            <h2 class="item-title">CRIMSON</h2>
+            <div class="item-meta"><span class="item-tag">V2</span></div>
+          </div>
+          <p class=\"item-desc\">Time evolves us.</p>
+        </div>
+      </a>
+
+      <a href="last dance.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YW16eXl4MWwzeTd0YzV5YWxtcjZyNDFxN3p5ZWY0a2FzdTk2MjRvaiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/33XoDeTGobQfqIZgCz/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">16 // END</span>
+          <div class="stream-header">
+            <h2 class="item-title">LAST<br>DANCE</h2>
+            <div class="item-meta"><span class="item-tag">Final</span></div>
+          </div>
+          <p class=\"item-desc\">The final waltz.</p>
+        </div>
+      </a>
+
+      <a href="money over all.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YW16eXl4MWwzeTd0YzV5YWxtcjZyNDFxN3p5ZWY0a2FzdTk2MjRvaiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/TfAZes0IOEEpnquUXh/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">17 // MOA</span>
+          <div class="stream-header">
+            <h2 class="item-title">MONEY</h2>
+            <div class="item-meta"><span class="item-tag">All</span></div>
+          </div>
+          <p class=\"item-desc\">Wealth rises.</p>
+        </div>
+      </a>
+
+      <a href="dirty.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dzhndG05bzE4NjR3YzhnNW13bGdmMGN1YzJkM2V2ZG4xMmhuaWZjaiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/7Qe2hQwkroyfIRJmNL/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">18 // OPS</span>
+          <div class="stream-header">
+            <h2 class="item-title">Q50</h2>
+            <div class="item-meta"><span class="item-tag">Dirty</span></div>
+          </div>
+          <p class=\"item-desc\">Dirty deals done.</p>
+        </div>
+      </a>
+
+      <a href="trickXbaby.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dzhndG05bzE4NjR3YzhnNW13bGdmMGN1YzJkM2V2ZG4xMmhuaWZjaiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/s41gTM0OfCHJNzxNkc/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">19 // UNT</span>
+          <div class="stream-header">
+            <h2 class="item-title">Q60</h2>
+            <div class="item-meta"><span class="item-tag">Trick</span></div>
+          </div>
+          <p class=\"item-desc\">Tricks unfold.</p>
+        </div>
+      </a>
+
+      <a href="Bird.html" class="stream-item">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXR4aDh4eGs1cWJraXF0c3ExYmpodnJueXVuemw3ZnhlNHdjdHQ4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vkRwb8Gx9etILeVDQ1/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">20 // BIG</span>
+          <div class="stream-header">
+            <h2 class="item-title">BIG 3</h2>
+            <div class="item-meta"><span class="item-tag">Mass</span></div>
+          </div>
+          <p class=\"item-desc\">Big moves made.</p>
+        </div>
+      </a>
+
+      <a href="VERTIGO.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3d2o2eXg5Y3cxeXcyZHR2a2x6YWd5MXhlM2Uxemp0bnJieGMzeHZlaiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/3JXpOOlv6OLIarCT6I/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">21 // SENS</span>
+          <div class="stream-header">
+            <h2 class="item-title">VERTIGO</h2>
+            <div class="item-meta"><span class="item-tag">Dizzy</span></div>
+          </div>
+          <p class=\"item-desc\">Spinning vertigo.</p>
+        </div>
+      </a>
+
+      <a href="Ceo.html" class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Zjl3eWdma2IyazBpazN1bjl6b3hib29pM21qMmNvdXowNTdjZnh4byZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/C27WX7H8gqgcZqx1LU/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">22 // ADM</span>
+          <div class="stream-header">
+            <h2 class="item-title">CEO</h2>
+            <div class="item-meta"><span class="item-tag">Boss</span></div>
+          </div>
+          <p class=\"item-desc\">Command at top.</p>
+        </div>
+      </a>
+
+      <a href="html.html" class="stream-item">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExenA2N2xpbjJmYzQ2bnB3czI3bjE3NjBwY3p6N2g0ZHR2bGJ5cnpyMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IeYftUBqrW8tMoQkaf/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">23 // NAVIDAD</span>
+          <div class="stream-header">
+            <h2 class="item-title">WE BACK</h2>
+            <div class="item-meta"><span class="item-tag">🎄</span></div>
+          </div>
+          <p class=\"item-desc\">We're back stronger.</p>
+        </div>
+      </a>
+
+      <a href="Pain.html" class="stream-item">
+        <img src="https://media.giphy.com/media/ATmiVRWGzQFNFixDnP/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">24 // PAIN</span>
+          <div class="stream-header">
+            <h2 class="item-title">PAIN</h2>
+            <div class="item-meta"><span class="item-tag">👁‍🗨</span></div>
+          </div>
+          <p class=\"item-desc\">See the truth.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div id="scriptables" class="page">
+    <div class="stream-list">
+      <a href="goatz🐐.js" download class="stream-item">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dzhndG05bzE4NjR3YzhnNW13bGdmMGN1YzJkM2V2ZG4xMmhuaWZjaiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/s41gTM0OfCHJNzxNkc/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">INJ // JS</span>
+          <div class="stream-header">
+            <h2 class="item-title">GOATZZ</h2>
+            <div class="item-meta"><span class="item-tag">Script</span></div>
+          </div>
+          <p class="item-desc">Pass: DoaWorldd</p>
+        </div>
+      </a>
+
+      <a href="https://www.mediafire.com/file/65qtab4nq9pxalf/aimbot-auxiliar.js/file" target="_blank" class="stream-item">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXR4aDh4eGs1cWJraXF0c3ExYmpodnJueXVuemw3ZnhlNHdjdHQ4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vkRwb8Gx9etILeVDQ1/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">INJ // IOS</span>
+          <div class="stream-header">
+            <h2 class="item-title">AUX</h2>
+            <div class="item-meta"><span class="item-tag">Aim</span></div>
+          </div>
+          <p class="item-desc">Pass: revenge</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div id="dns" class="page">
+    <div class="stream-list">
+      <a href="psa.cer" download class="stream-item">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2w5cnFqaDIzdW5lcTB6NWRjOTBjMWl6YzVja2NrMnE1bHg3MWp3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YWSOy6uhLE2VB126TO/giphy.gif" class="stream-bg" loading="lazy">
+        <div class="stream-overlay"></div>
+        <div class="stream-content">
+          <span class="item-id">NET // CRT</span>
+          <div class="stream-header">
+            <h2 class="item-title">PSA</h2>
+            <div class="item-meta"><span class="item-tag">DNS</span></div>
+          </div>
+          <p class="item-desc">Security Certificate.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<div class="dock-container">
+  <nav class="dock">
+    <button class="dock-btn active" onclick="showPage('paneles')" data-label="Grid">
+      <span class="material-symbols-outlined">grid_view</span>
+    </button>
+    <button class="dock-btn" onclick="showPage('scriptables')" data-label="Code">
+      <span class="material-symbols-outlined">terminal</span>
+    </button>
+    <button class="dock-btn" onclick="showPage('dns')" data-label="DNS">
+      <span class="material-symbols-outlined">dns</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+// --- LOGICA DE NAVEGACIÓN ---
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  
+  document.querySelectorAll('.dock-btn').forEach(btn => btn.classList.remove('active'));
+  
+  let index = 0;
+  if(pageId === 'paneles') index = 0;
+  if(pageId === 'scriptables') index = 1;
+  if(pageId === 'dns') index = 2;
+  
+  document.querySelectorAll('.dock-btn')[index].classList.add('active');
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// --- NIEVE CAYENDO ---
+function createSnowfall() {
+  const snowflakes = ['❄', '❅', '❆', '⚬'];
+  const body = document.body;
+  
+  function createFlake() {
+    const flake = document.createElement('div');
+    flake.classList.add('snowflake');
+    flake.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+    flake.style.left = Math.random() * 100 + '%';
+    flake.style.fontSize = Math.random() * 15 + 10 + 'px';
+    flake.style.opacity = Math.random() * 0.5 + 0.5;
+    flake.style.animation = `fall ${Math.random() * 10 + 10}s linear`;
+    body.appendChild(flake);
+    
+    setTimeout(() => flake.remove(), 15000);
+  }
+  
+  setInterval(createFlake, 300);
+}
+
+// Agregar animaci�n de caída de nieve
+const style = document.createElement('style');
+style.innerHTML = `
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
+
+// --- LOGICA DEL PRELOADER ---
+document.addEventListener("DOMContentLoaded", function() {
+  // Iniciar nieve
+  createSnowfall();
+  
+  const images = document.querySelectorAll('img.stream-bg');
+  const loader = document.getElementById('loader');
+  const loaderBar = document.getElementById('loaderBar');
+  const loaderPercent = document.getElementById('loaderPercent');
+  const body = document.body;
+  
+  let imagesLoadedCount = 0;
+  let totalImages = images.length;
+  
+  // Si no hay im�genes, quitamos el loader r�pido
+  if(totalImages === 0) {
+    removeLoader();
+  }
+
+  function imageLoaded() {
+    imagesLoadedCount++;
+    const percent = Math.round((imagesLoadedCount / totalImages) * 100);
+    
+    loaderBar.style.width = percent + "%";
+    loaderPercent.innerText = percent + "%";
+    
+    if (imagesLoadedCount >= totalImages) {
+      setTimeout(removeLoader, 500); // Pequeña pausa para ver el 100%
+    }
+  }
+
+  // Iterar sobre las im�genes para ver si ya cargaron o esperar
+  images.forEach(img => {
+    if (img.complete) {
+      imageLoaded();
+    } else {
+      img.addEventListener('load', imageLoaded);
+      img.addEventListener('error', imageLoaded); // Si falla, contamos como cargada para no bloquear
+    }
+  });
+
+  function removeLoader() {
+    loader.classList.add('hidden');
+    body.classList.add('loaded');
+  }
+
+  // FALLBACK DE SEGURIDAD
+  // Si algo falla y las im�genes no reportan carga en 8 segundos, abrimos la web igual.
+  setTimeout(() => {
+    if (!loader.classList.contains('hidden')) {
+      console.log("Fallback triggered: removing loader");
+      removeLoader();
+    }
+  }, 8000);
+});
+</script>
+</body>
+</html>
+
+

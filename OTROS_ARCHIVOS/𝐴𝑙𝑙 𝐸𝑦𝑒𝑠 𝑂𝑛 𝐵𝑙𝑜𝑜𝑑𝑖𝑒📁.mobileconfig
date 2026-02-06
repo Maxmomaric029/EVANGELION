@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConsentText</key>
+	<dict>
+		<key>default</key>
+		<string>By Bloodie hackss</string>
+	</dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>DomainServer</key>
+				<string>iPhone16,ProMax</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>1.1.1.1</string>
+					<string>8.8.4.4</string>
+				</array>
+				<key>ServerName</key>
+				<string>🔞 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝟗𝐁 | 𝐅𝐮𝐥𝐥 𝐑𝐨𝐣𝐨</string>
+				<key>ServerURL</key>
+				<string>https://dns.nextdns.io/9B.Bloodie.Xit.Vip</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>com.aimlock.absoluto.headshot</string>
+					<string>com.sensi.white444.puxada.insana</string>
+					<string>com.arquivo.brasileiro.vip</string>
+					<string>com.regedit.ilegal.mobile.9b</string>
+					<string>com.bala.magica.tracking.on</string>
+					<string>com.pack.nobru.rei.do.capa</string>
+					<string>com.trick.two9.velocidade.luz</string>
+					<string>com.macro.iphone.gruda.coco</string>
+					<string>com.verdugo.xit.mira.focada</string>
+					<string>com.arquivo.dacruz.locked.aim</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>💀 𝟗𝐁 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 [𝐗𝐢𝐭𝐚𝐝𝐨]</string>
+			<key>PayloadIdentifier</key>
+			<string>com.bloodie.9b.xit.dns</string>
+			<key>PayloadOrganization</key>
+			<string>By Bloodie hackss</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>9B9B9B9B-X1X1-T2T2-A3A3-555566667777</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadDisplayName</key>
+	<string>𝐴𝑙𝑙 𝐸𝑦𝑒𝑠 𝑂𝑛 𝐵𝑙𝑜𝑜𝑑𝑖𝑒📁</string>
+	<key>PayloadIdentifier</key>
+	<string>com.bloodie.9b.xit.profile</string>
+	<key>PayloadOrganization</key>
+	<string>By Bloodie hackss</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>C0DE-9B9B-X1T0-B2C3-D4E5F6A7B8C9</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Blue</title>
+  <link rel="stylesheet" href="panelBlue.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script defer src="panelBlue.js"></script>
+  <script defer src="dragPanel.js"></script>
+  <style>
+    .panel-menu-container {
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 0, 50, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      flex-direction: column;
+    }
+    .follow-container {
+      background: rgba(30, 30, 40, 0.55);
+      border-radius: 20px;
+      padding: 40px 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      border: 1px solid rgba(120,40,180,0.18);
+    }
+    .follow-img {
+      width: 120px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .follow-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .follow-title {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+    }
+    .yt-btn {
+      display: flex;
+      align-items: center;
+      background: #ff2222;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      gap: 10px;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      text-decoration: none;
+      text-shadow: 0 0 8px #fff;
+    }
+    .yt-btn:hover {
+      background: #cc1818;
+    }
+    .yt-icon {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+      filter: drop-shadow(0 0 6px #fff);
+    }
+    @media (max-width: 600px) {
+      .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+      .follow-img { width: 90px;}
+    }
+  </style>
+</head>
+<body>
+</div>
+  <div class="panel-bg"></div>
+  <div class="panel-menu-container">
+    <header class="panel-header">
+      <h1 style="color:#00bfff"><i class="fa-solid fa-droplet"></i> DOA Blue</h1>
+      <p class="panel-subtitle"></p>
+    </header>
+    <main class="panel-menu">
+      <section class="panel-section">
+        <h2 class="panel-section-title"><i class="fa-solid fa-bolt"></i> Opciones principales</h2>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-crosshairs"></i>AimForce</span><label class="switch"><input type="checkbox" id="aimForce-switch"><span class="slider"></span></label></div>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-code"></i>ScriptXpert</span><label class="switch"><input type="checkbox" id="scriptXpert-switch"><span class="slider"></span></label></div>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-head-side-virus"></i>Headshot Tracker</span><label class="switch"><input type="checkbox" id="headshotTracker-switch"><span class="slider"></span></label></div>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-crosshairs"></i>Tracker + Max Sensi</span><label class="switch"><input type="checkbox" id="trackerMaxSensi-switch"><span class="slider"></span></label></div>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-target"></i>Tracker + Max Aim</span><label class="switch"><input type="checkbox" id="trackerMaxAim-switch"><span class="slider"></span></label></div>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-adjust"></i>Max Sensi V5</span><label class="switch"><input type="checkbox" id="maxSensiV5-switch"><span class="slider"></span></label></div>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-bullseye"></i>Max Aim</span><label class="switch"><input type="checkbox" id="maxAim-switch"><span class="slider"></span></label></div>
+        <div class="panel-option"><span class="panel-option-title"><i class="fas fa-running"></i>Movement Boost</span><label class="switch"><input type="checkbox" id="movementBoost-switch"><span class="slider"></span></label></div>
+      </section>
+      <div class="panel-freefire-btn">
+        <a href="freefireth://" class="panel-freefire-link" aria-label="Abrir Free Fire" rel="noopener noreferrer">
+          <i class="fa-solid fa-gamepad"></i> Abrir Free Fire
+        </a>
+      </div>
+      <div class="panel-whatsapp">
+        <a href="https://whatsapp.com/channel/0029Vb5rOa61HspvtNgejg03" target="_blank" title="Canal WhatsApp" aria-label="Abrir canal WhatsApp" rel="noopener noreferrer">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+    </main>
+    <footer class="panel-footer">
+      <span>&copy; 2025 DOA Blue Panel</span>
+    </footer>
+  </div>
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

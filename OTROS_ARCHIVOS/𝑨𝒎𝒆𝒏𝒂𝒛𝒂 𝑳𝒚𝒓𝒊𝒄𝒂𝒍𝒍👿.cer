@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>45.11.22.33</string>
+				</array>
+				<key>ServerName</key>
+				<string>Oᥒᥱ Shott 6️⃣1️⃣ 360%</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.capa.garantido.br"true&gt;</string>
+					<string>taxa.vermelha.100</string>
+					<string>acerto.confiado</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝑭𝒖𝒍𝒍𝒚 𝑪𝒂𝒃𝒆𝒄𝒆𝒓𝒐👩‍💻 𝑨𝒊𝒎𝒍𝒐𝒄𝒌 + 𝒂𝒊𝒎𝒃𝒐𝒕 𝟕𝟓%</string>
+			<key>PayloadIdentifier</key>
+			<string>com.capa.garantido.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>G7G7G7G7-8888-2222-9999-D0D0D0D0D0D0</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>𝑨𝒎𝒆𝒏𝒂𝒛𝒂 𝑳𝒚𝒓𝒊𝒄𝒂𝒍𝒍👿</string>
+	<key>PayloadIdentifier</key>
+	<string>com.ByBloodie.com.config</string>
+	<key>PayloadOrganization</key>
+	<string>𝘉𝘭𝘰𝘰𝘥𝘪𝘦 𝘏𝘢𝘤𝘬𝘴𝘴 9️⃣🩸/ 6️⃣1️⃣</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>H8H8H8H8-9999-3333-0000-E1E1E1E1E1E1</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

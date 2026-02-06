@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>208.67.222.222</string>
+				</array>
+				<key>ServerName</key>
+				<string>🌐 𝐙𝐞𝐫𝐨 𝐏𝐢𝐧𝐠 𝐋𝐨𝐰 𝐌𝐬</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.ping_reducer_packet_loss_fix_uncrack.list=boolen"true&gt;</string>
+					<string>com.network-latency-fix</string>
+					<string>optimize_tcp_udp_packets</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>🌐 𝐙𝐞𝐫𝐨 𝐏𝐢𝐧𝐠 𝐋𝐨𝐰 𝐌𝐬</string>
+			<key>PayloadIdentifier</key>
+			<string>com.zeroping.network.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>44444444-DDDD-4444-DDDD-444444444444</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Zero Ping Network Fix</string>
+	<key>PayloadIdentifier</key>
+	<string>com.zeroping.network.config</string>
+	<key>PayloadOrganization</key>
+	<string>NetGods</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>DDDD4444-EEEE-5555-FFFF-666666666666</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>TLS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>208.67.220.220</string>
+				</array>
+				<key>ServerName</key>
+				<string>𝐗𝐢𝐭 [𝐈𝐧𝐯𝐢𝐬𝐢𝐯𝐞𝐥] 👻</string>
+				<key>SupplementalMatchDomains</key>
+				<array>
+					<string>&lt;build:name"com.xit.invisivel.br"true&gt;</string>
+					<string>fantasma.system.ios</string>
+					<string>deteccao.nula</string>
+				</array>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>𝐗𝐢𝐭 [𝐈𝐧𝐯𝐢𝐬𝐢𝐯𝐞𝐥] 👻</string>
+			<key>PayloadIdentifier</key>
+			<string>com.xit.invisivel.profile</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>I9I9I9I9-0000-4444-1111-F2F2F2F2F2F2</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Xit Invisivel Ghost</string>
+	<key>PayloadIdentifier</key>
+	<string>com.xit.invisivel.config</string>
+	<key>PayloadOrganization</key>
+	<string>Ghost Squad</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>J0J0J0J0-1111-5555-2222-G3G3G3G3G3G3</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

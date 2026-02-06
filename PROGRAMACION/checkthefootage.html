@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHECK THE FOOTAGE 📁</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://i.pinimg.com/736x/45/ea/39/45ea39b1cd5c6911bd34dfa59ff4c63a.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+            user-select: none; /* Evita que seleccionen texto */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 5, 0.85);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 350px;
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid #333;
+            border-top: 2px solid #ff0000;
+            border-bottom: 2px solid #ff0000;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 0 35px rgba(255, 0, 0, 0.15);
+            backdrop-filter: blur(12px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            font-style: italic;
+        }
+
+        p {
+            font-size: 10px;
+            color: #ff0000;
+            margin: 5px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+        }
+
+        /* Estilos del Switch */
+        .feature-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .feature-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 3px solid #ff0000;
+        }
+
+        .feature-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Botones de acci�n */
+        .action-area {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-sub {
+            background: transparent;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+        }
+        .btn-sub:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        .btn-game {
+            background: #1a1a1a;
+            color: #555;
+            cursor: not-allowed;
+            border: 1px dashed #333;
+        }
+
+        .btn-game.unlocked {
+            background: #ff0000;
+            color: white;
+            border: 1px solid #ff0000;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+
+        .status-bar {
+            font-size: 9px;
+            color: #444;
+            margin-top: 15px;
+            text-align: right;
+            font-family: monospace;
+        }
+        
+        #console-msg {
+            color: #00ff00;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>CHECK FOOTAGE</h1>
+            <p>𝘉𝘭𝘰𝘰𝘥𝘪𝘦 𝘏𝘢𝘤𝘬𝘴𝘴 𝟺𝘓 6️⃣1️⃣</p>
+        </div>
+        
+        <div class="feature-list">
+            
+            <div class="feature-row">
+                <span class="feature-name">📁 Aimlock V9 (Head)</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="notify(this, 'Aimlock')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="feature-row">
+                <span class="feature-name">🎯 Sensi White444</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="notify(this, 'Sensi Fix')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="feature-row">
+                <span class="feature-name">🔥 Magic Bullet</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="notify(this, 'Magic Bullet')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="feature-row">
+                <span class="feature-name">⚖️ No Recoil [0%]</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="notify(this, 'No Recoil')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="feature-row">
+                <span class="feature-name">🚀 FPS Booster 120Hz</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="notify(this, 'FPS Boost')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="feature-row">
+                <span class="feature-name">🛡️ Anti-Blacklist</span>
+                <label class="switch">
+                    <input type="checkbox" checked disabled> <span class="slider" style="background-color: #00ff00; box-shadow: 0 0 5px #00ff00;"></span>
+                </label>
+            </div>
+
+        </div>
+
+        <div class="action-area">
+            <button class="btn btn-sub" onclick="unlockGame()">
+                📺 1. VER CANAL (UNLOCK)
+            </button>
+            <button id="ffButton" class="btn btn-game">
+                🔒 2. ABRIR FREE FIRE
+            </button>
+        </div>
+
+        <div class="status-bar">
+            STATUS: <span id="status-text">WAITING...</span> <span id="console-msg">INJECTED ✔</span>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de notificaciones falsas al activar switch
+        function notify(checkbox, feature) {
+            const statusText = document.getElementById('status-text');
+            const consoleMsg = document.getElementById('console-msg');
+            
+            if(checkbox.checked) {
+                statusText.style.display = 'none';
+                consoleMsg.style.display = 'inline';
+                consoleMsg.innerHTML = `LOADING ${feature.toUpperCase()}...`;
+                
+                setTimeout(() => {
+                    consoleMsg.innerHTML = `${feature.toUpperCase()} [ACTIVE]`;
+                    consoleMsg.style.color = '#ff0000'; // Rojo al activar
+                }, 800);
+            } else {
+                consoleMsg.innerHTML = `${feature.toUpperCase()} [OFF]`;
+                consoleMsg.style.color = '#555';
+            }
+        }
+
+        // Sistema de desbloqueo
+        function unlockGame() {
+            window.location.href = 'https://youtube.com/@vshott'; // Tu canal
+            
+            setTimeout(() => {
+                const btn = document.getElementById('ffButton');
+                btn.classList.add('unlocked');
+                btn.innerHTML = '🔥 ABRIR FREE FIRE (LISTO)';
+                btn.onclick = function() {
+                    window.location.href = 'freefire://';
+                    // Fallback
+                    setTimeout(() => { window.location.href = 'freefiremax://'; }, 500);
+                };
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>
+
+

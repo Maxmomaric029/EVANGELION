@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel Cheats ♿</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-image: url('https://i.pinimg.com/736x/4f/c4/f3/4fc4f33a81a0344228fb51031a8dc0a0.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .cheat-panel {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .antiban-message {
+      color: #00ff00;
+      font-weight: bold;
+      margin-top: 5px;
+      display: none;
+    }
+    .aimbot-section h2, .misc-section h2 {
+      color: #9370DB; /* Morado */
+      border-bottom: 2px solid #9370DB;
+      padding-bottom: 10px;
+    }
+    .security-section h2 {
+      color: #00ff00; /* Verde */
+      border-bottom: 2px solid #00ff00;
+      padding-bottom: 10px;
+    }
+    .aimbot-section span, .misc-section span {
+      color: #9370DB; /* Morado para todos los textos */
+    }
+    .security-section span {
+      color: #00ff00; /* Verde para todos los textos */
+    }
+    h1 {
+      color: #9370DB; /* Morado para el título principal */
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .fas {
+      color: #9370DB; /* Morado para los iconos */
+      margin-right: 10px;
+    }
+    .security-section .fas {
+      color: #00ff00; /* Verde para los iconos de seguridad */
+    }
+    
+    /* Estilo para las opciones en vertical */
+    .option {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: rgba(25, 25, 25, 0.7);
+      border-radius: 8px;
+    }
+    
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    /* Estilo para los interruptores */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #333;
+      transition: .4s;
+      border-radius: 30px;
+    }
+    
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .toggle-slider {
+      background-color: #9370DB;
+    }
+    
+    .security-section input:checked + .toggle-slider {
+      background-color: #00ff00;
+    }
+    
+    input:checked + .toggle-slider:before {
+      transform: translateX(30px);
+    }
+    
+    .custom-slider {
+      width: 100%;
+      height: 10px;
+      background: #333;
+      outline: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    
+    .hidden {
+      display: none;
+      margin-top: 10px;
+    }
+    
+    .custom-select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      background-color: #333;
+      color: #9370DB;
+      border: 1px solid #9370DB;
+    }
+  
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+  <audio id="toggle-sound" preload="auto">
+    <source src="https://www.myinstants.com/instant/discord-join-call-94215/media/sounds/discord-join_jH9qx6j.mp3" type="audio/mpeg">
+  </audio>
+  
+  <div class="container cheat-panel">
+    <h1><i class="fas fa-gamepad"></i> Panel Cheats ♿</h1>
+
+    <section class="aimbot-section">
+      <h2><i class="fas fa-crosshairs"></i> Aimbot</h2>
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-bullseye"></i> Aimbot v4</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="aimbot-v4" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-bullseye"></i> Aimbot cuello 90%</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="aimbot-cuello" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-hand-point-up"></i> Aim Assist</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="aim-assist" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-eye"></i> AimFOV: <span id="aimfov-value">50</span>%</span>
+        </div>
+        <input type="range" id="aimfov-slider" min="0" max="100" value="50" class="custom-slider">
+      </div>
+
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-user-secret"></i> Silent Aim</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="silent-aim" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-forward"></i> Predicci�n: <span id="prediction-value">0.5</span></span>
+        </div>
+        <input type="range" id="prediction-slider" min="0.1" max="1" step="0.1" value="0.5" class="custom-slider">
+      </div>
+
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-list-ol"></i> Aim Priority</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="aim-priority-toggle" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div id="aim-priority-selector" class="hidden">
+          <select id="aim-priority" class="custom-select">
+            <option value="head">Head</option>
+            <option value="neck">Neck</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="misc-section">
+      <h2><i class="fas fa-wrench"></i> Misc</h2>
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-wifi"></i> Fake Lag: <span id="fake-lag-value">150</span>ms</span>
+        </div>
+        <input type="range" id="fake-lag-slider" min="0.1" max="300" step="0.1" value="150" class="custom-slider">
+      </div>
+
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-bullseye"></i> No Spread</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="no-spread" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-hand-paper"></i> No Recoil</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="no-recoil" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-expand"></i> Estirar Pantalla</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="estirar-pantalla" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-tachometer-alt"></i> FPS Unlocker</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="fps-unlocker" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="security-section">
+      <h2><i class="fas fa-shield-alt"></i> Seguridad</h2>
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-search"></i> Scan Anticheat</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="scan-anticheat" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-trash-alt"></i> Limpiar Reportes</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="limpiar-reportes" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-gavel"></i> Legal Mode</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="legal-mode" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="option">
+        <div class="option-header">
+          <span><i class="fas fa-id-card"></i> Fake ID Gen</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="fake-id-gen" class="toggle-option" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <span id="antiban-message" class="antiban-message">Antiban 100%</span>
+      </div>
+    </section>
+  </div>
+  
+  <script>
+    // Funci�n para reproducir el sonido
+    function playToggleSound() {
+      const sound = document.getElementById('toggle-sound');
+      sound.currentTime = 0;
+      sound.play();
+    }
+    
+    // Añadir evento de sonido a todos los interruptores
+    const toggleOptions = document.querySelectorAll('.toggle-option');
+    toggleOptions.forEach(option => {
+      option.addEventListener('change', function() {
+        playToggleSound();
+      });
+    });
+    
+    // Actualizar valores de los sliders
+    document.getElementById('aimfov-slider').addEventListener('input', function() {
+      document.getElementById('aimfov-value').textContent = this.value;
+    });
+    
+    document.getElementById('prediction-slider').addEventListener('input', function() {
+      document.getElementById('prediction-value').textContent = this.value;
+    });
+    
+    document.getElementById('fake-lag-slider').addEventListener('input', function() {
+      document.getElementById('fake-lag-value').textContent = this.value;
+    });
+    
+    // Mostrar/ocultar selector de prioridad
+    document.getElementById('aim-priority-toggle').addEventListener('change', function() {
+      const selector = document.getElementById('aim-priority-selector');
+      if (this.checked) {
+        selector.style.display = 'block';
+      } else {
+        selector.style.display = 'none';
+      }
+    });
+    
+    document.getElementById('fake-id-gen').addEventListener('change', function() {
+      const antibanMessage = document.getElementById('antiban-message');
+      if (this.checked) {
+        antibanMessage.style.display = 'block';
+      } else {
+        antibanMessage.style.display = 'none';
+      }
+    });
+  </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

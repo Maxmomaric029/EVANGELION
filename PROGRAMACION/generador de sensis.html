@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Audio Mejorado</title>
+    <style>
+        /* === RESET === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://i.pinimg.com/1200x/68/a6/de/68a6de28d4606ad3f31810977c5e625b.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* === CONTENEDOR PRINCIPAL === */
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .purple-btn {
+            background: linear-gradient(135deg, #a200ff, #5e00a6);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.3em;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .purple-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(128,0,255,0.7);
+        }
+
+        /* === MODAL === */
+        .menu-modal {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(25, 25, 25, 0.96);
+            border-radius: 20px;
+            padding: 40px 32px;
+            box-shadow: 0 0 40px #8000ffcc;
+            z-index: 10;
+            min-width: 380px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .menu-title {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #caaaff;
+        }
+
+        .menu-row {
+            display: flex;
+            align-items: center;
+            margin: 18px 0;
+            width: 100%;
+        }
+
+        .menu-number {
+            color: #fff;
+            font-size: 2em;
+            margin-right: 24px;
+            width: 60px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .menu-bar {
+            height: 32px;
+            background: linear-gradient(90deg, #4c0080, #9d4edd);
+            border-radius: 16px;
+            flex: 1;
+            position: relative;
+            margin-left: 8px;
+            margin-right: 8px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: rgba(255,255,255,0.3);
+            border-radius: 16px;
+            transition: width 0.6s ease-in-out;
+        }
+
+        .bolita {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background: radial-gradient(circle, #fff 60%, #8000ff 100%);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            transition: left 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+            z-index: 2;
+            box-shadow: 0 0 12px rgba(255,255,255,0.8);
+        }
+
+        .gen-btn {
+            background: linear-gradient(135deg, #5e00a6, #c300ff);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+        .gen-btn:hover {
+            background: linear-gradient(135deg, #7a00c3, #e200ff);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(194,0,255,0.6);
+        }
+
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 9;
+            animation: fadeInBg 0.6s ease-out;
+        }
+
+        /* === ALERT MODAL === */
+        .alert-modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: #2b003f;
+            color: #fff;
+            padding: 32px 24px;
+            border-radius: 16px;
+            box-shadow: 0 0 30px #c300ff88;
+            z-index: 20;
+            min-width: 320px;
+            text-align: center;
+            transition: transform 0.4s ease;
+        }
+        .alert-modal.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .alert-modal b {
+            color: #e1baff;
+        }
+        .alert-modal button {
+            margin-top: 18px;
+            background: linear-gradient(135deg, #a200ff, #5e00a6);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .alert-modal button:hover {
+            background: linear-gradient(135deg, #b600ff, #6a00b3);
+        }
+
+        /* === ANIMACIONES === */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -45%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 600px) {
+            .menu-modal {
+                width: 90%;
+                padding: 25px;
+            }
+            .purple-btn, .gen-btn {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <div class="center-container" id="main-container">
+        <button class="purple-btn" onclick="iniciar()">generador de sensis</button>
+        <audio id="audio" src="musica.m4a"></audio>
+    </div>
+
+    <div class="modal-bg" id="modal-bg"></div>
+
+    <div class="menu-modal" id="menu-modal">
+        <div class="menu-title">? Configuraci�n de Sensibilidad ?</div>
+        <div class="menu-row">
+            <span class="menu-number" id="num1">50</span>
+            <div class="menu-bar" id="bar1">
+                <div class="bar-fill" id="fill1"></div>
+                <div class="bolita" id="bolita1"></div>
+            </div>
+        </div>
+        <div class="menu-row">
+            <span class="menu-number" id="num2">50</span>
+            <div class="menu-bar" id="bar2">
+                <div class="bar-fill" id="fill2"></div>
+                <div class="bolita" id="bolita2"></div>
+            </div>
+        </div>
+        <div class="menu-row">
+            <span class="menu-number" id="num3">50</span>
+            <div class="menu-bar" id="bar3">
+                <div class="bar-fill" id="fill3"></div>
+                <div class="bolita" id="bolita3"></div>
+            </div>
+        </div>
+        <div class="menu-row">
+            <span class="menu-number" id="num4">50</span>
+            <div class="menu-bar" id="bar4">
+                <div class="bar-fill" id="fill4"></div>
+                <div class="bolita" id="bolita4"></div>
+            </div>
+        </div>
+        <button class="gen-btn" onclick="mostrarAlerta()">🔮 Generar Sensibilidad</button>
+    </div>
+
+    <div class="alert-modal" id="alert-modal">
+        <div>
+            📱 ¿Este modelo es tu teléfono?<br>
+            <b id="modelo-detectado">Detectando...</b>
+        </div>
+        <div>
+            <button onclick="confirmarModelo(true)">Sí</button>
+            <button onclick="confirmarModelo(false)">No</button>
+        </div>
+    </div>
+
+    <script>
+        function iniciar() {
+            const audio = document.getElementById('audio');
+            audio.play().catch(() => {});
+            document.getElementById('main-container').style.display = 'none';
+            document.getElementById('menu-modal').style.display = 'flex';
+            document.getElementById('modal-bg').style.display = 'block';
+        }
+
+        function mostrarAlerta() {
+            const alertModal = document.getElementById('alert-modal');
+            alertModal.style.display = 'block';
+            setTimeout(() => alertModal.classList.add('active'), 10);
+            let modelo = navigator.userAgent || "Desconocido";
+            document.getElementById('modelo-detectado').textContent = modelo;
+        }
+
+        function cerrarAlerta() {
+            const alertModal = document.getElementById('alert-modal');
+            alertModal.classList.remove('active');
+            setTimeout(() => { alertModal.style.display = 'none'; }, 300);
+        }
+
+        function confirmarModelo(esCorrecto) {
+            cerrarAlerta();
+            if (esCorrecto) {
+                for (let i = 1; i <= 4; i++) {
+                    let num = Math.floor(Math.random() * (140 - 60 + 1)) + 60;
+                    document.getElementById('num' + i).textContent = num;
+                    moverBolita('bolita' + i, 'fill' + i, num);
+                }
+            } else {
+                alert("Por favor, usa tu teléfono para mejores resultados.");
+            }
+        }
+
+        function moverBolita(bolitaId, fillId, num) {
+            const min = 60, max = 140;
+            const bar = document.getElementById(bolitaId).parentElement;
+            const barWidth = bar.offsetWidth;
+            const percent = (num - min) / (max - min);
+            const pos = percent * (barWidth - 32) + 16;
+            document.getElementById(bolitaId).style.left = pos + "px";
+            document.getElementById(fillId).style.width = (percent * 100) + "%";
+        }
+
+        window.onload = function() {
+            for (let i = 1; i <= 4; i++) {
+                moverBolita('bolita' + i, 'fill' + i, 50);
+            }
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+
+

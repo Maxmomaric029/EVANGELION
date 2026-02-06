@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEAR XIT V2 | iPhone Edition</title>
+    <style>
+        :root {
+            --primary-red: #b30000;
+            --neon-glow: #ff4d4d;
+            --dark-bg: #030303;
+            --panel-bg: #0a0a0a;
+            --text-gray: #aaaaaa;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Consolas', 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border: 2px solid var(--primary-red);
+            border-radius: 12px;
+            padding: 25px;
+            width: 360px;
+            box-shadow: 0 0 40px rgba(179, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 8px;
+            color: var(--neon-glow);
+            text-shadow: 0 0 15px var(--primary-red);
+        }
+
+        .subtitle {
+            font-size: 0.7rem;
+            color: var(--text-gray);
+            letter-spacing: 3px;
+        }
+
+        /* Secciones */
+        .section-title {
+            font-size: 0.75rem;
+            color: var(--primary-red);
+            margin: 15px 0 10px 0;
+            text-transform: uppercase;
+            border-left: 3px solid var(--primary-red);
+            padding-left: 8px;
+        }
+
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .option label {
+            font-size: 0.8rem;
+            color: #efefef;
+        }
+
+        /* Sliders / Barras de rango */
+        .range-container {
+            margin: 10px 0;
+        }
+
+        .range-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 5px;
+            color: var(--text-gray);
+        }
+
+        input[type=range] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: var(--primary-red);
+        }
+
+        /* Switches */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 38px;
+            height: 18px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #222;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #eee;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--primary-red); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Botón Inyectar */
+        .btn-fear {
+            width: 100%;
+            background: linear-gradient(180deg, #600, #b00);
+            border: 1px solid var(--neon-glow);
+            padding: 15px;
+            margin-top: 20px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .btn-fear:hover {
+            box-shadow: 0 0 20px var(--primary-red);
+            transform: translateY(-2px);
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            margin-top: 20px;
+            color: #444;
+        }
+
+        .online { color: #00ff00; }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <div class="header">
+        <h1>FEAR</h1>
+        <div class="subtitle">Paybac Over all.</div>
+    </div>
+
+    <div class="section-title">Combat / Aimbot</div>
+    
+    <div class="option">
+        <label>AimLock (Mira fija)</label>
+        <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="option">
+        <label>Auto-Headshot 98%</label>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="option">
+        <label>Aim con Mira (Scope)</label>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="section-title">Sensibilidad VIP</div>
+    
+    <div class="range-container">
+        <div class="range-label"><span>General</span><span>98%</span></div>
+        <input type="range" min="0" max="100" value="98">
+    </div>
+
+    <div class="range-container">
+        <div class="range-label"><span>Suavizado (Smoothing)</span><span>12%</span></div>
+        <input type="range" min="0" max="100" value="12">
+    </div>
+
+    <div class="section-title">Sistema & Visual</div>
+    
+    <div class="option">
+        <label>Sensi fear</label>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="option">
+        <label>Optimizar Ping</label>
+        <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="option">
+        <label>Limpiar Reportes</label>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <button class="btn-fear" onclick="inject()">INJECT FEAR EXECUTOR</button>
+
+    <div class="status-bar">
+        <span>DEVICE: IPHONE 15 PRO</span>
+        <span class="online">SERVER: ONLINE</span>
+    </div>
+</div>
+
+<script>
+    function inject() {
+        let btn = document.querySelector('.btn-fear');
+        btn.innerHTML = "LOADING DATA...";
+        setTimeout(() => {
+            btn.innerHTML = "BYPASSING...";
+            setTimeout(() => {
+                btn.innerHTML = "DONE!";
+                alert("Configuración FEAR aplicada satisfactoriamente.");
+                // Abre Free Fire
+                window.location.href = "com.dts.freefireth://";
+            }, 1500);
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>

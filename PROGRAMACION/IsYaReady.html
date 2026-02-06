@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IS YA READY?  PRIVATE</title>
+    <style>
+        :root {
+            --main-color: #ff003c; /* Un rojo vibrante que pega con el fondo */
+            --glass: rgba(0, 0, 0, 0.75);
+            --border: rgba(255, 0, 60, 0.3);
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: url('https://i.pinimg.com/1200x/95/cd/bd/95cdbdf5a6b07eb0609159945c239dc0.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Overlay para oscurecer un poco el fondo y que resalte el panel */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .panel {
+            position: relative;
+            z-index: 1;
+            width: 340px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: -1px;
+            color: #fff;
+            text-shadow: 3px 3px var(--main-color);
+        }
+
+        .header p {
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--main-color);
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .content {
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        /* Aplicando FÓRMULA XIT 4.0 */
+        .xit-option {
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .xit-option:hover {
+            border-color: var(--main-color);
+            background: rgba(255, 0, 60, 0.1);
+        }
+
+        .option-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Estilo Switch iOS Premium */
+        .switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--main-color); }
+        input:checked + .slider:before { transform: translateX(18px); }
+
+        .btn-ready {
+            width: 100%;
+            padding: 18px;
+            margin-top: 20px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-ready:hover {
+            background: var(--main-color);
+            color: white;
+            box-shadow: 0 0 20px var(--main-color);
+            transform: scale(1.02);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <div class="header">
+        <h1>𝐈𝐬 𝐲𝐚 𝐫𝐞𝐚𝐝𝐲?</h1>
+        <p>DOA</p>
+    </div>
+
+    <div class="content">
+        <div class="xit-option">
+            <span class="option-text">👺 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐅𝐮𝐥𝐥 𝐕𝐞𝐫𝐦𝐞𝐥𝐡𝐨</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="xit-option">
+            <span class="option-text">💀 𝐀𝐮𝐱𝐢𝐥𝐢𝐨 𝐆𝐫𝐮𝐝𝐚 [𝐕𝐈𝐏]</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="xit-option">
+            <span class="option-text">🇧🇷 𝐓𝐫𝐢𝐜𝐤 𝐂𝐚𝐩𝐚 𝐈𝐧𝐬𝐚𝐧𝐨</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="xit-option">
+            <span class="option-text">💎 𝐒𝐞𝐜𝐫𝐞𝐭 aimlock 𝐒𝐮𝐚𝐯𝐞 𝐢𝐎𝐒</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <button class="btn-ready" onclick="this.innerHTML='𝐆𝐄𝐓 𝐑𝐄𝐀𝐃𝐘...';">𝐈'𝐌 𝐑𝐄𝐀𝐃𝐘</button>
+
+    <div class="footer">
+        𝐃𝐞𝐯:FLockk
+    </div>
+</div>
+
+</body>
+</html>
+
+

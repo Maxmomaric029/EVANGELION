@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMON DICE  | SUPREMACY</title>
+    <style>
+        :root {
+            --shadow-purple: #6a0dad;
+            --electric-purple: #a020f0;
+            --bg-black: #050505;
+            --card-gray: #121212;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .panel {
+            background: var(--card-gray);
+            width: 350px;
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid rgba(160, 32, 240, 0.2);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(160, 32, 240, 0.1);
+            position: relative;
+        }
+
+        /* Título con la personalidad Simon Dice */
+        .header {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 2px 2px var(--shadow-purple);
+        }
+
+        .header span {
+            font-size: 0.65rem;
+            color: var(--electric-purple);
+            letter-spacing: 5px;
+            font-weight: bold;
+        }
+
+        /* Estilo de opciones con Fórmula XIT 4.0 */
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .xit-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--electric-purple);
+            transition: 0.3s;
+        }
+
+        .xit-card:hover {
+            background: rgba(160, 32, 240, 0.05);
+            transform: translateX(5px);
+        }
+
+        .text-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-text {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .sub-text {
+            font-size: 0.6rem;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        /* Botón de inyección "Simon" */
+        .btn-simon {
+            width: 100%;
+            margin-top: 30px;
+            padding: 18px;
+            background: var(--electric-purple);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(160, 32, 240, 0.4);
+            transition: 0.4s;
+        }
+
+        .btn-simon:hover {
+            background: #bc13fe;
+            box-shadow: 0 0 25px var(--electric-purple);
+            letter-spacing: 5px;
+        }
+
+        /* Checkbox Personalizado */
+        input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--electric-purple);
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        input[type="checkbox"]:checked {
+            background: var(--electric-purple);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✔';
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            left: 3px;
+            top: -2px;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.55rem;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <div class="header">
+        <h1>Simon says✡</h1>
+            <span>𝐎𝐁𝐄𝐘 𝐓𝐇𝐄 𝐑𝐔𝐋𝐄𝐒 </span>
+    </div>
+
+    <div class="option-list">
+        <div class="xit-card">
+            <div class="text-group">
+                <span class="main-text">👺 𝐒𝐞𝐜𝐫𝐞𝐭 𝐆𝐫𝐮𝐝𝐚 𝐌𝐨𝐛𝐢𝐥𝐞</span>
+                <span class="sub-text">Fórmula Privada 4.0</span>
+            </div>
+            <input type="checkbox" checked>
+        </div>
+
+        <div class="xit-card">
+            <div class="text-group">
+                <span class="main-text">🩸 𝐏𝐚𝐜𝐤 𝐅𝐮𝐥𝐥 𝐕𝐞𝐫𝐦𝐞𝐥𝐡𝐨 [𝐕𝐈𝐏]</span>
+                <span class="sub-text">Ajuste de Registro External</span>
+            </div>
+            <input type="checkbox">
+        </div>
+
+        <div class="xit-card">
+            <div class="text-group">
+                <span class="main-text">🇧🇷 𝐌𝐚𝐜𝐫𝐨 𝐂𝐚𝐩𝐚 𝐈𝐧𝐬𝐚𝐧𝐨</span>
+                <span class="sub-text">High Performance Skill</span>
+            </div>
+            <input type="checkbox" checked>
+        </div>
+
+        <div class="xit-card">
+            <div class="text-group">
+                <span class="main-text">💀 𝐀𝐮𝐱𝐢𝐥𝐢𝐨 𝐒𝐮𝐚𝐯𝐞 𝐢𝐎𝐒</span>
+                <span class="sub-text">Bypass Antiban System</span>
+            </div>
+            <input type="checkbox">
+        </div>
+    </div>
+
+    <button class="btn-simon" onclick="simonSays()">Execute Order</button>
+
+    <div class="footer">
+        © SI, ES LA CANCIOND DE BABYLOCC
+    </div>
+</div>
+
+<script>
+    function simonSays() {
+        const btn = document.querySelector('.btn-simon');
+        btn.innerHTML = "ejecutando...";
+        setTimeout(() => {
+            btn.innerHTML = "ORDER EXECUTED";
+            alert("Simon dice: Paybacc over all♿");
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>

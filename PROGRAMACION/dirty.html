@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimbot 🎯</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4a1a4a 0%, #6b1f3d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .panel-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #e8d5ff;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .option {
+            background: linear-gradient(135deg, #5a2458 0%, #7a2845 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .option-text {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option i {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .option-status {
+            width: 50px;
+            height: 26px;
+            border-radius: 13px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .option-status::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #666;
+            top: 1px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .option.active .option-status {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+        }
+
+        .option.active .option-status::after {
+            background: #00ff88;
+            transform: translateX(24px);
+            box-shadow: 0 2px 8px rgba(0, 255, 136, 0.4);
+        }
+
+        .execute-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #8b2d8b 0%, #b83a5e 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .execute-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 58, 94, 0.4);
+        }
+
+        .execute-btn:active {
+            transform: translateY(-1px);
+        }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+    <div class="panel-container">
+        <div class="header">
+            <h1>Aimbot 🎯</h1>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Opciones</div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-star"></i>
+                    Aim Stellar Mejorado
+                </span>
+                <div class="option-status"></div>
+            </div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-folder"></i>
+                    AimAssist
+                </span>
+                <div class="option-status"></div>
+            </div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-code"></i>
+                    AimTrick
+                </span>
+                <div class="option-status"></div>
+            </div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-skull"></i>
+                    Regedit 1.114.1
+                </span>
+                <div class="option-status"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="header">
+                <h1>Trick's 🛡</h1>
+            </div>
+            <div class="section-title">Opciones</div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-droplet"></i>
+                    Aim Dotty
+                </span>
+                <div class="option-status"></div>
+            </div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-location-dot"></i>
+                    Shot Delly .15
+                </span>
+                <div class="option-status"></div>
+            </div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-user-ninja"></i>
+                    Inyectar Setting
+                </span>
+                <div class="option-status"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="header">
+                <h1>Misc ⚙️</h1>
+            </div>
+            <div class="section-title">Opciones</div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-lock"></i>
+                    Anti Ban
+                </span>
+                <div class="option-status"></div>
+            </div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-lock"></i>
+                    Anti Blacklist
+                </span>
+                <div class="option-status"></div>
+            </div>
+            <div class="option" onclick="toggleOption(this)">
+                <span class="option-text">
+                    <i class="fas fa-lock"></i>
+                    No Detectar
+                </span>
+                <div class="option-status"></div>
+            </div>
+        </div>
+
+        <a href="freefireth://" class="execute-btn">
+            <i class="fas fa-play"></i>
+            Ejecutar Free Fire
+        </a>
+    </div>
+
+    <script>
+        function toggleOption(element) {
+            element.classList.toggle('active');
+        }
+
+        // Configuraci�n de asistencia de puntería
+        const headshotConfig = {
+            precision: 0.85,
+            smoothing: 0.7,
+            recoilCompensation: true,
+            targetPriority: 'head'
+        };
+
+        // Simulaci�n de ajuste de puntería (solo visual)
+        let aimAssistActive = false;
+
+        // Aimbot C++
+        console.log("Aimbot C++");
+
+        document.querySelectorAll('.option').forEach((option, index) => {
+            if (index === 0 || index === 1) {
+                option.addEventListener('click', () => {
+                    aimAssistActive = !aimAssistActive;
+                    console.log('Aim Assist:', aimAssistActive ? 'Activado' : 'Desactivado');
+                });
+            }
+        });
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

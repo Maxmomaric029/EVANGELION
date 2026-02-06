@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Favela Xit - Private</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Russo+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon: #8c00ff; /* Morado Regedit */
+            --neon-glow: rgba(140, 0, 255, 0.4);
+            --dark: #090909;
+            --card: rgba(20, 20, 20, 0.9);
+            --text: #fff;
+            --gray: #666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
+            /* Fondo Urbano / Drill */
+            background-image: url("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXZ4eXF4eXF4eXF4eXF4eXF4eXF4eXF4eXF4eXF4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LpdlqTkgO2Lwwixwv7/giphy.gif");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text);
+        }
+
+        body::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.85); z-index: 0;
+        }
+
+        .xit-panel {
+            position: relative; z-index: 10;
+            width: 100%; max-width: 360px; height: 85vh;
+            background: var(--card);
+            border-radius: 30px;
+            border: 1px solid rgba(140, 0, 255, 0.2);
+            box-shadow: 0 0 30px var(--neon-glow);
+            display: flex; flex-direction: column;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 25px;
+            background: linear-gradient(180deg, rgba(140,0,255,0.1), transparent);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .title h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 22px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--neon);
+        }
+        .title span { font-size: 10px; color: var(--neon); font-weight: 800; background: rgba(140,0,255,0.1); padding: 3px 8px; border-radius: 4px; }
+
+        .profile-pic {
+            width: 40px; height: 40px; border-radius: 12px;
+            background: url('https://i.pinimg.com/736x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg'); 
+            background-size: cover;
+            box-shadow: 0 0 15px var(--neon);
+        }
+
+        .tabs {
+            display: flex; margin: 0 20px 20px 20px;
+            background: rgba(255,255,255,0.05); padding: 5px; border-radius: 15px;
+        }
+        .tab-btn {
+            flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: 700;
+            color: var(--gray); cursor: pointer; border-radius: 10px; transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--neon); color: #fff; box-shadow: 0 0 15px var(--neon-glow); }
+
+        .content { flex: 1; overflow-y: auto; padding: 0 20px 20px 20px; scrollbar-width: none; }
+        .section { display: none; animation: slideUp 0.4s ease; }
+        .section.active { display: block; }
+
+        .card-opt {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid var(--neon);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .opt-info { display: flex; flex-direction: column; }
+        .opt-title { font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .opt-desc { font-size: 10px; color: var(--gray); margin-top: 2px; }
+
+        .switch { position: relative; width: 42px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #333; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--neon); box-shadow: 0 0 10px var(--neon-glow); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        input[type=range] {
+            width: 100%; margin-top: 10px; height: 5px; background: #333; border-radius: 5px; appearance: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            appearance: none; width: 15px; height: 15px; background: var(--neon); border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px var(--neon);
+        }
+
+        .inject-container { padding: 20px; background: linear-gradient(0deg, var(--card) 20%, transparent); }
+        .btn-inject {
+            width: 100%; padding: 18px; border: none; border-radius: 15px;
+            background: var(--neon); color: #fff;
+            font-family: 'Russo One', sans-serif; font-size: 16px; letter-spacing: 1px;
+            cursor: pointer; transition: 0.2s;
+            box-shadow: 0 5px 20px var(--neon-glow);
+            text-transform: uppercase;
+        }
+        .btn-inject:active { transform: scale(0.95); }
+
+        .toast {
+            position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
+            background: #fff; color: #000; padding: 8px 15px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; opacity: 0; transition: 0.3s; pointer-events: none; z-index: 99;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(10px); }
+
+        @keyframes slideUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+    
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 0, 50, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+.follow-container {
+  background: rgba(30, 30, 40, 0.55);
+  border-radius: 20px;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(120,40,180,0.18);
+}
+.follow-img {
+  width: 120px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.follow-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.follow-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff, 0 2px 8px #7c2ae8;
+}
+.yt-btn {
+  display: flex;
+  align-items: center;
+  background: #ff2222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  text-shadow: 0 0 8px #fff;
+}
+.yt-btn:hover {
+  background: #cc1818;
+}
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff);
+}
+@media (max-width: 600px) {
+  .follow-container { flex-direction: column; gap: 18px; padding: 24px 10px;}
+  .follow-img { width: 90px;}
+}
+</style>
+</head>
+<body>
+</div>
+
+    <div class="xit-panel">
+        <div id="toast" class="toast">?? Config Activada</div>
+
+        <div class="header">
+            <div class="title">
+                <h1>FAVELA XIT</h1>
+                <span>V4.2 VIP ????</span>
+            </div>
+            <div class="profile-pic"></div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-btn active" onclick="tab('combat', this)">BALA</div>
+            <div class="tab-btn" onclick="tab('sensi', this)">SENSI</div>
+            <div class="tab-btn" onclick="tab('misc', this)">OPCIONES</div>
+        </div>
+
+        <div class="content">
+            
+            <!-- COMBAT (NUEVAS OPCIONES FÓRMULA XIT 4.0) -->
+            <div id="combat" class="section active">
+                <div class="card-opt">
+                    <div class="opt-info">
+                        <div class="opt-title">?? AimLock Secreto (Priv)</div>
+                        <div class="opt-desc">Indetectable / Suave</div>
+                    </div>
+                    <label class="switch"><input type="checkbox" onchange="msg('Aim Secreto ON')"><span class="slider"></span></label>
+                </div>
+
+                <div class="card-opt" style="display:block">
+                    <div style="display:flex; justify-content:space-between;">
+                        <div class="opt-title">?? Busaca de Bala [Eixo X]</div>
+                        <span style="color:var(--neon); font-size:11px; font-weight:bold;">MAX</span>
+                    </div>
+                    <input type="range" value="98">
+                </div>
+
+                <div class="card-opt">
+                    <div class="opt-info">
+                        <div class="opt-title">?? Majeuse Bullet (Legit)</div>
+                        <div class="opt-desc">Hitbox Expandida 2x</div>
+                    </div>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+            </div>
+
+            <!-- SENSI (NUEVAS OPCIONES FÓRMULA XIT 4.0) -->
+            <div id="sensi" class="section">
+                <div class="card-opt" style="display:block">
+                    <div style="display:flex; justify-content:space-between;">
+                        <div class="opt-title">� Emulador iOS 100%</div>
+                        <span style="color:var(--neon); font-size:11px; font-weight:bold;">100%</span>
+                    </div>
+                    <input type="range" value="100">
+                </div>
+
+                <div class="card-opt">
+                    <div class="opt-info">
+                        <div class="opt-title">???? Back da Lenda (VIP)</div>
+                        <div class="opt-desc">Configuraci�n Da Cruz</div>
+                    </div>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+
+                <div class="card-opt">
+                    <div class="opt-info">
+                        <div class="opt-title">? Sensi Xitada 4.0</div>
+                        <div class="opt-desc">Mais Leve / Sem Bugs</div>
+                    </div>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+            </div>
+
+            <!-- EXTRAS (NUEVAS OPCIONES FÓRMULA XIT 4.0) -->
+            <div id="misc" class="section">
+                <div class="card-opt">
+                    <div class="opt-info">
+                        <div class="opt-title">🛡� ������ �����-���</div>
+                        <div class="opt-desc">Protecci�n ID</div>
+                    </div>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="card-opt">
+                    <div class="opt-info">
+                        <div class="opt-title">?? Proca R�pida</div>
+                        <div class="opt-desc">Macro de Sniper</div>
+                    </div>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="inject-container">
+            <button class="btn-inject" onclick="inject()">? ATIVAR MOD MENU</button>
+        </div>
+    </div>
+
+    <script>
+        function tab(id, el) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function msg(txt) {
+            const t = document.getElementById('toast');
+            t.innerText = txt;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        function inject() {
+            const btn = document.querySelector('.btn-inject');
+            const original = btn.innerText;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> INJETANDO...';
+            btn.style.background = "#fff";
+            btn.style.color = "#000";
+
+            setTimeout(() => {
+                btn.innerHTML = "✅ SUCESSO!";
+                btn.style.background = "#00e676";
+                btn.style.color = "#fff";
+                msg("ARQUIVOS CARREGADOS");
+                
+                setTimeout(() => {
+                    window.location.href = "freefireth://";
+                    setTimeout(() => {
+                        btn.innerHTML = original;
+                        btn.style.background = "var(--neon)";
+                        btn.style.color = "#fff";
+                    }, 2000);
+                }, 1000);
+            }, 1500);
+        }
+    </script>
+
+<script>
+document.getElementById('ytBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.open('https://www.youtube.com/@DraakoXitty', '_blank');
+  document.getElementById('overlay').style.display = 'none';
+});
+</script>
+</body>
+</html>
+
+
+
+

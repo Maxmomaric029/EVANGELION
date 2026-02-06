@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEESPERANZA v5 </title>
+    <style>
+        :root {
+            --ios-blue: #007AFF;
+            --white: #ffffff;
+            --soft-gray: #1c1c1e;
+        }
+
+        body {
+            background: #000;
+            color: var(--white);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .panel {
+            background: rgba(28, 28, 30, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            width: 340px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            font-size: 0.7rem;
+            color: var(--ios-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Aplicando la FÓRMULA XIT 4.0 en el diseño */
+        .option-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 18px;
+            padding: 5px 15px;
+            margin-bottom: 12px;
+        }
+
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        /* Estilo de letra según la fórmula (Bold y Elegante) */
+        .option-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #efefef;
+        }
+
+        /* iOS Switch */
+        .switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #39393d;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .slider { background-color: #34c759; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .btn-inject {
+            width: 100%;
+            padding: 16px;
+            margin-top: 20px;
+            background: var(--white);
+            border: none;
+            border-radius: 15px;
+            color: black;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-inject:hover {
+            transform: scale(0.98);
+            background: #e5e5e5;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.6rem;
+            color: #555;
+            letter-spacing: 1px;
+        }
+
+        .badge {
+            font-size: 0.6rem;
+            background: rgba(0, 122, 255, 0.2);
+            color: var(--ios-blue);
+            padding: 2px 8px;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <div class="header">
+        <h1>Desesperanza</h1>
+        <div class="sub-header">"Y yo me pregunto es que no se cansan?"</div>
+    </div>
+
+    <div class="option-box">
+        <div class="option">
+            <span class="option-name">💀 𝐀𝐮𝐱𝐢𝐥𝐢𝐨 𝐆𝐫𝐮𝐝𝐚 </span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="option-box">
+        <div class="option">
+            <span class="option-name">🩸 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐅𝐮𝐥𝐥 𝐕𝐞𝐫𝐦𝐞𝐥𝐡𝐨 [𝐕𝐈𝐏]</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="option-box">
+        <div class="option">
+            <span class="option-name">👺 𝐓𝐫𝐢𝐜𝐤 𝐂𝐚𝐩𝐚 𝐅𝐨𝐜𝐚𝐝𝐨 🇧🇷</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="option-box">
+        <div class="option">
+            <span class="option-name">💎 𝐒𝐞𝐧𝐬𝐢 𝐗𝐢𝐭𝐚𝐝𝐚 𝐏𝐫𝐢𝐯 v5</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="option-box">
+        <div class="option">
+            <span class="option-name">🔒 𝐁𝐲𝐩𝐚𝐬𝐬 𝐒𝐮𝐚𝐯𝐞 𝐢𝐎𝐒 [𝐎𝐍]</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <button class="btn-inject" onclick="this.innerHTML='𝐂𝐎𝐍𝐅𝐈𝐆 𝐀𝐏𝐏𝐋𝐈𝐄𝐃';">𝐀𝐏𝐏𝐋𝐘 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒</button>
+
+    <div class="footer">
+        𝐃𝐄𝐕𝐄𝐋𝐎𝐏𝐄𝐃 BY PAYBACC 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘 
+    </div>
+</div>
+
+</body>
+</html>
