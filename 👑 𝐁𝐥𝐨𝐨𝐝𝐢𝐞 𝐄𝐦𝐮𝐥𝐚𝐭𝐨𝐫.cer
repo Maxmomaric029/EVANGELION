@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>45.90.28.0</string>
+          <string>45.90.30.0</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.emumix</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>6A7B8C9D-0E1F-4013-8013-777788889999</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🖥️ 𝐒𝐞𝐧𝐬𝐢 𝐄𝐦𝐮𝐥𝐚𝐝𝐨𝐫</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>1.0.0.1</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.grudarmix</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>7B8C9D0E-1F2A-4014-8014-000011112222</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🩸 𝐆𝐫𝐮𝐝𝐚𝐫 𝐍𝐚 𝐂𝐚𝐛𝐞ç𝐚</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>👑 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 𝐄𝐦𝐮𝐥𝐚𝐭𝐨𝐫</string>
+  <key>PayloadIdentifier</key>
+  <string>com.bloodie.profile.emulator</string>
+  <key>PayloadOrganization</key>
+  <string>Bloodie</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>8C9D0E1F-2A3B-4015-8015-333344445555</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

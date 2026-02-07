@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>9.9.9.9</string>
+          <string>149.112.112.112</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.hitboxmix</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>D4E5F6A7-B8C9-4004-8004-000011112222</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⚔️ 𝐇𝐢𝐭𝐛𝐨𝐱 𝐄𝐱𝐩𝐚𝐧𝐝 𝟓𝟎%</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>76.76.2.0</string>
+          <string>76.76.10.0</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.recoilmix</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>E5F6A7B8-C9D0-4005-8005-333344445555</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⚓ 𝐍𝐨 𝐑𝐞𝐜𝐨𝐢𝐥 𝐒𝐭𝐚𝐛𝐥𝐞</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>☠️ 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 𝐃𝐞𝐬𝐭𝐫𝐨𝐲𝐞𝐫</string>
+  <key>PayloadIdentifier</key>
+  <string>com.bloodie.profile.destroyer</string>
+  <key>PayloadOrganization</key>
+  <string>Bloodie</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>F6A7B8C9-D0E1-4006-8006-666677778888</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

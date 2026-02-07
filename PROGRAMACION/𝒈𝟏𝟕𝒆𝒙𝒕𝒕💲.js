@@ -1,5 +1,4 @@
-// Scriptable: Menú "Aimbot Auxiliar" con contraseña
-// Versión mejorada con mejor estructura y manejo de errores
+
 
 const CONTRASENA_CORRECTA = "destiny by doa";
 

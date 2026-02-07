@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>1.1.1.1</string>
+          <string>1.0.0.1</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.mix1</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>A1B2C3D4-E5F6-4001-8001-111122223333</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🚀 𝐒𝐞𝐧𝐬𝐢 + 𝐏𝐮𝐱𝐚𝐝𝐚 𝐕𝟓</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>8.8.8.8</string>
+          <string>8.8.4.4</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.mix2</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>B2C3D4E5-F6A7-4002-8002-444455556666</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🩸 𝐅𝐮𝐥𝐥 𝐑𝐞𝐝 𝐒𝐲𝐬𝐭𝐞𝐦</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>💎 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 𝐂𝐨𝐦𝐛𝐨 𝐕𝐈𝐏</string>
+  <key>PayloadIdentifier</key>
+  <string>com.bloodie.profile.combovip</string>
+  <key>PayloadOrganization</key>
+  <string>Bloodie</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>C3D4E5F6-A7B8-4003-8003-777788889999</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

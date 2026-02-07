@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>94.140.14.14</string>
+          <string>94.140.15.15</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.regeditmix</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>3D4E5F6A-7B8C-4010-8010-888899990000</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⚙️ 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐌𝐨𝐛𝐢𝐥𝐞 𝐕𝟒</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>8.26.56.26</string>
+          <string>8.20.247.20</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.lockmix</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>4E5F6A7B-8C9D-4011-8011-111122223333</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>🎯 𝐋𝐨𝐜𝐤 𝐇𝐞𝐚𝐝 𝟗𝟗%</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>🧬 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐗</string>
+  <key>PayloadIdentifier</key>
+  <string>com.bloodie.profile.regeditx</string>
+  <key>PayloadOrganization</key>
+  <string>Bloodie</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>5F6A7B8C-9D0E-4012-8012-444455556666</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>
