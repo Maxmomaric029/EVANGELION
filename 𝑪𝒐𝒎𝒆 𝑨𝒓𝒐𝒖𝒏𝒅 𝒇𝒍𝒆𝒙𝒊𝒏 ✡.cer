@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key><array><string>208.67.222.222</string></array>
+      </dict>
+      <key>PayloadIdentifier</key><string>com.bloodie.pai.sensi</string>
+      <key>PayloadType</key><string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key><string>AAAA-1111-BBBB-2222-CCCC</string>
+      <key>PayloadVersion</key><integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>📱 𝐒𝐞𝐧𝐬𝐢 𝐝𝐞 𝐄𝐦𝐮𝐥𝐚𝐝𝐨𝐫 𝐗</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key><array><string>208.67.220.220</string></array>
+      </dict>
+      <key>PayloadIdentifier</key><string>com.bloodie.pai.supresor</string>
+      <key>PayloadType</key><string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key><string>BBBB-2222-CCCC-3333-DDDD</string>
+      <key>PayloadVersion</key><integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⌨️ 𝐒𝐮𝐩𝐫𝐞𝐬𝐬𝐨𝐫 𝐆𝐨𝐝 𝐀𝐜𝐭𝐢𝐯𝐞</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key><string>👑 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 𝐎 𝐏𝐚𝐢 𝐝𝐚 𝐒𝐞𝐧𝐬𝐢</string>
+  <key>PayloadIdentifier</key><string>com.bloodie.profile.paidasensi</string>
+  <key>PayloadOrganization</key><string>Bloodie</string>
+  <key>PayloadType</key><string>Configuration</string>
+  <key>PayloadUUID</key><string>77777777-AAAA-BBBB-CCCC-DDDDDDDDDDDD</string>
+  <key>PayloadVersion</key><integer>1</integer>
+</dict>
+</plist>

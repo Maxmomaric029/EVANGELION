@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>1.1.1.1</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.hitbox</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>B2C3D4E5-F6A7-4B8C-9D0E-1F2G3H4I5J6K</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⚔️ 𝐇𝐢𝐭𝐛𝐨𝐱 𝐏𝐞𝐬𝐜𝐨ç𝐨 𝐕𝟐</string>
+    </dict>
+    <dict>
+      <key>DNSSettings</key>
+      <dict>
+        <key>ServerAddresses</key>
+        <array>
+          <string>176.103.130.130</string>
+        </array>
+      </dict>
+      <key>PayloadIdentifier</key>
+      <string>com.bloodie.dns.regedit</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>C3D4E5F6-G7H8-4I9J-0K1L-2M3N4O5P6Q7R</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>⚙️ 𝐑𝐞𝐠𝐞𝐝𝐢𝐭 𝐌𝐨𝐛𝐢𝐥𝐞 𝐢𝐎𝐒</string>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>👹 𝐁𝐥𝐨𝐨𝐝𝐢𝐞 𝐗𝐢𝐭 𝐢𝐏𝐡𝐨𝐧𝐞 𝐕𝐈𝐏</string>
+  <key>PayloadIdentifier</key>
+  <string>com.bloodie.profile.xitvip</string>
+  <key>PayloadOrganization</key>
+  <string>Bloodie</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>D4E5F6G7-H8I9-0J1K-2L3M-4N5O6P7Q8R9S</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>
